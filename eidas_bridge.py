@@ -9,7 +9,7 @@ def eidas_link_did(did, certificate, proof: str) -> str:
     Returns the JSON that needs to be stored on the Agent public Storage
     (i.e: an Identity Hub)
     """
-    return {}
+    return ""
 
 def eidas_get_service_endpoint_struct(storage_endpoint: str) -> str:
     """ 
@@ -17,7 +17,7 @@ def eidas_get_service_endpoint_struct(storage_endpoint: str) -> str:
     Receives a service endpoint where it is stored the issuer's 
     eIDAS and DID linking information and returns the correspondent JSON
     """
-    return {}
+    return ""
 
 def eidas_sign_credential(json_credential: str) -> str:
     """ 
@@ -25,7 +25,7 @@ def eidas_sign_credential(json_credential: str) -> str:
     Trusted Service Provider and adds the corresponde response to the 
     received credential JSON structure.
     """
-    return {}
+    return ""
 
 def eidas_verify_credential(json_credential: str) -> str:
     """
