@@ -3,6 +3,8 @@
 from eidas_bridge.eidas_bridge import eidas_link_did, \
     eidas_get_service_endpoint_struct, eidas_sign_credential, eidas_verify_credential
 import pytest
+import json
+from utils.util import bytes_to_b58
 
 dids = [
     "did:sov:55GkHamhTU1ZbTbV2ab9DE"
@@ -62,8 +64,7 @@ def test_eidas_link_did_bad_types(did, certificate, proof):
 @pytest.mark.parametrize("certificate", certificates)
 @pytest.mark.parametrize("proof", proofs)
 def test_eidas_link_did(did, certificate, proof):
-    result =  eidas_link_did(did, certificate, proof)
-    assert result == ""
+    assert eidas_link_did(did, certificate, proof) == _to_json(did, certificate, proof)
 
 @pytest.mark.parametrize("storage_endpoint", bad_type_endpoints)
 def test_eidas_get_service_endpoint_struct_bad_types(storage_endpoint):
@@ -94,3 +95,28 @@ def test_eidas_verify_credential_bad_types(credential):
 def test_eidas_verify_credential(credential):
     result = eidas_verify_credential(credential)
     assert result == "NOT VALID"
+
+
+def _to_json(did, certificate, proof) -> str:
+    """
+    Create a JSON representation of the model instance.
+
+    Returns:
+        A JSON representation of this message
+
+    """
+    return json.dumps(_serialize(did, certificate, proof), indent=2)
+
+def _serialize(did, certificate, proof) -> str:
+    """
+    Dump current object to a JSON-compatible dictionary.
+
+    Returns:
+        dict representation of current EIDASLink
+
+    """
+    return {
+        "did": did,
+        "certificate": bytes_to_b58(certificate),
+        "proof": bytes_to_b58(proof)
+    }

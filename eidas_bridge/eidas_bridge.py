@@ -3,6 +3,8 @@
 """ EIDAS BRIDGE """
 
 from utils.util import check_args
+from .eidaslink import EIDASLink
+import json
 
 def eidas_link_did(did, certificate, proof) -> str:
     """ 
@@ -12,19 +14,8 @@ def eidas_link_did(did, certificate, proof) -> str:
     Returns the JSON that needs to be stored on the Agent public Storage
     (i.e: an Identity Hub)
     """
-    check_args(did, str)
-    check_args(certificate, bytes)
-    check_args(proof, bytes)
-
-    # TO DO 
-    '''
-    - construct a json structure with the given parameters and return it
-    - check that the proof really correspond to a PKCS#1 signature of
-        the DID passed signed with the privkey of the certificate
-    '''
     
-
-    return ""
+    return EIDASLink(did, certificate, proof).to_json()
 
 def eidas_get_service_endpoint_struct(storage_endpoint) -> str:
     """ 
