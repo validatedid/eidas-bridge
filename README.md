@@ -35,12 +35,23 @@ Execute `eidas_demo`:
 $ python eidas_demo.py
 ```
 
+#### Running Pytest suite tests
+
+##### Requeriments
+- Pytest
+
+##### Test execution
+
+```sh
+$ pytest tests/test_eidas_bridge.py
+```
+
 eIDAS API calls
 ===============
 
 #### eidas_link_did
 ```python
-def eidas_link_did(did, certificate, proof: str) -> str:
+def eidas_link_did(did, certificate, proof) -> str:
 ```
 Link the Issuer DID with eIDAS certificate.
 Receives a DID, an eIDAS certificate, and its proof of possession.
@@ -48,20 +59,20 @@ Returns the JSON that needs to be stored on the Agent public Storage (i.e: an Id
 
 #### eidas_get_service_endpoint_struct
 ```python
-def eidas_get_service_endpoint_struct(storage_endpoint: str) -> str:
+def eidas_get_service_endpoint_struct(storage_endpoint) -> str:
 ```
 Contructs the JSON structure that needs to be added to the Issuer's DID Document.
 Receives a service endpoint where it is stored the issuer's eIDAS and DID linking information and returns the correspondent JSON.
 
 #### eidas_sign_credential
 ```python
-def eidas_sign_credential(json_credential: str) -> str:
+def eidas_sign_credential(json_credential) -> str:
 ```
 Checks the validity of the issuer's eIDAS certificate against a Trusted Service Provider and adds the corresponde response to the received credential JSON structure.
 
 #### eidas_verify_credential
 ```python
-def eidas_verify_credential(json_credential: str) -> str:
+def eidas_verify_credential(json_credential) -> str:
 ```
 Verifies that the credential issuer had a valid eIDAS certificate at the moment of issuing the passed credential.
 Returns: VALID or NOT VALID
