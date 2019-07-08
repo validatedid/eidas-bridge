@@ -2,7 +2,7 @@
 # eidas_bridge.py
 """ EIDAS BRIDGE """
 
-import util 
+from utils.util import check_args
 
 def eidas_link_did(did, certificate, proof) -> str:
     """ 
@@ -12,9 +12,9 @@ def eidas_link_did(did, certificate, proof) -> str:
     Returns the JSON that needs to be stored on the Agent public Storage
     (i.e: an Identity Hub)
     """
-    util.check_args(did, str)
-    util.check_args(certificate, bytes)
-    util.check_args(proof, bytes)
+    check_args(did, str)
+    check_args(certificate, bytes)
+    check_args(proof, bytes)
 
     # TO DO 
     '''
@@ -32,7 +32,7 @@ def eidas_get_service_endpoint_struct(storage_endpoint) -> str:
     Receives a service endpoint where it is stored the issuer's 
     eIDAS and DID linking information and returns the correspondent JSON
     """
-    util.check_args(storage_endpoint, str)
+    check_args(storage_endpoint, str)
 
      # TO DO 
     '''
@@ -48,7 +48,7 @@ def eidas_sign_credential(json_credential) -> str:
     Trusted Service Provider and adds the corresponde response to the 
     received credential JSON structure.
     """
-    util.check_args(json_credential, str)
+    check_args(json_credential, str)
 
      # TO DO 
     '''
@@ -64,7 +64,7 @@ def eidas_verify_credential(json_credential) -> str:
     at the moment of issuing the passed credential.
     Returns: VALID or NOT VALID
     """
-    util.check_args(json_credential, str)
+    check_args(json_credential, str)
 
      # TO DO 
     '''

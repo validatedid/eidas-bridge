@@ -1,6 +1,7 @@
 # test_eidas_bridge.py
 
-import eidas_bridge
+from eidas_bridge.eidas_bridge import eidas_link_did, \
+    eidas_get_service_endpoint_struct, eidas_sign_credential, eidas_verify_credential
 import pytest
 
 dids = [
@@ -55,41 +56,41 @@ bad_type_credentials = [
 @pytest.mark.parametrize("proof", bad_type_proofs)
 def test_eidas_link_did_bad_types(did, certificate, proof):
     with pytest.raises(TypeError):
-        eidas_bridge.eidas_link_did(did, certificate, proof)
+        eidas_link_did(did, certificate, proof)
 
 @pytest.mark.parametrize("did", dids)
 @pytest.mark.parametrize("certificate", certificates)
 @pytest.mark.parametrize("proof", proofs)
 def test_eidas_link_did(did, certificate, proof):
-    result =  eidas_bridge.eidas_link_did(did, certificate, proof)
+    result =  eidas_link_did(did, certificate, proof)
     assert result == ""
 
 @pytest.mark.parametrize("storage_endpoint", bad_type_endpoints)
 def test_eidas_get_service_endpoint_struct_bad_types(storage_endpoint):
     with pytest.raises(TypeError):
-        eidas_bridge.eidas_get_service_endpoint_struct(storage_endpoint)
+        eidas_get_service_endpoint_struct(storage_endpoint)
 
 @pytest.mark.parametrize("storage_endpoint", endpoints)
 def test_eidas_get_service_endpoint_struct(storage_endpoint):
-    result = eidas_bridge.eidas_get_service_endpoint_struct(storage_endpoint)
+    result = eidas_get_service_endpoint_struct(storage_endpoint)
     assert result == ""
 
 @pytest.mark.parametrize("credential", bad_type_credentials)
 def test_eidas_sign_credential_bad_types(credential):
     with pytest.raises(TypeError):
-        eidas_bridge.eidas_sign_credential(credential)
+        eidas_sign_credential(credential)
 
 @pytest.mark.parametrize("credential", credentials)
 def test_eidas_sign_credential(credential):
-    result = eidas_bridge.eidas_sign_credential(credential)
+    result = eidas_sign_credential(credential)
     assert result == ""
 
 @pytest.mark.parametrize("credential", bad_type_credentials)
 def test_eidas_verify_credential_bad_types(credential):
     with pytest.raises(TypeError):
-        eidas_bridge.eidas_verify_credential(credential)
+        eidas_verify_credential(credential)
 
 @pytest.mark.parametrize("credential", credentials)
 def test_eidas_verify_credential(credential):
-    result = eidas_bridge.eidas_verify_credential(credential)
+    result = eidas_verify_credential(credential)
     assert result == "NOT VALID"
