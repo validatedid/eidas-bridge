@@ -11,6 +11,11 @@ Quick Start Guide
 #### Requirements
 
 - Python 3.6 or higher
+- `libsodium` version 1.0.15 or higher
+  - For Python use `pysodium`:
+    ```sh
+    $ pip install pysodium
+    ```
 
 #### Running the included demo
 
