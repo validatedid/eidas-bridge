@@ -2,6 +2,7 @@
 """ Represents an eIDAS Link structure """
 
 from utils.util import check_args, bytes_to_b58
+from utils.crypto import eidas_hash_str
 import json
 
 class EIDASProofException(Exception):
@@ -29,14 +30,19 @@ class EIDASLink():
         """
         # TO DO 
         # check signature
-        # result_proof = _check_signature()
-        result_proof = self._proof
-        if self._proof != result_proof:
+        """ SHA256 hash of a DID """
+        did_hashed = eidas_hash_str(self._did)
+
+        """ verify proof with pubkey """
+        cert_pub_key = self._get_public_key()
+        # verified = verify(proof, cert_pub_key, did_hashed)
+        verified = True
+        if not verified:
             raise EIDASProofException("Proof does not correspond to the certificate signed DID")
 
 
 
-    def get_public_key(self) -> bytes:
+    def _get_public_key(self) -> bytes:
         """ Returns the certificate public key in bytes format """
 
         # TODO
