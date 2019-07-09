@@ -3,7 +3,7 @@
 
 from utils.util import check_args, bytes_to_b58
 from utils.crypto import eidas_hash_str, get_public_key_from_x509cert_obj, \
-    x509_get_certificate_from_obj_str
+    x509_get_certificate_from_obj_str, x509_load_certificate_from_data_bytes
 import json
 
 class EIDASProofException(Exception):
@@ -18,7 +18,7 @@ class EIDASLink():
         check_args(proof, bytes)
 
         self._did = did
-        self._x509cert = x509cert
+        self._x509cert = x509_load_certificate_from_data_bytes(x509cert)
         self._proof = proof
         """ check signarure proof before finishing the object creation """
         self._check_proof()
@@ -63,8 +63,10 @@ class EIDASLink():
             dict representation of current EIDASLink
 
         """
+        _cert = x509_get_certificate_from_obj_str(self._x509cert)
+        
         return {
             "did": self._did,
-            "certificate": x509_get_certificate_from_obj_str(self._x509cert),
+            "certificate": "{}".format(_cert.decode()),
             "proof": bytes_to_b58(self._proof)
         }

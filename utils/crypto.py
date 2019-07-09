@@ -172,9 +172,13 @@ def rsa_load_private_key_from_data(pem_data, input_password) -> bytes:
         backend=default_backend()
     )
 
-def x509_load_certificate_from_data(pem_data) -> bytes:
-    """ loads a x509 certificate object from a PEM x509 certificate data """
+def x509_load_certificate_from_data_bytes(pem_data) -> bytes:
+    """ loads a x509 certificate object from a PEM x509 certificate data already encoded """
     return x509.load_pem_x509_certificate(pem_data, default_backend())
+
+def x509_load_certificate_from_data_str(pem_data) -> bytes:
+    """ loads a x509 certificate object from a PEM x509 certificate data in string format"""
+    return x509.load_pem_x509_certificate(str(pem_data).encode("utf-8"), default_backend())
 
 def x509_load_certificate_from_file(path_to_cert_file) -> bytes:
     """ loads a x509 certificate object from a PEM x509 certificate file """
