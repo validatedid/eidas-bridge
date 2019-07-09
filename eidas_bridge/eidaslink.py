@@ -2,7 +2,8 @@
 """ Represents an eIDAS Link structure """
 
 from utils.util import check_args, bytes_to_b58
-from utils.crypto import eidas_hash_str
+from utils.crypto import eidas_hash_str, get_public_key_from_x509cert_obj, \
+    x509_get_certificate_from_obj_str
 import json
 
 class EIDASProofException(Exception):
@@ -11,13 +12,13 @@ class EIDASProofException(Exception):
 class EIDASLink():
     """ Represents an eIDAS Link structure """
 
-    def __init__(self, did, certificate, proof):
+    def __init__(self, did, x509cert, proof):
         check_args(did, str)
-        check_args(certificate, bytes)
+        check_args(x509cert, bytes)
         check_args(proof, bytes)
 
         self._did = did
-        self._certificate = certificate
+        self._x509cert = x509cert
         self._proof = proof
         """ check signarure proof before finishing the object creation """
         self._check_proof()
@@ -34,21 +35,15 @@ class EIDASLink():
         did_hashed = eidas_hash_str(self._did)
 
         """ verify proof with pubkey """
-        cert_pub_key = self._get_public_key()
+        rsa_pub_key = self._get_public_key()
         # verified = verify(proof, cert_pub_key, did_hashed)
         verified = True
         if not verified:
             raise EIDASProofException("Proof does not correspond to the certificate signed DID")
 
-
-
     def _get_public_key(self) -> bytes:
-        """ Returns the certificate public key in bytes format """
-
-        # TODO
-        """ extract the public key of the certificate """
-        # dummy bytes
-        return b"\xd6\x98\x04\x88\xd2-\xc1D\x02\x15\xc9Z\x9bK \x8f\xe0\x8b5\xd0Z$"
+        """ Returns the x509 certificate public key """
+        return get_public_key_from_x509cert_obj(self._x509cert)
 
     def to_json(self) -> str:
         """
@@ -70,6 +65,6 @@ class EIDASLink():
         """
         return {
             "did": self._did,
-            "certificate": bytes_to_b58(self._certificate),
+            "certificate": x509_get_certificate_from_obj_str(self._x509cert),
             "proof": bytes_to_b58(self._proof)
         }
