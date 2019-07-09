@@ -30,3 +30,6 @@ def b58_to_bytes(val: str) -> bytes:
 def bytes_to_b58(val: bytes) -> str:
     """Convert a byte string to base 58."""
     return base58.b58encode(val).decode("ascii")
+
+def print_object(input_obj):
+    print("{}".format(input_obj.decode()))
