@@ -1,6 +1,6 @@
 # test_crypto.py
 
-from utils.crypto import eidas_hash_str
+from utils.crypto import eidas_hash_str, eidas_crypto_hash_str
 import pytest
 
 testdata = [
@@ -17,3 +17,7 @@ testdata = [
 @pytest.mark.parametrize("did, expected", testdata)
 def test_eidas_hash_str(did, expected):
     assert eidas_hash_str(did) == expected
+
+@pytest.mark.parametrize("did, expected", testdata)
+def test_eidas_crypto_hash_str(did, expected):
+    assert eidas_crypto_hash_str(did) == expected

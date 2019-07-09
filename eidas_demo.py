@@ -3,7 +3,8 @@ from eidas_bridge.eidas_bridge import eidas_link_did, \
 from utils.crypto import eidas_hash_byte, eidas_hash_str, eidas_hash_hex,  \
     create_selfsigned_x509_certificate, store_rsa_key_and_x509cert_to_disk, \
     get_public_key_from_rsakey_str, x509_get_certificate_from_obj_str, \
-    print_rsa_key, print_x509cert
+    print_rsa_key, print_x509cert, eidas_crypto_hash_byte, eidas_crypto_hash_str, \
+    eidas_crypto_hash_hex
 
 _rsa_private_key_pem = "\
     -----BEGIN RSA PRIVATE KEY-----\
@@ -100,6 +101,9 @@ def basic_demo():
 
     print("\n--- END EIDAS DEMO ---")
 
+""""""""""""""""""
+""" HASH TESTS """
+""""""""""""""""""
 def hash_byte(did):
     print("Input data BYTES:\t" + did.hex())
     print("Output data BYTES:\t" + eidas_hash_byte(did) + "\n")
@@ -111,6 +115,18 @@ def hash_str(did):
 def hash_hex(did):
     print("Input data HEX STR:\t" + did)
     print("Output data HEX STR:\t" + eidas_hash_hex(did) + "\n")
+
+def crypto_hash_byte(did):
+    print("Input data BYTES:\t" + did.hex())
+    print("Output data BYTES:\t" + eidas_crypto_hash_byte(did) + "\n")
+
+def crypto_hash_str(did):
+    print("Input data STR:\t\t" + did)
+    print("Output data STR:\t" + eidas_crypto_hash_str(did) + "\n")
+
+def crypto_hash_hex(did):
+    print("Input data HEX STR:\t" + did)
+    print("Output data HEX STR:\t" + eidas_crypto_hash_hex(did) + "\n")
 
 def test_suite_hash():
     hash_byte(b'PI')
@@ -125,7 +141,22 @@ def test_suite_hash():
     hash_str("did:test:abcdefghijkl")
     hash_hex('fffe00005000000049000000')
 
-""" RSA CRYPTO TEST SUITE """
+def test_suite_crypto_hash():
+    crypto_hash_byte(b'PI')
+    crypto_hash_str("PI")
+    crypto_hash_str("")
+    crypto_hash_str(" ")
+    crypto_hash_str("a")
+    crypto_hash_str("0")
+    crypto_hash_str("did:sov:")
+    crypto_hash_str("55GkHamhTU1ZbTbV2ab9DE")
+    crypto_hash_str("did:sov:55GkHamhTU1ZbTbV2ab9DE")
+    crypto_hash_str("did:test:abcdefghijkl")
+    crypto_hash_hex('fffe00005000000049000000')
+
+""""""""""""""""""""""""""""""
+""" RSA CRYPTO TEST SUITE  """
+""""""""""""""""""""""""""""""
 def test_generate_x509cert_and_key_and_store_to_disk(path_to_file):
     # create rsa key and x509 certificate
     rsa_key, x509cert = create_selfsigned_x509_certificate(2048, u'ES', u'TEST_STATE',
@@ -141,8 +172,11 @@ def test_generate_x509cert_and_key_and_store_to_disk(path_to_file):
     print ("\nX509 CERTIFICATE: \n")
     print_x509cert(x509cert)
 
-
+""""""""""""
+""" MAIN """
+""""""""""""
 if __name__ == '__main__':
     #basic_demo()
-    #test_suite_hash()
-    test_generate_x509cert_and_key_and_store_to_disk("./tests/data/tmp/")
+    test_suite_hash()
+    test_suite_crypto_hash()
+    #test_generate_x509cert_and_key_and_store_to_disk("./tests/data/tmp/")

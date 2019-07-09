@@ -14,19 +14,38 @@ from .util import print_object
 class RSAKeySizeException(Exception):
     """Error raised when key length is not 2048 or 4096."""
 
+""""""""""""""""""""""""
+""" HASHES FUNCTIONS """
+""""""""""""""""""""""""
 def eidas_hash_byte(b_data: bytes) -> str:
     """ Generates a 256-hash hex string from bytes """
     return pysodium.crypto_hash_sha256(b_data).hex()
 
 def eidas_hash_str(str_data: str) -> str:
-    """ Generates a 256-hash hex string from a given text string  """
+    """ Generates a 256-hash hex string from a given text string (using libsodium) """
     return eidas_hash_byte(str_data.encode('utf8'))
 
 def eidas_hash_hex(hex_data: str) -> str:
     """ Generates a 256-hash hex string from a given hex string data """
     return eidas_hash_byte(bytes.fromhex(hex_data))
 
+def eidas_crypto_hash_byte(b_data: bytes) -> str:
+    """ Generates a 256-hash hex string from bytes (using cryptography module) """
+    digest = hashes.Hash(hashes.SHA256(), backend=default_backend())
+    digest.update(b_data)
+    return digest.finalize().hex()
 
+def eidas_crypto_hash_str(str_data: str) -> str:
+    """ Generates a 256-hash hex string from a given text string (using cryptography module) """
+    return eidas_crypto_hash_byte(str_data.encode('utf8'))
+
+def eidas_crypto_hash_hex(hex_data: str) -> str:
+    """ Generates a 256-hash hex string from a given hex string data (using cryptography module) """
+    return eidas_crypto_hash_byte(bytes.fromhex(hex_data))
+
+""""""""""""""""""""""""""""""
+"""  RSA & X509 FUNCTIONS  """
+""""""""""""""""""""""""""""""
 def _rsa_generate_key(key_size) -> bytes:
     """ Generate a RSA key """
     if key_size != 2048 and key_size != 4096:
