@@ -1,7 +1,6 @@
 from eidas_bridge.eidas_bridge import eidas_link_did, \
     eidas_get_service_endpoint_struct, eidas_sign_credential, eidas_verify_credential
-from utils.crypto import eidas_hash_byte, eidas_hash_str, eidas_hash_hex,  \
-    create_selfsigned_x509_certificate, store_rsa_key_and_x509cert_to_disk, \
+from utils.crypto import create_selfsigned_x509_certificate, store_rsa_key_and_x509cert_to_disk, \
     get_public_key_from_rsakey_str, x509_get_certificate_from_obj_str, \
     print_rsa_key, print_x509cert, eidas_crypto_hash_byte, eidas_crypto_hash_str, \
     eidas_crypto_hash_hex
@@ -28,18 +27,6 @@ def basic_demo():
 """"""""""""""""""
 """ HASH TESTS """
 """"""""""""""""""
-def hash_byte(did):
-    print("Input data BYTES:\t" + did.hex())
-    print("Output data BYTES:\t" + eidas_hash_byte(did) + "\n")
-
-def hash_str(did):
-    print("Input data STR:\t\t" + did)
-    print("Output data STR:\t" + eidas_hash_str(did) + "\n")
-
-def hash_hex(did):
-    print("Input data HEX STR:\t" + did)
-    print("Output data HEX STR:\t" + eidas_hash_hex(did) + "\n")
-
 def crypto_hash_byte(did):
     print("Input data BYTES:\t" + did.hex())
     print("Output data BYTES:\t" + eidas_crypto_hash_byte(did) + "\n")
@@ -51,19 +38,6 @@ def crypto_hash_str(did):
 def crypto_hash_hex(did):
     print("Input data HEX STR:\t" + did)
     print("Output data HEX STR:\t" + eidas_crypto_hash_hex(did) + "\n")
-
-def test_suite_hash():
-    hash_byte(b'PI')
-    hash_str("PI")
-    hash_str("")
-    hash_str(" ")
-    hash_str("a")
-    hash_str("0")
-    hash_str("did:sov:")
-    hash_str("55GkHamhTU1ZbTbV2ab9DE")
-    hash_str("did:sov:55GkHamhTU1ZbTbV2ab9DE")
-    hash_str("did:test:abcdefghijkl")
-    hash_hex('fffe00005000000049000000')
 
 def test_suite_crypto_hash():
     crypto_hash_byte(b'PI')
@@ -101,6 +75,5 @@ def test_generate_x509cert_and_key_and_store_to_disk(path_to_file):
 """"""""""""
 if __name__ == '__main__':
     basic_demo()
-    #test_suite_hash()
     #test_suite_crypto_hash()
     #test_generate_x509cert_and_key_and_store_to_disk("./tests/data/tmp/")

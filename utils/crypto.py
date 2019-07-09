@@ -1,7 +1,6 @@
 """Cryptography and X509 certificate functions used by eIDAS Bridge."""
 
 import datetime
-import pysodium
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives.asymmetric import rsa
@@ -17,18 +16,6 @@ class RSAKeySizeException(Exception):
 """"""""""""""""""""""""
 """ HASHES FUNCTIONS """
 """"""""""""""""""""""""
-def eidas_hash_byte(b_data: bytes) -> str:
-    """ Generates a 256-hash hex string from bytes """
-    return pysodium.crypto_hash_sha256(b_data).hex()
-
-def eidas_hash_str(str_data: str) -> str:
-    """ Generates a 256-hash hex string from a given text string (using libsodium) """
-    return eidas_hash_byte(str_data.encode('utf8'))
-
-def eidas_hash_hex(hex_data: str) -> str:
-    """ Generates a 256-hash hex string from a given hex string data """
-    return eidas_hash_byte(bytes.fromhex(hex_data))
-
 def eidas_crypto_hash_byte(b_data: bytes) -> str:
     """ Generates a 256-hash hex string from bytes (using cryptography module) """
     digest = hashes.Hash(hashes.SHA256(), backend=default_backend())

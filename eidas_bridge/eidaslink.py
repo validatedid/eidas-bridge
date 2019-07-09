@@ -2,7 +2,7 @@
 """ Represents an eIDAS Link structure """
 
 from utils.util import check_args, bytes_to_b58
-from utils.crypto import eidas_hash_str, get_public_key_from_x509cert_obj, \
+from utils.crypto import eidas_crypto_hash_str, get_public_key_from_x509cert_obj, \
     x509_get_certificate_from_obj_str, x509_load_certificate_from_data_bytes
 import json
 
@@ -32,7 +32,7 @@ class EIDASLink():
         # TO DO 
         # check signature
         """ SHA256 hash of a DID """
-        did_hashed = eidas_hash_str(self._did)
+        did_hashed = eidas_crypto_hash_str(self._did)
 
         """ verify proof with pubkey """
         rsa_pub_key = self._get_public_key()
