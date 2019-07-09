@@ -11,10 +11,15 @@ Quick Start Guide
 #### Requirements
 
 - Python 3.6 or higher
-- `libsodium` version 1.0.15 or higher
-  - For Python use `pysodium`:
+- `libsodium` version 1.0.15 or higher (it supports only ED25519 keys, and that is why Hyperledger uses it)
+  - In python use `pysodium`:
     ```sh
     $ pip install pysodium
+    ```
+- Cryptograhic libraries with RSA support and X509 capabilities
+  - In python use `cryptography`, an easy-to-use library that contains the required crypto & x509 functions:
+   ```sh
+    $ pip install cryptography
     ```
 
 #### Running the included demo
