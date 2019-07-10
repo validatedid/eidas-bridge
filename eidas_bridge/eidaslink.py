@@ -3,7 +3,7 @@
 
 from utils.util import check_args, bytes_to_b58
 from utils.crypto import eidas_crypto_hash_str, get_public_key_from_x509cert_obj, \
-    x509_get_certificate_from_obj_str, x509_load_certificate_from_data_bytes
+    x509_load_certificate_from_data_bytes, rsa_verify_pss, x509_get_PEM_certificate_from_obj
 import json
 
 class EIDASProofException(Exception):
@@ -27,20 +27,10 @@ class EIDASLink():
         """ checks that the proof really corresponds to the signed hash of the DID 
         passed as argument, signed with the certificate private key 
         
-        Raise EIDASProofException
+        Raise EIDASProofException (at the moment InvalidSignature)
         """
-        # TO DO 
-        # check signature
-        """ SHA256 hash of a DID """
-        did_hashed = eidas_crypto_hash_str(self._did)
-
-        """ verify proof with pubkey """
-        rsa_pub_key = self._get_public_key()
-        # verified = verify(proof, cert_pub_key, did_hashed)
-        verified = True
-        if not verified:
-            raise EIDASProofException("Proof does not correspond to the certificate signed DID")
-
+        rsa_verify_pss(self._proof, self._did.encode('utf-8'), self._get_public_key())
+        
     def _get_public_key(self) -> bytes:
         """ Returns the x509 certificate public key """
         return get_public_key_from_x509cert_obj(self._x509cert)
@@ -63,7 +53,7 @@ class EIDASLink():
             dict representation of current EIDASLink
 
         """
-        _cert = x509_get_certificate_from_obj_str(self._x509cert)
+        _cert = x509_get_PEM_certificate_from_obj(self._x509cert)
         
         return {
             "did": self._did,

@@ -7,6 +7,7 @@ from cryptography.hazmat.primitives.asymmetric import rsa
 from cryptography import x509
 from cryptography.x509.oid import NameOID
 from cryptography.hazmat.primitives import hashes
+from cryptography.hazmat.primitives.asymmetric import padding
 from .util import print_object
 
 
@@ -14,7 +15,7 @@ class RSAKeySizeException(Exception):
     """Error raised when key length is not 2048 or 4096."""
 
 """"""""""""""""""""""""
-""" HASHES FUNCTIONS """
+""" HASH FUNCTIONS """
 """"""""""""""""""""""""
 def eidas_crypto_hash_byte(b_data: bytes) -> str:
     """ Generates a 256-hash hex string from bytes (using cryptography module) """
@@ -42,15 +43,6 @@ def _rsa_generate_key(key_size) -> bytes:
         key_size=key_size,
         backend=default_backend()
     )
-
-def _rsa_store_key_to_disk(rsa_key, pem_key_file):
-    # Write our key to disk for safe keeping
-    with open(pem_key_file, "wb") as f:
-        f.write(rsa_key.private_bytes(
-            encoding=serialization.Encoding.PEM,
-            format=serialization.PrivateFormat.TraditionalOpenSSL,
-            encryption_algorithm=serialization.BestAvailableEncryption(b"passphrase"),
-        ))
 
 def _generate_x509_certificate(rsa_key, 
     cert_iss_country, cert_iss_state, cert_iss_locality, cert_iss_org, cert_iss_common, 
@@ -85,11 +77,6 @@ def _generate_x509_certificate(rsa_key,
     # Sign our certificate with our private key
     ).sign(rsa_key, hashes.SHA256(), default_backend())
 
-def _x509_store_certificate_to_disk(x509cert, pem_cert_file):
-    # Write our certificate out to disk.
-    with open(pem_cert_file, "wb") as f:
-        f.write(x509cert.public_bytes(serialization.Encoding.PEM))
-
 def create_selfsigned_x509_certificate(key_size,
     cert_iss_country, cert_iss_state, cert_iss_locality, cert_iss_org, cert_iss_common, 
     cert_valid_days) -> (bytes, bytes):
@@ -111,21 +98,19 @@ def create_selfsigned_x509_certificate(key_size,
 
     return rsa_key, x509Cert
 
-def store_rsa_key_and_x509cert_to_disk(rsa_key, rsa_key_pem_file, x509cert, x509cert_pem_file):
-    _rsa_store_key_to_disk(rsa_key, rsa_key_pem_file)
+def store_rsa_key_and_x509cert_to_disk(rsa_key, rsa_key_pem_file, input_password,
+    x509cert, x509cert_pem_file):
+    _rsa_store_key_to_disk(rsa_key, rsa_key_pem_file, input_password)
     _x509_store_certificate_to_disk(x509cert, x509cert_pem_file)
 
-def get_public_key_from_rsakey_str(rsa_key) -> str:
-    """ returns a string containing a RSA public key in PEM format """
-    public_key = rsa_key.public_key()
-    return public_key.public_bytes(
-        encoding=serialization.Encoding.PEM,
-        format=serialization.PublicFormat.SubjectPublicKeyInfo
-    )
-
-def get_public_key_from_x509cert_obj(x509cert) -> bytes:
-    """ returns a RSA public key object from a x509 certificate object """
-    return x509cert.public_key()
+def _rsa_store_key_to_disk(rsa_key, pem_key_file, input_password):
+    # Write our key to disk for safe keeping
+    with open(pem_key_file, "wb") as f:
+        f.write(rsa_key.private_bytes(
+            encoding=serialization.Encoding.PEM,
+            format=serialization.PrivateFormat.TraditionalOpenSSL,
+            encryption_algorithm=serialization.BestAvailableEncryption(input_password),
+        ))
 
 def get_private_key_from_rsakey_str(rsa_key, input_password) -> str:
     """ returns a string containing a RSA private key in PEM format """
@@ -144,20 +129,42 @@ def rsa_load_private_key_from_file(path_to_key_file, input_password) -> bytes:
             backend=default_backend()
         )
 
-def rsa_load_public_key_from_data(pem_data) -> bytes:
-    """ loads a RSA public key object from a PEM public key data string """
-    return serialization.load_pem_public_key(
-        data=pem_data,
-        backend=default_backend
-    )
-
 def rsa_load_private_key_from_data(pem_data, input_password) -> bytes:
-    """ loads a RSA private key object from a PEM public key data string """
+    """ loads a RSA private key object from a PEM data bytes """
     return serialization.load_pem_private_key(
         data=pem_data,
         password=input_password,
         backend=default_backend()
     )
+
+def get_public_key_from_rsakey_str(rsa_key) -> str:
+    """ returns a string containing a RSA public key in PEM format """
+    public_key = rsa_key.public_key()
+    return public_key.public_bytes(
+        encoding=serialization.Encoding.PEM,
+        format=serialization.PublicFormat.SubjectPublicKeyInfo
+    )
+
+def get_public_key_from_x509cert_obj(x509cert) -> bytes:
+    """ returns a RSA public key object from a x509 certificate object """
+    return x509cert.public_key()
+
+def rsa_load_public_key_from_data(pem_data) -> bytes:
+    """ loads a RSA public key object from a PEM public key data bytes """
+    return serialization.load_pem_public_key(
+        data=pem_data,
+        backend=default_backend
+    )
+
+def _x509_store_certificate_to_disk(x509cert, pem_cert_file):
+    # Write our certificate out to disk.
+    with open(pem_cert_file, "wb") as f:
+        f.write(x509cert.public_bytes(serialization.Encoding.PEM))
+
+def x509_load_certificate_from_file(path_to_cert_file) -> bytes:
+    """ loads a x509 certificate object from a PEM x509 certificate file """
+    with open(path_to_cert_file, "rb") as key_file:
+        return x509.load_pem_x509_certificate(key_file.read(), default_backend())
 
 def x509_load_certificate_from_data_bytes(pem_data) -> bytes:
     """ loads a x509 certificate object from a PEM x509 certificate data already encoded """
@@ -167,12 +174,7 @@ def x509_load_certificate_from_data_str(pem_data) -> bytes:
     """ loads a x509 certificate object from a PEM x509 certificate data in string format"""
     return x509.load_pem_x509_certificate(str(pem_data).encode("utf-8"), default_backend())
 
-def x509_load_certificate_from_file(path_to_cert_file) -> bytes:
-    """ loads a x509 certificate object from a PEM x509 certificate file """
-    with open(path_to_cert_file, "rb") as key_file:
-        return x509.load_pem_x509_certificate(key_file.read(), default_backend())
-
-def x509_get_certificate_from_obj_str(x509cert) -> str:
+def x509_get_PEM_certificate_from_obj(x509cert) -> bytes:
     """ returns a PEM string with a x509 certificate """
     return x509cert.public_bytes(serialization.Encoding.PEM)
 
@@ -181,5 +183,30 @@ def print_rsa_key(rsa_key):
     print_object(get_public_key_from_rsakey_str(rsa_key))
 
 def print_x509cert(x509cert):
-    print_object(x509_get_certificate_from_obj_str(x509cert))
-    
+    print_object(x509_get_PEM_certificate_from_obj(x509cert))
+
+""""""""""""""""""""""""""""""""
+""" SIGN & VERIFY FUNCTIONS """
+""""""""""""""""""""""""""""""""
+def rsa_sign_pss(message, rsa_priv_key) -> bytes:
+    return rsa_priv_key.sign(
+        message,
+        padding.PSS(
+            mgf=padding.MGF1(hashes.SHA256()),
+            salt_length=padding.PSS.MAX_LENGTH
+        ),
+        hashes.SHA256()
+    )
+
+def rsa_verify_pss(signature, message, rsa_pub_key):
+    return rsa_pub_key.verify(
+        signature,
+        message,
+        padding.PSS(
+            mgf=padding.MGF1(hashes.SHA256()),
+            salt_length=padding.PSS.MAX_LENGTH
+        ),
+        hashes.SHA256()
+    )
+
+

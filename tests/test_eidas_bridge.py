@@ -5,7 +5,6 @@ import json
 from eidas_bridge.eidas_bridge import eidas_link_did, \
     eidas_get_service_endpoint_struct, eidas_sign_credential, eidas_verify_credential
 from utils.util import bytes_to_b58
-from utils.crypto import x509_get_certificate_from_obj_str
 from tests.data.common_data import all_type_dids, all_type_certificates, bad_type_proofs, \
     dids, x509certs, proofs, bad_type_endpoints, endpoints, bad_type_credentials, credentials
 
