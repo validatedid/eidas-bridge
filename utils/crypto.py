@@ -183,8 +183,14 @@ def x509_get_PEM_certificate_from_obj(x509cert) -> bytes:
     return x509cert.public_bytes(serialization.Encoding.PEM)
 
 """ Nice stdout printing RSA key and x509 certificate """
-def print_rsa_key(rsa_key):
-    print_object(get_public_key_from_rsakey_str(rsa_key))
+def print_rsa_priv_key(rsa_key, input_password):
+    print_object(
+        rsa_key.private_bytes(
+            encoding=serialization.Encoding.PEM,
+            format=serialization.PrivateFormat.PKCS8,
+            encryption_algorithm=serialization.BestAvailableEncryption(input_password)
+        )
+    )
 
 def print_rsa_pub_key(rsa_pub_key):
     print_object(
