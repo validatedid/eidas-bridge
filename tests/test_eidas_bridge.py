@@ -19,7 +19,7 @@ def test_eidas_link_did_bad_types(did, certificate, proof):
 @pytest.mark.parametrize("x509cert", x509certs)
 @pytest.mark.parametrize("proof", proofs)
 def test_eidas_link_did(did, x509cert, proof):
-    assert eidas_link_did(did, x509cert, proof) == _to_json(did, x509cert, proof)
+    assert eidas_link_did(did, x509cert, bytes.fromhex(proof)) == _to_json(did, x509cert, bytes.fromhex(proof))
 
 @pytest.mark.parametrize("storage_endpoint", bad_type_endpoints)
 def test_eidas_get_service_endpoint_struct_bad_types(storage_endpoint):
@@ -72,5 +72,5 @@ def _serialize(did, x509cert, proof) -> str:
     return {
         "did": did,
         "certificate": "{}".format(x509cert.decode()),
-        "proof": bytes_to_b58(proof)
+        "proof": proof.hex()
     }

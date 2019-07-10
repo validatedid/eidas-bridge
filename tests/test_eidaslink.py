@@ -17,7 +17,7 @@ def test_EIDASLINK_class_bad_types(did, certificate, proof):
 @pytest.mark.parametrize("x509cert", x509certs)
 @pytest.mark.parametrize("proof", proofs)
 def test_EIDASLINK_class(did, x509cert, proof):
-    eidas_link = EIDASLink(did, x509cert, proof)
+    eidas_link = EIDASLink(did, x509cert, bytes.fromhex(proof))
     assert eidas_link._did == did
     assert eidas_link._x509cert == x509_load_certificate_from_data_bytes(x509cert)
-    assert eidas_link._proof == proof
+    assert eidas_link._proof == bytes.fromhex(proof)

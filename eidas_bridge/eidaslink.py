@@ -58,5 +58,5 @@ class EIDASLink():
         return {
             "did": self._did,
             "certificate": "{}".format(_cert.decode()),
-            "proof": bytes_to_b58(self._proof)
+            "proof": self._proof.hex()
         }

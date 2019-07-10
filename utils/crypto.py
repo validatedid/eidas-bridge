@@ -4,6 +4,7 @@ import datetime
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives.asymmetric import rsa
+from cryptography.exceptions import InvalidSignature
 from cryptography import x509
 from cryptography.x509.oid import NameOID
 from cryptography.hazmat.primitives import hashes
@@ -13,6 +14,9 @@ from .util import print_object
 
 class RSAKeySizeException(Exception):
     """Error raised when key length is not 2048 or 4096."""
+
+class InvalidSignatureException(Exception):
+    """Error raised when the signature is not valid """
 
 """"""""""""""""""""""""
 """ HASH FUNCTIONS """
@@ -182,6 +186,14 @@ def x509_get_PEM_certificate_from_obj(x509cert) -> bytes:
 def print_rsa_key(rsa_key):
     print_object(get_public_key_from_rsakey_str(rsa_key))
 
+def print_rsa_pub_key(rsa_pub_key):
+    print_object(
+        rsa_pub_key.public_bytes(
+            encoding=serialization.Encoding.PEM,
+            format=serialization.PublicFormat.SubjectPublicKeyInfo
+        )
+    )
+
 def print_x509cert(x509cert):
     print_object(x509_get_PEM_certificate_from_obj(x509cert))
 
@@ -199,14 +211,17 @@ def rsa_sign_pss(message, rsa_priv_key) -> bytes:
     )
 
 def rsa_verify_pss(signature, message, rsa_pub_key):
-    return rsa_pub_key.verify(
-        signature,
-        message,
-        padding.PSS(
-            mgf=padding.MGF1(hashes.SHA256()),
-            salt_length=padding.PSS.MAX_LENGTH
-        ),
-        hashes.SHA256()
-    )
+    try:
+        return rsa_pub_key.verify(
+            signature,
+            message,
+            padding.PSS(
+                mgf=padding.MGF1(hashes.SHA256()),
+                salt_length=padding.PSS.MAX_LENGTH
+            ),
+            hashes.SHA256()
+        )
+    except InvalidSignature:
+        raise InvalidSignatureException(InvalidSignature)
 
 
