@@ -48,7 +48,7 @@ $ python eidas_demo.py
 ##### Test execution
 
 ```sh
-$ pytest tests/test_eidas_bridge.py
+$ pytest
 ```
 
 eIDAS API calls
