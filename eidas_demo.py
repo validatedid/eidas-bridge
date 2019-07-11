@@ -114,7 +114,7 @@ def test_sign_from_file_verify_from_cert_file(path_to_key_file, input_password,
     if bprint:
         _print_priv_key(rsa_priv_key, input_password)
 
-    #rsa signature with PSS padding
+    #rsa signature
     signature = rsa_sign(message.encode('utf-8'), rsa_priv_key, padding)
     if bprint:
         _print_signature(signature)
@@ -229,7 +229,7 @@ def _print_signature(signature):
 if __name__ == '__main__':
     #basic_demo()
     test_eidas_link_did("./tests/data/tmp/rsakey.pem", b"passphrase", 
-    "./tests/data/tmp/x509cert.pem", "did:sov:55GkHamhTU1ZbTbV2ab9DE", False, PKCS1v15_PADDING)
+    "./tests/data/tmp/x509cert.pem", "did:sov:55GkHamhTU1ZbTbV2ab9DE", False, PSS_PADDING) #PKCS1v15_PADDING)
     #test_suite_crypto_hash()
     """
     crypto_suite_test(

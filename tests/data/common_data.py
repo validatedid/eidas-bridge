@@ -106,6 +106,15 @@ bad_type_credentials = [
     0
 ] 
 
+bad_obj_type_paddings = [
+    b"\xd6\x98\x04\x88\xd2-\xc1D\x02\x15\xc9Z\x9bK \x8f\xe0\x8b5\xd0Z$",
+    0
+]
+
+bad_type_paddings = [
+    "new_padding"
+]
+
 crypto_testdata = [
     ("","e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"),
     (" ","36a9e7f1c95b82ffb99743e0c5c4ce95d83c9a430aac59f84ef3cbfab6145068"),

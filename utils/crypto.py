@@ -9,18 +9,25 @@ from cryptography import x509
 from cryptography.x509.oid import NameOID
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.asymmetric import padding
-from .util import print_object
+from .util import print_object, check_args
 
 """ PADDING CONSTANTS """
 PKCS1v15_PADDING = "PKCS1-v1_5"
 PSS_PADDING = "PSS"
-
 
 class RSAKeySizeException(Exception):
     """Error raised when key length is not 2048 or 4096."""
 
 class InvalidSignatureException(Exception):
     """Error raised when the signature is not valid """
+
+class InvalidPaddingException(Exception):
+    """ Error raised when the signature padding is neither PKCS#1 nor PSS """
+
+def check_args_padding(padding, typeObj):
+    check_args(padding, typeObj)
+    if padding != PKCS1v15_PADDING and padding != PSS_PADDING:
+        raise InvalidPaddingException("Invalid Padding format: only supported PKCS#1 and PSS")
 
 """"""""""""""""""""""""
 """ HASH FUNCTIONS """
@@ -157,6 +164,11 @@ def get_public_key_from_x509cert_obj(x509cert) -> bytes:
     """ returns a RSA public key object from a x509 certificate object """
     return x509cert.public_key()
 
+def get_public_key_from_x509cert_pem(x509_pem) -> bytes:
+    """ returns a RSA public key object from a x509 certificate in PEM format """
+    x509cert = x509_load_certificate_from_data_bytes(x509_pem)
+    return get_public_key_from_x509cert_obj(x509cert)
+
 def rsa_load_public_key_from_data(pem_data) -> bytes:
     """ loads a RSA public key object from a PEM public key data bytes """
     return serialization.load_pem_public_key(
@@ -211,11 +223,13 @@ def print_x509cert(x509cert):
 """ SIGN & VERIFY FUNCTIONS """
 """"""""""""""""""""""""""""""""
 
-def rsa_sign(message, rsa_priv_key, padding_type=PKCS1v15_PADDING):
+def rsa_sign(message, rsa_priv_key, padding_type):
     if padding_type == PSS_PADDING :
         return rsa_sign_pss(message, rsa_priv_key)
-    else:
+    elif padding_type == PKCS1v15_PADDING :
         return rsa_sign_pkcs1(message, rsa_priv_key)
+    else: 
+        raise InvalidPaddingException("Invalid Padding format: only supported PKCS#1 and PSS")
 
 def rsa_sign_pss(message, rsa_priv_key) -> bytes:
     return rsa_priv_key.sign(
@@ -234,11 +248,13 @@ def rsa_sign_pkcs1(message, rsa_priv_key) -> bytes:
         hashes.SHA256()
     )
 
-def rsa_verify(signature, message, rsa_pub_key, padding_type=PKCS1v15_PADDING):
+def rsa_verify(signature, message, rsa_pub_key, padding_type):
     if padding_type == PSS_PADDING :
         rsa_verify_pss(signature, message, rsa_pub_key)
-    else:
+    elif padding_type == PKCS1v15_PADDING :
         rsa_verify_pkcs1(signature, message, rsa_pub_key)
+    else:
+        raise InvalidPaddingException("Invalid Padding format: only supported PKCS#1 and PSS")
 
 def rsa_verify_pss(signature, message, rsa_pub_key):
     try:

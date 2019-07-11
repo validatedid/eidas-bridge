@@ -2,8 +2,7 @@
 """ Represents an eIDAS Link structure """
 
 from utils.util import check_args, timestamp
-from utils.crypto import eidas_crypto_hash_str, get_public_key_from_x509cert_obj, \
-    x509_load_certificate_from_data_bytes, rsa_verify, x509_get_PEM_certificate_from_obj
+from utils.crypto import rsa_verify, check_args_padding, get_public_key_from_x509cert_pem
 import json
 
 class EIDASProofException(Exception):
@@ -16,11 +15,12 @@ class EIDASLink():
         check_args(did, str)
         check_args(x509cert, bytes)
         check_args(proof, bytes)
+        check_args_padding(padding, str)
 
         self._did = did
-        self._x509cert = x509_load_certificate_from_data_bytes(x509cert)
+        self._x509cert = x509cert
         self._proof = proof
-        self._padding=padding
+        self._padding = padding
 
         """ check signarure proof before finishing the object creation """
         self._check_proof()
@@ -35,7 +35,7 @@ class EIDASLink():
         
     def _get_public_key(self) -> bytes:
         """ Returns the x509 certificate public key """
-        return get_public_key_from_x509cert_obj(self._x509cert)
+        return get_public_key_from_x509cert_pem(self._x509cert)
 
     def to_json(self) -> str:
         """
@@ -45,23 +45,20 @@ class EIDASLink():
             A JSON representation of this message
 
         """
-        return json.dumps(self.serialize(), indent=2)
+        return json.dumps(self._serialize(), indent=2)
 
-    def serialize(self) -> str:
+    def _serialize(self) -> str:
         """
         Dump current object to a JSON-compatible dictionary.
 
-        Returns:
+        Returns: 
             dict representation of current EIDASLink
-
         """
-        _cert = x509_get_PEM_certificate_from_obj(self._x509cert)
-        
         return {
             "type": "EidasLink",
             "created": timestamp(),
             "did": self._did,
-            "certificate": "{}".format(_cert.decode()),
+            "certificate": "{}".format(self._x509cert.decode()),
             "proof": {
                 "type": "RsaSignature2018",
                 "padding": self._padding,
