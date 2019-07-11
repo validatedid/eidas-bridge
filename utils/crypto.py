@@ -11,6 +11,10 @@ from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.asymmetric import padding
 from .util import print_object
 
+""" PADDING CONSTANTS """
+PKCS1v15_PADDING = "PKCS1-v1_5"
+PSS_PADDING = "PSS"
+
 
 class RSAKeySizeException(Exception):
     """Error raised when key length is not 2048 or 4096."""
@@ -206,6 +210,13 @@ def print_x509cert(x509cert):
 """"""""""""""""""""""""""""""""
 """ SIGN & VERIFY FUNCTIONS """
 """"""""""""""""""""""""""""""""
+
+def rsa_sign(message, rsa_priv_key, padding_type=PKCS1v15_PADDING):
+    if padding_type == PSS_PADDING :
+        return rsa_sign_pss(message, rsa_priv_key)
+    else:
+        return rsa_sign_pkcs1(message, rsa_priv_key)
+
 def rsa_sign_pss(message, rsa_priv_key) -> bytes:
     return rsa_priv_key.sign(
         message,
@@ -216,9 +227,22 @@ def rsa_sign_pss(message, rsa_priv_key) -> bytes:
         hashes.SHA256()
     )
 
+def rsa_sign_pkcs1(message, rsa_priv_key) -> bytes:
+    return rsa_priv_key.sign(
+        message,
+        padding.PKCS1v15(),
+        hashes.SHA256()
+    )
+
+def rsa_verify(signature, message, rsa_pub_key, padding_type=PKCS1v15_PADDING):
+    if padding_type == PSS_PADDING :
+        rsa_verify_pss(signature, message, rsa_pub_key)
+    else:
+        rsa_verify_pkcs1(signature, message, rsa_pub_key)
+
 def rsa_verify_pss(signature, message, rsa_pub_key):
     try:
-        return rsa_pub_key.verify(
+        rsa_pub_key.verify(
             signature,
             message,
             padding.PSS(
@@ -230,4 +254,14 @@ def rsa_verify_pss(signature, message, rsa_pub_key):
     except InvalidSignature:
         raise InvalidSignatureException(InvalidSignature)
 
+def rsa_verify_pkcs1(signature, message, rsa_pub_key):
+    try:
+        rsa_pub_key.verify(
+            signature,
+            message,
+            padding.PKCS1v15(),
+            hashes.SHA256()
+        )
+    except InvalidSignature:
+        raise InvalidSignatureException(InvalidSignature)
 
