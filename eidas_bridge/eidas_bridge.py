@@ -3,19 +3,21 @@
 """ EIDAS BRIDGE """
 
 from utils.util import check_args
+from utils.crypto import PSS_PADDING
 from .eidaslink import EIDASLink
 import json
 
-def eidas_link_did(did, certificate, proof) -> str:
+def eidas_link_did(did, certificate, proof, padding = PSS_PADDING) -> str:
     """ 
     Link the Issuer DID with eIDAS certificate
 
-    Receives a DID, an eIDAS certificate, and its proof of possession
+    Receives a DID, an eIDAS certificate, its proof of possession, and 
+    optionally the padding of the signature proof (accepts PKCS#1 and PSS)
     Returns the JSON that needs to be stored on the Agent public Storage
     (i.e: an Identity Hub)
     """
     
-    return EIDASLink(did, certificate, proof).to_json()
+    return EIDASLink(did, certificate, proof, padding).to_json()
 
 def eidas_get_service_endpoint_struct(storage_endpoint) -> str:
     """ 

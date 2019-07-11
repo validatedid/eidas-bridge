@@ -3,19 +3,16 @@
 
 from utils.util import check_args, bytes_to_b58
 from utils.crypto import eidas_crypto_hash_str, get_public_key_from_x509cert_obj, \
-    x509_load_certificate_from_data_bytes, rsa_verify, x509_get_PEM_certificate_from_obj, \
-    PKCS1v15_PADDING, PSS_PADDING
+    x509_load_certificate_from_data_bytes, rsa_verify, x509_get_PEM_certificate_from_obj
 import json
 
 class EIDASProofException(Exception):
     """Error raised when a proof does not match to the signed DID hash."""
 
 class EIDASLink():
-    """ Represents an eIDAS Link structure 
-        Padding PKCS1 by default
-    """
+    """ Represents an eIDAS Link structure """
 
-    def __init__(self, did, x509cert, proof, padding=PKCS1v15_PADDING):
+    def __init__(self, did, x509cert, proof, padding):
         check_args(did, str)
         check_args(x509cert, bytes)
         check_args(proof, bytes)

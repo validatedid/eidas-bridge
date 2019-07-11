@@ -32,20 +32,21 @@ def basic_demo():
     print("\n--- END EIDAS DEMO ---")
 
 def test_eidas_link_did(path_to_key_file, input_password, 
-    path_to_cert_file, did, padding):
+    path_to_cert_file, did, bprint, padding):
     #load key
     rsa_priv_key = rsa_load_private_key_from_file(path_to_key_file, input_password)
 
     #rsa signature
     proof = rsa_sign(did.encode('utf-8'), rsa_priv_key, padding)
-    _print_signature(proof)
+    if bprint:
+        _print_signature(proof)
 
     #load certificate and convert it to a PEM byte data
     x509cert = x509_load_certificate_from_file(path_to_cert_file)
     pem_cert_data = x509_get_PEM_certificate_from_obj(x509cert)
 
     #create an eIDAS Link DID structure and print to stdout
-    print(eidas_link_did(did, pem_cert_data, proof))
+    print(eidas_link_did(did, pem_cert_data, proof, padding))
 
 """"""""""""""""""
 """ HASH TESTS """
@@ -228,7 +229,7 @@ def _print_signature(signature):
 if __name__ == '__main__':
     #basic_demo()
     test_eidas_link_did("./tests/data/tmp/rsakey.pem", b"passphrase", 
-    "./tests/data/tmp/x509cert.pem", "did:sov:55GkHamhTU1ZbTbV2ab9DE", PKCS1v15_PADDING)
+    "./tests/data/tmp/x509cert.pem", "did:sov:55GkHamhTU1ZbTbV2ab9DE", False, PKCS1v15_PADDING)
     #test_suite_crypto_hash()
     """
     crypto_suite_test(
