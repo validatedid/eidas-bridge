@@ -227,8 +227,10 @@ def _print_signature(signature):
 """"""""""""
 if __name__ == '__main__':
     #basic_demo()
-    #test_eidas_link_did("./tests/data/tmp/rsakey.pem", b"passphrase", "./tests/data/tmp/x509cert.pem", "did:sov:55GkHamhTU1ZbTbV2ab9DE")
+    test_eidas_link_did("./tests/data/tmp/rsakey.pem", b"passphrase", 
+    "./tests/data/tmp/x509cert.pem", "did:sov:55GkHamhTU1ZbTbV2ab9DE", PKCS1v15_PADDING)
     #test_suite_crypto_hash()
+    """
     crypto_suite_test(
         [False, True, True, False, False], 
         "./tests/data/tmp/", 
@@ -252,4 +254,4 @@ if __name__ == '__main__':
         x509certs,
         False,
         PSS_PADDING
-    )
+    )"""
