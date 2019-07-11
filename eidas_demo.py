@@ -1,13 +1,16 @@
+# eidas_demo.py
+""" EIDAS LIBRARY DEMO TO TEST ALL API FUNCTIONS """
+
 from eidas_bridge.eidas_bridge import eidas_link_did, \
     eidas_get_service_endpoint_struct, eidas_sign_credential, eidas_verify_credential
-from utils.crypto import create_selfsigned_x509_certificate, store_rsa_key_and_x509cert_to_disk, \
-    get_public_key_from_rsakey_str, print_rsa_pub_key, InvalidSignatureException, \
-    print_x509cert, eidas_crypto_hash_byte, eidas_crypto_hash_str, \
-    eidas_crypto_hash_hex, rsa_load_private_key_from_file, \
-    x509_load_certificate_from_file, x509_get_PEM_certificate_from_obj, print_rsa_priv_key, \
-    x509_load_certificate_from_data_bytes, PKCS1v15_PADDING, PSS_PADDING, rsa_sign, rsa_verify
+from utils.crypto import InvalidSignatureException, x509_load_certificate_from_data_bytes, \
+    PKCS1v15_PADDING, PSS_PADDING, rsa_verify
 from tests.data.common_data import dids, x509certs, proofs, endpoints, credentials
-from tests.util import bcolors
+from tests.util import bcolors, print_object
+from tests.crypto import create_selfsigned_x509_certificate, store_rsa_key_and_x509cert_to_disk, \
+    print_rsa_pub_key, print_x509cert, eidas_crypto_hash_byte, eidas_crypto_hash_str, \
+    eidas_crypto_hash_hex, rsa_load_private_key_from_file, x509_load_certificate_from_file, \
+    x509_get_PEM_certificate_from_obj, print_rsa_priv_key, rsa_sign
 
 """"""""""""""""""""""""
 """ EIDAS BRIDGE TESTS """
@@ -47,6 +50,15 @@ def test_eidas_link_did(path_to_key_file, input_password,
 
     #create an eIDAS Link DID structure and print to stdout
     print(eidas_link_did(did, pem_cert_data, proof, padding))
+
+def test_eidas_link_did_all_paddings(path_to_key_file, input_password, 
+    path_to_cert_file, did, bprint, bpadding):
+    if bpadding:
+        test_eidas_link_did(path_to_key_file, input_password, path_to_cert_file, did, bprint, PKCS1v15_PADDING)
+        test_eidas_link_did(path_to_key_file, input_password, path_to_cert_file, did, bprint, PSS_PADDING)
+    else:
+        test_eidas_link_did(path_to_key_file, input_password, path_to_cert_file, did, bprint, PSS_PADDING)
+
 
 """"""""""""""""""
 """ HASH TESTS """
@@ -170,8 +182,18 @@ def test_verify_signature_from_cert_pem_data_loop(x509certs, message, proofs, bp
         i += 1
 
 def crypto_suite_test(tests_to_execute, path_to_dir_to_store, path_to_key_file, input_password, 
+    path_to_cert_file, message, proofs, x509certs, bprint, bpadding):
+    if bpadding:
+        crypto_suite_test_padding_set(tests_to_execute, path_to_dir_to_store, path_to_key_file, input_password, 
+        path_to_cert_file, message, proofs, x509certs, bprint, PKCS1v15_PADDING)
+        crypto_suite_test_padding_set(tests_to_execute, path_to_dir_to_store, path_to_key_file, input_password, 
+        path_to_cert_file, message, proofs, x509certs, bprint, PSS_PADDING)
+    else:
+        crypto_suite_test_padding_set(tests_to_execute, path_to_dir_to_store, path_to_key_file, input_password, 
+        path_to_cert_file, message, proofs, x509certs, bprint, PSS_PADDING)
+
+def crypto_suite_test_padding_set(tests_to_execute, path_to_dir_to_store, path_to_key_file, input_password, 
     path_to_cert_file, message, proofs, x509certs, bprint, padding):
-    
     if tests_to_execute[0]:
         print("CRYPTO TEST 1: Generate x509 certificate and RSA Key and store to disk:\n")
         test_generate_x509cert_and_key_and_store_to_disk(path_to_dir_to_store, 
@@ -228,12 +250,16 @@ def _print_signature(signature):
 """"""""""""
 if __name__ == '__main__':
     #basic_demo()
-    test_eidas_link_did("./tests/data/tmp/rsakey.pem", b"passphrase", 
-    "./tests/data/tmp/x509cert.pem", "did:sov:55GkHamhTU1ZbTbV2ab9DE", False, PSS_PADDING) #PKCS1v15_PADDING)
+    test_eidas_link_did_all_paddings(
+        "./tests/data/tmp/rsakey.pem", 
+        b"passphrase", 
+        "./tests/data/tmp/x509cert.pem", 
+        "did:sov:55GkHamhTU1ZbTbV2ab9DE", 
+        False, 
+        True)
     #test_suite_crypto_hash()
-    """
     crypto_suite_test(
-        [False, True, True, False, False], 
+        [False, True, True, True, True], 
         "./tests/data/tmp/", 
         "./tests/data/rsakey.pem", 
         b"passphrase", 
@@ -242,17 +268,5 @@ if __name__ == '__main__':
         proofs,
         x509certs,
         False,
-        PKCS1v15_PADDING
+        True
     )
-    crypto_suite_test(
-        [False, True, True, False, False], 
-        "./tests/data/tmp/", 
-        "./tests/data/rsakey.pem", 
-        b"passphrase", 
-        "./tests/data/x509cert.pem", 
-        "did:sov:55GkHamhTU1ZbTbV2ab9DE",
-        proofs,
-        x509certs,
-        False,
-        PSS_PADDING
-    )"""
