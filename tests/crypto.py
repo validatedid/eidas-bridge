@@ -12,7 +12,7 @@ from cryptography.x509.oid import NameOID
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.asymmetric import padding
 from tests.util import print_object
-from utils.crypto import PKCS1v15_PADDING, PSS_PADDING, InvalidPaddingException
+from eidas_bridge.utils.crypto import PKCS1v15_PADDING, PSS_PADDING, InvalidPaddingException
 
 
 class RSAKeySizeException(Exception):

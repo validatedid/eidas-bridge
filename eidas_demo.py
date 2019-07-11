@@ -3,7 +3,7 @@
 
 from eidas_bridge.eidas_bridge import eidas_link_did, \
     eidas_get_service_endpoint_struct, eidas_sign_credential, eidas_verify_credential
-from utils.crypto import InvalidSignatureException, x509_load_certificate_from_data_bytes, \
+from eidas_bridge.utils.crypto import InvalidSignatureException, x509_load_certificate_from_data_bytes, \
     PKCS1v15_PADDING, PSS_PADDING, rsa_verify
 from tests.data.common_data import dids, x509certs, proofs, endpoints, credentials
 from tests.util import bcolors, print_object

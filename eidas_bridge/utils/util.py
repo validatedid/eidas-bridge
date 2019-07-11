@@ -1,5 +1,5 @@
 # util.py
-''' Basic functions to help the development '''
+''' Auxiliary functions '''
 
 import datetime
 

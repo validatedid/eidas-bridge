@@ -1,10 +1,10 @@
-#test_utils_crypto.py
-""" Unit test for cryptographic functions from utils/crypto.py file for eIDAS Library """
+#test_eidas_bridge_utils_crypto.py
+""" Unit test for cryptographic functions from eidas_bridge/utils/crypto.py file for eIDAS Library """
 
 import pytest
 from cryptography import x509
 from tests.data.common_data import x509certs
-from utils.crypto import x509_load_certificate_from_data_bytes
+from eidas_bridge.utils.crypto import x509_load_certificate_from_data_bytes
 from cryptography.hazmat.backends import default_backend
 
 @pytest.mark.parametrize("x509cert", x509certs)

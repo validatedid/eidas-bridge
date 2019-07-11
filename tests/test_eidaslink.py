@@ -4,7 +4,7 @@ import pytest
 from eidas_bridge.eidaslink import EIDASLink
 from tests.data.common_data import all_type_dids, all_type_certificates, bad_type_proofs, \
     dids, x509certs, proofs, bad_obj_type_paddings, bad_type_paddings, paddings
-from utils.crypto import InvalidPaddingException
+from eidas_bridge.utils.crypto import InvalidPaddingException
 
 @pytest.mark.parametrize("did", all_type_dids)
 @pytest.mark.parametrize("certificate", all_type_certificates)

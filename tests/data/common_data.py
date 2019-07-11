@@ -1,7 +1,7 @@
 # common_data.py
 """ Data to used alongside the test suite """
 
-from utils.crypto import PKCS1v15_PADDING, PSS_PADDING
+from eidas_bridge.utils.crypto import PKCS1v15_PADDING, PSS_PADDING
 
 dids = [
     "did:sov:55GkHamhTU1ZbTbV2ab9DE"

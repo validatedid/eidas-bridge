@@ -2,8 +2,8 @@
 # eidas_bridge.py
 """ EIDAS BRIDGE """
 
-from utils.util import check_args
-from utils.crypto import PSS_PADDING
+from .utils.util import check_args
+from .utils.crypto import PSS_PADDING
 from .eidaslink import EIDASLink
 import json
 

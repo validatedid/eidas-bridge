@@ -1,8 +1,8 @@
 # eidaslink.py
 """ Represents an eIDAS Link structure """
 
-from utils.util import check_args, timestamp
-from utils.crypto import rsa_verify, check_args_padding, get_public_key_from_x509cert_pem
+from .utils.util import check_args, timestamp
+from .utils.crypto import rsa_verify, check_args_padding, get_public_key_from_x509cert_pem
 import json
 
 class EIDASProofException(Exception):
