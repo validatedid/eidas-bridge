@@ -1,7 +1,7 @@
 # eidaslink.py
 """ Represents an eIDAS Link structure """
 
-from utils.util import check_args, bytes_to_b58
+from utils.util import check_args, timestamp
 from utils.crypto import eidas_crypto_hash_str, get_public_key_from_x509cert_obj, \
     x509_load_certificate_from_data_bytes, rsa_verify, x509_get_PEM_certificate_from_obj
 import json
@@ -58,7 +58,13 @@ class EIDASLink():
         _cert = x509_get_PEM_certificate_from_obj(self._x509cert)
         
         return {
+            "type": "EidasLink",
+            "created": timestamp(),
             "did": self._did,
             "certificate": "{}".format(_cert.decode()),
-            "proof": self._proof.hex()
+            "proof": {
+                "type": "RsaSignature2018",
+                "padding": self._padding,
+                "signatureValue": self._proof.hex()
+            }
         }
