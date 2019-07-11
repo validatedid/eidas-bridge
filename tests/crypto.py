@@ -11,6 +11,7 @@ from cryptography import x509
 from cryptography.x509.oid import NameOID
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.asymmetric import padding
+from cryptography.hazmat.primitives.serialization import pkcs12
 from tests.util import print_object
 from eidas_bridge.utils.crypto import PKCS1v15_PADDING, PSS_PADDING, InvalidPaddingException
 
@@ -224,9 +225,21 @@ def rsa_sign_pkcs1(message, rsa_priv_key) -> bytes:
         hashes.SHA256()
     )
 
-
-
 """"""""""""""""""""""""""""""""
 """   PKCS#12 CERTIFICATE    """
 """"""""""""""""""""""""""""""""
 
+""" 
+    CREATE .P12 FILE 
+    command to create a .p12 file from the key and certificate created:
+    $ openssl pkcs12 -export -out tests/data/certificate.p12 -inkey tests/data/rsakey.pem -in tests/data/x509cert.pem 
+"""
+
+def load_pkcs12_file(path_to_p12_file, input_password) ->(bytes, bytes, bytes):
+    """ loads a key and certificate from a p12 file.
+    Returns:	
+        - A tuple of (private_key, certificate, additional_certificates)
+    """
+    with open(path_to_p12_file, "rb") as p12_file:
+        p12_data = p12_file.read()
+        return pkcs12.load_key_and_certificates(p12_data, input_password, default_backend())
