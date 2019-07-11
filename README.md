@@ -56,11 +56,13 @@ eIDAS API calls
 
 #### eidas_link_did
 ```python
-def eidas_link_did(did, certificate, proof) -> str:
+def eidas_link_did(did, certificate, proof, padding = PSS_PADDING) -> str:
 ```
-Link the Issuer DID with eIDAS certificate.
-Receives a DID, an eIDAS certificate, and its proof of possession.
-Returns the JSON that needs to be stored on the Agent public Storage (i.e: an Identity Hub)
+Link the Issuer DID with eIDAS certificate
+Receives a DID, an eIDAS certificate, its proof of possession, and 
+optionally the padding of the signature proof (accepts PKCS#1 and PSS)
+Returns the JSON that needs to be stored on the Agent public Storage
+(i.e: an Identity Hub)
 
 #### eidas_get_service_endpoint_struct
 ```python
