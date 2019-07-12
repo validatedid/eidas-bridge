@@ -17,8 +17,8 @@ class InvalidSignatureException(Exception):
 class InvalidPaddingException(Exception):
     """ Error raised when the signature padding is neither PKCS#1 nor PSS """
 
-def check_args_padding(padding, typeObj):
-    check_args(padding, typeObj)
+def check_args_padding(padding, type_obj):
+    check_args(padding, type_obj)
     if padding != PKCS1v15_PADDING and padding != PSS_PADDING:
         raise InvalidPaddingException("Invalid Padding format: only supported PKCS#1 and PSS")
 

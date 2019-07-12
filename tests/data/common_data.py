@@ -152,7 +152,8 @@ proofs = [
 ]
 
 paddings = [
-    PSS_PADDING
+    PSS_PADDING,
+    PKCS1v15_PADDING
 ]
 
 all_type_dids = [
