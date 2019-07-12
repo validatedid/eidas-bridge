@@ -6,8 +6,8 @@ from eidas_bridge.eidas_bridge import eidas_link_did, \
         eidas_get_service_endpoint_struct, eidas_sign_credential, eidas_verify_credential
 from eidas_bridge.utils.util import timestamp
 from tests.data.common_data import all_type_dids, all_type_certificates, bad_type_proofs, \
-        dids, x509certs, proofs, bad_type_endpoints, endpoints, bad_type_credentials, credentials, \
-        paddings
+        dids, bad_type_endpoints, endpoints, bad_type_credentials, credentials, \
+        eidas_link_inputs
 
 @pytest.mark.parametrize("did", all_type_dids)
 @pytest.mark.parametrize("certificate", all_type_certificates)
@@ -17,12 +17,10 @@ def test_eidas_link_did_bad_types(did, certificate, proof):
         eidas_link_did(did, certificate, proof)
 
 @pytest.mark.parametrize("did", dids)
-@pytest.mark.parametrize("x509cert", x509certs)
-@pytest.mark.parametrize("proof", proofs)
-@pytest.mark.parametrize("padding", paddings)
-def test_eidas_link_did(did, x509cert, proof, padding):
-        eidas_link = eidas_link_did(did, x509cert, bytes.fromhex(proof), padding)
-        expected = _to_json(did, x509cert, bytes.fromhex(proof), padding, get_created_timestamp(eidas_link)) 
+@pytest.mark.parametrize("eidas_link_input", eidas_link_inputs)
+def test_eidas_link_did(did, eidas_link_input):
+        eidas_link = eidas_link_did(did, eidas_link_input[0], bytes.fromhex(eidas_link_input[1]), eidas_link_input[2])
+        expected = _to_json(did, eidas_link_input[0], bytes.fromhex(eidas_link_input[1]), eidas_link_input[2], get_created_timestamp(eidas_link)) 
         assert eidas_link == expected
 
 @pytest.mark.parametrize("storage_endpoint", bad_type_endpoints)

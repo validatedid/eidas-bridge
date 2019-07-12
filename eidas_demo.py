@@ -1,11 +1,12 @@
 # eidas_demo.py
 """ EIDAS LIBRARY DEMO TO TEST ALL API FUNCTIONS """
 
+import time
 from eidas_bridge.eidas_bridge import eidas_link_did, \
     eidas_get_service_endpoint_struct, eidas_sign_credential, eidas_verify_credential
 from eidas_bridge.utils.crypto import InvalidSignatureException, x509_load_certificate_from_data_bytes, \
     PKCS1v15_PADDING, PSS_PADDING, rsa_verify
-from tests.data.common_data import dids, x509certs, proofs, endpoints, credentials
+from tests.data.common_data import dids, eidas_link_inputs, endpoints, credentials
 from tests.util import bcolors, print_object
 from tests.crypto import create_selfsigned_x509_certificate, store_rsa_key_and_x509cert_to_disk, \
     print_rsa_pub_key, print_x509cert, eidas_crypto_hash_byte, eidas_crypto_hash_str, \
@@ -17,48 +18,22 @@ from tests.crypto import create_selfsigned_x509_certificate, store_rsa_key_and_x
 """"""""""""""""""""""""
 
 def basic_demo():
+
     """ Initial Demo: very basic """
-    print("--- INIT EIDAS DEMO ---\n\r")
+    print(bcolors.HEADER + "1.- calling eidas link did: " + bcolors.ENDC)
+    for eidas_link_input in eidas_link_inputs:
+        for did in dids:
+            print(bcolors.OKBLUE + "\n\r--- EIDAS LINK DID JSON STRUCT ---\n\r" + bcolors.ENDC)
+            print (eidas_link_did(did, eidas_link_input[0], bytes.fromhex(eidas_link_input[1]), eidas_link_input[2]))
 
-    print("1.- calling eidas link did ")
-    print (eidas_link_did(dids[0], x509certs[0], proofs[0]))
-
-    print("\n2.- calling eidas get service endpoint struct ")
+    print(bcolors.HEADER + "\n2.- calling eidas get service endpoint struct " + bcolors.ENDC)
     print (eidas_get_service_endpoint_struct(endpoints[0]))
 
-    print("\n3.- calling eidas sign credential ")
+    print(bcolors.HEADER + "\n3.- calling eidas sign credential " + bcolors.ENDC)
     print (eidas_sign_credential(credentials[0]))
 
-    print("\n4.- calling eidas verify credential ")
+    print(bcolors.HEADER + "\n4.- calling eidas verify credential " + bcolors.ENDC)
     print (eidas_verify_credential(credentials[0]))
-
-    print("\n--- END EIDAS DEMO ---")
-
-def test_eidas_link_did(path_to_key_file, input_password, 
-    path_to_cert_file, did, bprint, padding):
-    #load key
-    rsa_priv_key = rsa_load_private_key_from_file(path_to_key_file, input_password)
-
-    #rsa signature
-    proof = rsa_sign(did.encode('utf-8'), rsa_priv_key, padding)
-    if bprint:
-        _print_signature(proof)
-
-    #load certificate and convert it to a PEM byte data
-    x509cert = x509_load_certificate_from_file(path_to_cert_file)
-    pem_cert_data = x509_get_PEM_certificate_from_obj(x509cert)
-
-    #create an eIDAS Link DID structure and print to stdout
-    print(eidas_link_did(did, pem_cert_data, proof, padding))
-
-def test_eidas_link_did_all_paddings(path_to_key_file, input_password, 
-    path_to_cert_file, did, bprint, bpadding):
-    if bpadding:
-        test_eidas_link_did(path_to_key_file, input_password, path_to_cert_file, did, bprint, PKCS1v15_PADDING)
-        test_eidas_link_did(path_to_key_file, input_password, path_to_cert_file, did, bprint, PSS_PADDING)
-    else:
-        test_eidas_link_did(path_to_key_file, input_password, path_to_cert_file, did, bprint, PSS_PADDING)
-
 
 """"""""""""""""""
 """ HASH TESTS """
@@ -75,7 +50,7 @@ def crypto_hash_hex(did):
     print("Input data HEX STR:\t" + did)
     print("Output data HEX STR:\t" + eidas_crypto_hash_hex(did) + "\n")
 
-def test_suite_crypto_hash():
+def test_crypto_hash_suite():
     crypto_hash_byte(b'PI')
     crypto_hash_str("PI")
     crypto_hash_str("")
@@ -106,7 +81,7 @@ def test_generate_x509cert_and_key_and_store_to_disk(path_to_dir, input_password
         _print_priv_key(rsa_key, input_password)
         _print_pub_key(x509cert.public_key())
 
-def test_sign_and_verify_from_key_file(path_to_key_file, input_password, message, bprint, padding):
+def test_sign_and_verify_from_key_file(path_to_key_file, input_password, message, padding, bprint):
     #load key
     rsa_priv_key = _load_key_from_file(path_to_key_file, input_password, bprint)
 
@@ -117,7 +92,7 @@ def test_sign_and_verify_from_key_file(path_to_key_file, input_password, message
     _verify(signature, message, rsa_priv_key.public_key(), padding)
 
 def test_sign_from_file_verify_from_cert_file(path_to_key_file, input_password, 
-    path_to_cert_file, message, bprint, padding):
+    path_to_cert_file, message, padding, bprint):
     #load key
     rsa_priv_key = _load_key_from_file(path_to_key_file, input_password, bprint)
     #load certificate
@@ -129,39 +104,21 @@ def test_sign_from_file_verify_from_cert_file(path_to_key_file, input_password,
     #rsa validation with the public key from the loaded certificate
     _verify(signature, message, x509cert.public_key(), padding)
 
-def verify_signature_from_cert_file(path_to_cert_file, message, signature, bprint, padding):
+def verify_signature_from_cert_file(path_to_cert_file, message, signature, padding, bprint):
     #load certificate
     x509cert = _load_cert_from_file(path_to_cert_file, bprint)
 
     #rsa validation with the public key from the loaded certificate
-    _verify(signature, message, x509cert.public_key(), padding)
+    _verify(bytes.fromhex(signature), message, x509cert.public_key(), padding)
 
-def test_verify_signature_from_cert_file_loop(path_to_cert_file, message, proofs, bprint,\
-    padding):
-    for signature in proofs:
-        verify_signature_from_cert_file(path_to_cert_file, message, bytes.fromhex(signature), \
-            bprint, padding)
-
-def verify_signature_from_cert_pem_data(pem_cert_data, message, signature, bprint, padding):
+def verify_signature_from_cert_pem_data(pem_cert_data, message, signature, padding, bprint):
     #load certificate 
     x509cert = _load_cert_from_pem(pem_cert_data, bprint)
 
     #rsa validation with the public key from the loaded certificate
-    _verify(signature, message, x509cert.public_key(), padding)
+    _verify(bytes.fromhex(signature), message, x509cert.public_key(), padding)
 
-def test_verify_signature_from_cert_pem_data_loop(x509certs, message, proofs, bprint, padding):
-    i = 0
-    for certificate in x509certs:
-        print("Using the [" + str(i) + "] certificate")
-        j = 0
-        for signature in proofs:
-            print("Using the [" + str(j) + "] signature")
-            verify_signature_from_cert_pem_data(certificate, message, bytes.fromhex(signature), 
-            bprint, padding)
-            j += 1
-        i += 1
-
-def test_sign_and_verify_from_p12file_using_key(path_to_p12_file, p12_password, message, bprint, padding):
+def test_sign_and_verify_from_p12file_using_key(path_to_p12_file, p12_password, message, padding, bprint):
     # Load key and cert from p12 file
     rsa_priv_key, *_ = _load_key_and_cert_from_p12file(path_to_p12_file, p12_password, bprint)
 
@@ -171,7 +128,7 @@ def test_sign_and_verify_from_p12file_using_key(path_to_p12_file, p12_password, 
     #rsa validation with the public key from private key
     _verify(signature, message, rsa_priv_key.public_key(), padding)
 
-def test_sign_and_verify_fron_p12file_using_cert(path_to_p12_file, p12_password, message, bprint, padding):
+def test_sign_and_verify_fron_p12file_using_cert(path_to_p12_file, p12_password, message, padding, bprint):
     # Load key and cert from p12 file
     rsa_priv_key, x509cert = _load_key_and_cert_from_p12file(path_to_p12_file, p12_password, bprint)
 
@@ -184,52 +141,44 @@ def test_sign_and_verify_fron_p12file_using_cert(path_to_p12_file, p12_password,
 
 """ CRYPTO SUITE """
 
-def crypto_suite_test(tests_to_execute, path_to_dir_to_store, path_to_key_file, input_password, 
-    path_to_cert_file, path_to_p12_file, p12_password, message, proofs, x509certs, bprint, bpadding):
-    if bpadding:
-        crypto_suite_test_padding_set(tests_to_execute, path_to_dir_to_store, path_to_key_file, input_password, 
-        path_to_cert_file, path_to_p12_file, p12_password, message, proofs, x509certs, bprint, PKCS1v15_PADDING)
-        crypto_suite_test_padding_set(tests_to_execute, path_to_dir_to_store, path_to_key_file, input_password, 
-        path_to_cert_file, path_to_p12_file, p12_password, message, proofs, x509certs, bprint, PSS_PADDING)
-    else:
-        crypto_suite_test_padding_set(tests_to_execute, path_to_dir_to_store, path_to_key_file, input_password, 
-        path_to_cert_file, path_to_p12_file, p12_password, message, proofs, x509certs, bprint, PSS_PADDING)
-
-def crypto_suite_test_padding_set(tests_to_execute, path_to_dir_to_store, path_to_key_file, input_password, 
-    path_to_cert_file, path_to_p12_file, p12_password, message, proofs, x509certs, bprint, padding):
+def _crypto_suite_test(tests_to_execute, path_to_dir_to_store, path_to_key_file, input_password, 
+    path_to_cert_file, path_to_p12_file, p12_password, message, x509cert, proof, padding, bprint):
     if tests_to_execute[0]:
-        print("CRYPTO TEST 1: Generate x509 certificate and RSA Key and store to disk:\n")
+        print("\nCRYPTO TEST 1: Generate x509 certificate and RSA Key and store to disk:\n")
+        input("Press Enter to continue...")
         test_generate_x509cert_and_key_and_store_to_disk(path_to_dir_to_store, 
         input_password, bprint)
     if tests_to_execute[1]:
         print("\nCRYPTO TEST 2: Sign a message with a RSA Key loaded from file and \
 Verify the signature with the correspondent public key:\n")
-        test_sign_and_verify_from_key_file(path_to_key_file, input_password, message, bprint, padding)
+        input("Press Enter to continue...")
+        test_sign_and_verify_from_key_file(path_to_key_file, input_password, message, padding, bprint)
     if tests_to_execute[2]:
         print("\nCRYPTO TEST 3: Sign a message with a RSA Key loaded from file and \
 Verify the signature with the certificate public key loaded from a file:\n")
+        input("Press Enter to continue...")
         test_sign_from_file_verify_from_cert_file(path_to_key_file, input_password, 
-        path_to_cert_file, message, bprint, padding)
+        path_to_cert_file, message, padding, bprint)
     if tests_to_execute[3]:
         print("\nCRYPTO TEST 4: Verifies signatures passed as a list and getting \
 the public key from a certificate stored in disk:\n")
-        test_verify_signature_from_cert_file_loop(path_to_cert_file, message, proofs, 
-        bprint, padding)
+        input("Press Enter to continue...")
+        verify_signature_from_cert_file(path_to_cert_file, message, proof, padding, bprint)
     if tests_to_execute[4]:
         print("\nCRYPTO TEST 5: Verifies signatures passed as a list and getting \
 the public key from a certificate stored in a list:\n")
-        test_verify_signature_from_cert_pem_data_loop(x509certs, message, proofs, 
-        bprint, padding)
+        input("Press Enter to continue...")
+        verify_signature_from_cert_pem_data(x509cert, message, proof, padding, bprint)
     if tests_to_execute[5]:
-        print("SIGN & VERIFY TEST 6: Using a PKCS#12 file and using the public key \
+        print("\nSIGN & VERIFY TEST 6: Using a PKCS#12 file and using the public key \
 from the private key to verify:\n")
-        test_sign_and_verify_from_p12file_using_key(path_to_p12_file, p12_password, message, bprint, padding)
+        input("Press Enter to continue...")
+        test_sign_and_verify_from_p12file_using_key(path_to_p12_file, p12_password, message, padding, bprint)
     if tests_to_execute[6]:
-        print("SIGN & VERIFY TEST 7: Using a PKCS#12 file and using the public key \
+        print("\nSIGN & VERIFY TEST 7: Using a PKCS#12 file and using the public key \
 from the certificate to verify:\n")
-        test_sign_and_verify_fron_p12file_using_cert(path_to_p12_file, p12_password, message, bprint, padding)
-
-
+        input("Press Enter to continue...")
+        test_sign_and_verify_fron_p12file_using_cert(path_to_p12_file, p12_password, message, padding, bprint)
 
 """"""""""""""""""""""""
 """ AUX FUNCTIONS    """
@@ -287,9 +236,9 @@ def _verify(signature, message, pub_key, padding):
     #rsa validation with the public key from the loaded certificate
     try:
         rsa_verify(signature, message.encode('utf-8'), pub_key, padding)
-        print("Signature validation: " + bcolors.OKGREEN + "VALID" + bcolors.ENDC)
+        print("\nSignature validation: " + bcolors.OKGREEN + "VALID\n" + bcolors.ENDC)
     except InvalidSignatureException:
-        print("Signature validation: " + bcolors.FAIL + "NOT VALID" + bcolors.ENDC)
+        print("\nSignature validation: " + bcolors.FAIL + "NOT VALID\n" + bcolors.ENDC)
 
 def _print_certificate(x509cert):
     print ("\nX509 CERTIFICATE: \n")
@@ -306,33 +255,55 @@ def _print_pub_key(pub_key):
 def _print_signature(signature):
     print("Signature: \n" + signature.hex())
 
+def test_crypto_suite_loop(tests_to_execute, path_to_dir_to_store, path_to_key_file, input_password, 
+    path_to_cert_file, path_to_p12_file, p12_password, dids, eidas_link_inputs, bprint):
+    for eidas_link_input in eidas_link_inputs:
+        for did in dids:
+            _crypto_suite_test(
+                tests_to_execute, 
+                path_to_dir_to_store, 
+                path_to_key_file, 
+                input_password, 
+                path_to_cert_file, 
+                path_to_p12_file,
+                p12_password, 
+                did,
+                eidas_link_input[0],
+                eidas_link_input[1],
+                eidas_link_input[2],
+                bprint
+            )
+
 """"""""""""
 """ MAIN """
 """"""""""""
 if __name__ == '__main__':
-    #basic_demo()
-    """
-    test_eidas_link_did_all_paddings(
-        "./tests/data/tmp/rsakey.pem", 
-        b"passphrase", 
-        "./tests/data/tmp/x509cert.pem", 
-        "did:sov:55GkHamhTU1ZbTbV2ab9DE", 
-        False, 
-        True)
-    """
-    #test_suite_crypto_hash()
+    start_time = time.time()
+    print(bcolors.BOLD + "\n--- INIT EIDAS MAIN DEMO TEST SUITE ---\n\r" + bcolors.ENDC)
     
-    crypto_suite_test(
-        [False, True, True, True, True, True, True], 
+    print(bcolors.HEADER + "\n--- INIT BASIC DEMO TEST SUITE ---\n\r" + bcolors.ENDC)
+    input("Press Enter to continue...")
+    basic_demo()
+
+    print(bcolors.HEADER + "\n--- INIT CRYPTO HASH TEST SUITE ---\n\r" + bcolors.ENDC)
+    input("Press Enter to continue...")
+    test_crypto_hash_suite()
+
+    print(bcolors.HEADER + "\n--- INIT CRYPTO TEST SUITE ---\n\r" + bcolors.ENDC)
+    input("Press Enter to continue...")
+    test_crypto_suite_loop(
+        [True, True, True, True, True, True, True], 
         "./tests/data/tmp/", 
         "./tests/data/rsakey.pem", 
         b"passphrase", 
         "./tests/data/x509cert.pem", 
         "./tests/data/certificate.p12",
         b"passphrase", 
-        "did:sov:55GkHamhTU1ZbTbV2ab9DE",
-        proofs,
-        x509certs,
-        False,
-        True
+        dids,
+        eidas_link_inputs,
+        False
     )
+    elapsed_time = time.time() - start_time
+    print(bcolors.BOLD + "\n--- END EIDAS MAIN DEMO TEST SUITE ---\n\r" + bcolors.ENDC)
+    print("--- Total time: " + bcolors.OKGREEN + str(round(elapsed_time, 2)) + " seconds " + \
+        bcolors.ENDC + "---\n\r")
