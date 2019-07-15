@@ -95,7 +95,7 @@ Returns the correspondent JSON to be added to the Service Endpoint Section of th
     // used to retrieve eIDAS Link data associated with the DID
     "id": "did:sov:55GkHamhTU1ZbTbV2ab9DE#eidas",
     "type": "EidasService",
-    "serviceEndpoint": "https://hub.example.com/.identity/did:sov:55GkHamhTU1ZbTbV2ab9DE/eidas"
+    "serviceEndpoint": "http://service_endpoint.sample/did:sov:55GkHamhTU1ZbTbV2ab9DE/eidas"
 }
 ```
 
