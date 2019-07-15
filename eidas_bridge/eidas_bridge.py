@@ -7,6 +7,12 @@ from .utils.crypto import PSS_PADDING
 from .eidaslink import EIDASLink
 from .eidas_service import EIDASService
 
+class EIDASNotSupportedException(Exception):
+    """
+    Error raised when is called a library function than will not be supported 
+    at this development Phase.
+    """
+
 def eidas_link_did(did, certificate, proof, padding = PSS_PADDING) -> str:
     """ 
     Link the Issuer DID with eIDAS certificate
@@ -39,16 +45,10 @@ def eidas_sign_credential(json_credential) -> str:
     Checks the validity of the issuer's eIDAS certificate against a 
     Trusted Service Provider and adds the corresponde response to the 
     received credential JSON structure.
+
+    Not Supported at this Phase 0.
     """
-    check_args(json_credential, str)
-
-     # TO DO 
-    '''
-    - construct a json structure with the given parameters and return it
-    - launch an OCSP request to check the validity of the certificate
-    '''
-
-    return ""
+    raise EIDASNotSupportedException("eIDAS library call NOT supported.")
 
 def eidas_verify_credential(json_credential) -> str:
     """

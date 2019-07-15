@@ -3,7 +3,8 @@
 
 import time
 from eidas_bridge.eidas_bridge import eidas_link_did, \
-    eidas_get_service_endpoint, eidas_sign_credential, eidas_verify_credential
+    eidas_get_service_endpoint, eidas_sign_credential, eidas_verify_credential, \
+    EIDASNotSupportedException
 from eidas_bridge.utils.crypto import InvalidSignatureException, x509_load_certificate_from_data_bytes, \
     PKCS1v15_PADDING, PSS_PADDING, rsa_verify
 from tests.data.common_data import eidas_link_inputs, service_endpoints, credentials, paddings
@@ -31,7 +32,10 @@ def basic_demo():
         print (eidas_get_service_endpoint(service_endpoint[0], service_endpoint[1]))
 
     print(bcolors.HEADER + "\n3.- calling eidas sign credential " + bcolors.ENDC)
-    print (eidas_sign_credential(credentials[0]))
+    try:
+        print (eidas_sign_credential(credentials[0]))
+    except EIDASNotSupportedException:
+        print(bcolors.WARNING + "\n\r--- EIDAS Library function NOT supported yet. ---\n\r" + bcolors.ENDC)
 
     print(bcolors.HEADER + "\n4.- calling eidas verify credential " + bcolors.ENDC)
     print (eidas_verify_credential(credentials[0]))

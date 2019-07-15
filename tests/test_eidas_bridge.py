@@ -3,7 +3,8 @@
 import pytest
 import json
 from eidas_bridge.eidas_bridge import eidas_link_did, \
-        eidas_get_service_endpoint, eidas_sign_credential, eidas_verify_credential
+        eidas_get_service_endpoint, eidas_sign_credential, eidas_verify_credential, \
+        EIDASNotSupportedException
 from eidas_bridge.utils.util import timestamp
 from tests.data.common_data import all_type_dids, all_type_certificates, bad_type_proofs, \
         dids, bad_type_endpoints, service_endpoints, bad_type_credentials, credentials, \
@@ -41,15 +42,9 @@ def test_eidas_get_service_endpoint(service_endpoint):
         )
         assert eidas_service == expected
 
-@pytest.mark.parametrize("credential", bad_type_credentials)
-def test_eidas_sign_credential_bad_types(credential):
-    with pytest.raises(TypeError):
-        eidas_sign_credential(credential)
-
-@pytest.mark.parametrize("credential", credentials)
-def test_eidas_sign_credential(credential):
-    result = eidas_sign_credential(credential)
-    assert result == ""
+def test_eidas_sign_credential():
+        with pytest.raises(EIDASNotSupportedException):
+                eidas_sign_credential(None)
 
 @pytest.mark.parametrize("credential", bad_type_credentials)
 def test_eidas_verify_credential_bad_types(credential):
