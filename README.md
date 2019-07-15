@@ -51,8 +51,8 @@ $ python eidas_demo.py
 $ pytest
 ```
 
-eIDAS API calls
-===============
+eIDAS Bridge Library calls
+==========================
 
 #### eidas_link_did
 ```python
