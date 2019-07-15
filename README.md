@@ -82,10 +82,13 @@ EIDAS Link DID JSON **sample** structure:
 
 #### eidas_get_service_endpoint_struct
 ```python
-def eidas_get_service_endpoint_struct(did, storage_endpoint) -> str:
+def eidas_get_service_endpoint_struct(did, service_endpoint) -> str:
 ```
 Contructs the JSON structure that needs to be added to the Issuer's DID Document Service Endpoint Section.
-Receives a did and a service endpoint where it is stored the issuer's eIDAS and DID linking information and returns the correspondent JSON to be added to the Service Endpoint Section of the Issuer's DID Document.
+
+Receives a did and a service endpoint where it is stored the issuer's eIDAS and DID linking information.
+
+Returns the correspondent JSON to be added to the Service Endpoint Section of the Issuer's DID Document.
 
 ```json_
 {
