@@ -3,7 +3,7 @@
 
 import time
 from eidas_bridge.eidas_bridge import eidas_link_did, \
-    eidas_get_service_endpoint_struct, eidas_sign_credential, eidas_verify_credential
+    eidas_get_service_endpoint, eidas_sign_credential, eidas_verify_credential
 from eidas_bridge.utils.crypto import InvalidSignatureException, x509_load_certificate_from_data_bytes, \
     PKCS1v15_PADDING, PSS_PADDING, rsa_verify
 from tests.data.common_data import eidas_link_inputs, service_endpoints, credentials, paddings
@@ -25,10 +25,11 @@ def basic_demo():
         print(bcolors.OKBLUE + "\n\r--- EIDAS LINK DID JSON STRUCT ---\n\r" + bcolors.ENDC)
         print (eidas_link_did(eidas_link_input[3], eidas_link_input[0], bytes.fromhex(eidas_link_input[1]), eidas_link_input[2]))
 
-    """
     print(bcolors.HEADER + "\n2.- calling eidas get service endpoint struct " + bcolors.ENDC)
-    print (eidas_get_service_endpoint_struct(service_endpoints[0], service_endpoints[1]))
-    """
+    for service_endpoint in service_endpoints:
+        print(bcolors.OKBLUE + "\n\r--- EIDAS SERVICE ENDPOINT JSON STRUCT ---\n\r" + bcolors.ENDC)
+        print (eidas_get_service_endpoint(service_endpoint[0], service_endpoint[1]))
+
     print(bcolors.HEADER + "\n3.- calling eidas sign credential " + bcolors.ENDC)
     print (eidas_sign_credential(credentials[0]))
 
@@ -285,17 +286,14 @@ if __name__ == '__main__':
     start_time = time.time()
     print(bcolors.BOLD + "\n--- INIT EIDAS MAIN DEMO TEST SUITE ---\n\r" + bcolors.ENDC)
     
-    """
     print(bcolors.HEADER + "\n--- INIT BASIC DEMO TEST SUITE ---\n\r" + bcolors.ENDC)
     input("Press Enter to continue...")
     basic_demo()
-    """
 
     """
     print(bcolors.HEADER + "\n--- INIT CRYPTO HASH TEST SUITE ---\n\r" + bcolors.ENDC)
     input("Press Enter to continue...")
     test_crypto_hash_suite()
-    """
 
     print(bcolors.HEADER + "\n--- INIT CRYPTO TEST SUITE ---\n\r" + bcolors.ENDC)
     input("Press Enter to continue...")
@@ -311,6 +309,7 @@ if __name__ == '__main__':
         paddings,
         True
     )
+    """
     elapsed_time = time.time() - start_time
     print(bcolors.BOLD + "\n--- END EIDAS MAIN DEMO TEST SUITE ---\n\r" + bcolors.ENDC)
     print("--- Total time: " + bcolors.OKGREEN + str(round(elapsed_time, 2)) + " seconds " + \
