@@ -5,7 +5,7 @@
 from .utils.util import check_args
 from .utils.crypto import PSS_PADDING
 from .eidaslink import EIDASLink
-import json
+from .eidas_service import EIDASService
 
 def eidas_link_did(did, certificate, proof, padding = PSS_PADDING) -> str:
     """ 
@@ -13,27 +13,26 @@ def eidas_link_did(did, certificate, proof, padding = PSS_PADDING) -> str:
 
     Receives a DID, an eIDAS certificate, its proof of possession, and 
     optionally the padding of the signature proof (accepts PKCS#1 and PSS)
+
     Returns the JSON that needs to be stored on the Agent public Storage
     (i.e: an Identity Hub)
     """
     
     return EIDASLink(did, certificate, proof, padding).to_json()
 
-def eidas_get_service_endpoint_struct(storage_endpoint) -> str:
+def eidas_get_service_endpoint(did, service_endpoint) -> str:
     """ 
-    Contructs the JSON structure that needs to be added to the Issuer's DID Document
-    Receives a service endpoint where it is stored the issuer's 
-    eIDAS and DID linking information and returns the correspondent JSON
+    Contructs the JSON structure that needs to be added to the Issuer's 
+    DID Document Service Endpoint Section. 
+
+    Receives a did and a service endpoint where it is stored the issuer's 
+    eIDAS and DID linking information.
+
+    Returns the correspondent JSON to be added to the Service Endpoint 
+    Section of the Issuer's DID Document.
     """
-    check_args(storage_endpoint, str)
 
-     # TO DO 
-    '''
-    - construct a json structure with the given parameters and return it
-
-    '''
-
-    return ""
+    return EIDASService(did, service_endpoint).to_json()
 
 def eidas_sign_credential(json_credential) -> str:
     """ 

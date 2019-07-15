@@ -14,25 +14,25 @@ class EIDASService():
         self._did = did
         self._endpoint = endpoint
 
-def to_json(self) -> str:
+    def to_json(self) -> str:
+            """
+            Create a JSON representation of the model instance.
+
+            Returns:
+                A JSON representation of this message
+
+            """
+            return json.dumps(self._serialize(), indent=1)
+
+    def _serialize(self) -> str:
         """
-        Create a JSON representation of the model instance.
+        Dump current object to a JSON-compatible dictionary.
 
-        Returns:
-            A JSON representation of this message
-
+        Returns: 
+            dict representation of current eIDAS Service Endpoint
         """
-        return json.dumps(self._serialize(), indent=1)
-
-def _serialize(self) -> str:
-    """
-    Dump current object to a JSON-compatible dictionary.
-
-    Returns: 
-        dict representation of current eIDAS Service Endpoint
-    """
-    return {
-        "id": self._did + "#eidas",
-        "type": "EidasService",
-        "serviceEndpoint": self.endpoint
-    }
+        return {
+            "id": self._did + "#eidas",
+            "type": "EidasService",
+            "serviceEndpoint": self._endpoint
+            }

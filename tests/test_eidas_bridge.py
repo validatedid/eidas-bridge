@@ -3,7 +3,7 @@
 import pytest
 import json
 from eidas_bridge.eidas_bridge import eidas_link_did, \
-        eidas_get_service_endpoint_struct, eidas_sign_credential, eidas_verify_credential
+        eidas_get_service_endpoint, eidas_sign_credential, eidas_verify_credential
 from eidas_bridge.utils.util import timestamp
 from tests.data.common_data import all_type_dids, all_type_certificates, bad_type_proofs, \
         dids, bad_type_endpoints, service_endpoints, bad_type_credentials, credentials, \
@@ -20,18 +20,26 @@ def test_eidas_link_did_bad_types(did, certificate, proof):
 @pytest.mark.parametrize("eidas_link_input", eidas_link_inputs)
 def test_eidas_link_did(did, eidas_link_input):
         eidas_link = eidas_link_did(did, eidas_link_input[0], bytes.fromhex(eidas_link_input[1]), eidas_link_input[2])
-        expected = _to_json(did, eidas_link_input[0], bytes.fromhex(eidas_link_input[1]), eidas_link_input[2], get_created_timestamp(eidas_link)) 
+        expected = _to_json_eidas_link(did, eidas_link_input[0], bytes.fromhex(eidas_link_input[1]), eidas_link_input[2], get_created_timestamp(eidas_link)) 
         assert eidas_link == expected
 
+@pytest.mark.parametrize("did", all_type_dids)
 @pytest.mark.parametrize("storage_endpoint", bad_type_endpoints)
-def test_eidas_get_service_endpoint_struct_bad_types(storage_endpoint):
+def test_eidas_get_service_endpoint_bad_types(did, storage_endpoint):
     with pytest.raises(TypeError):
-        eidas_get_service_endpoint_struct(storage_endpoint)
+        eidas_get_service_endpoint(did, storage_endpoint)
 
 @pytest.mark.parametrize("service_endpoint", service_endpoints)
-def test_eidas_get_service_endpoint_struct(service_endpoint):
-    result = eidas_get_service_endpoint_struct(service_endpoint[1])
-    assert result == ""
+def test_eidas_get_service_endpoint(service_endpoint):
+        eidas_service = eidas_get_service_endpoint(
+            service_endpoint[0], # did
+            service_endpoint[1] # service endpoint
+        ) 
+        expected = _to_json_eidas_service(
+                service_endpoint[0], # did
+                service_endpoint[1] # service endpoint
+        )
+        assert eidas_service == expected
 
 @pytest.mark.parametrize("credential", bad_type_credentials)
 def test_eidas_sign_credential_bad_types(credential):
@@ -53,7 +61,7 @@ def test_eidas_verify_credential(credential):
     result = eidas_verify_credential(credential)
     assert result == "NOT VALID"
 
-def _to_json(did, x509cert, proof, padding, created) -> str:
+def _to_json_eidas_link(did, x509cert, proof, padding, created) -> str:
     """
     Create a JSON representation of the model instance.
 
@@ -61,9 +69,9 @@ def _to_json(did, x509cert, proof, padding, created) -> str:
         A JSON representation of this message
 
     """
-    return json.dumps(_serialize(did, x509cert, proof, padding, created), indent=2)
+    return json.dumps(_serialize_eidas_link(did, x509cert, proof, padding, created), indent=2)
 
-def _serialize(did, x509cert, proof, padding, created) -> str:
+def _serialize_eidas_link(did, x509cert, proof, padding, created) -> str:
     """
     Dump current object to a JSON-compatible dictionary.
 
@@ -82,6 +90,30 @@ def _serialize(did, x509cert, proof, padding, created) -> str:
                 "signatureValue": proof.hex()
             }
     }
+
+def _to_json_eidas_service(did, service_endpoint) -> str:
+    """
+    Create a JSON representation of the model instance.
+
+    Returns:
+        A JSON representation of this message
+
+    """
+    return json.dumps(_serialize_eidas_service(did, service_endpoint), indent=1)
+
+def _serialize_eidas_service(did, service_endpoint) -> str:
+    """
+    Dump current object to a JSON-compatible dictionary.
+
+    Returns:
+        dict representation of current EIDAS Service Endpoint
+
+    """
+    return {
+            "id": did + "#eidas",
+            "type": "EidasService",
+            "serviceEndpoint": service_endpoint
+            }
 
 def get_created_timestamp(eidas1: str) -> str:
         eidas_parsed = json.loads(eidas1)
