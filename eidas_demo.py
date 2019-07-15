@@ -6,7 +6,7 @@ from eidas_bridge.eidas_bridge import eidas_link_did, \
     eidas_get_service_endpoint_struct, eidas_sign_credential, eidas_verify_credential
 from eidas_bridge.utils.crypto import InvalidSignatureException, x509_load_certificate_from_data_bytes, \
     PKCS1v15_PADDING, PSS_PADDING, rsa_verify
-from tests.data.common_data import eidas_link_inputs, endpoints, credentials, paddings
+from tests.data.common_data import eidas_link_inputs, service_endpoints, credentials, paddings
 from tests.util import bcolors, print_object
 from tests.crypto import create_selfsigned_x509_certificate, store_rsa_key_and_x509cert_to_disk, \
     print_rsa_pub_key, print_x509cert, eidas_crypto_hash_byte, eidas_crypto_hash_str, \
@@ -25,9 +25,10 @@ def basic_demo():
         print(bcolors.OKBLUE + "\n\r--- EIDAS LINK DID JSON STRUCT ---\n\r" + bcolors.ENDC)
         print (eidas_link_did(eidas_link_input[3], eidas_link_input[0], bytes.fromhex(eidas_link_input[1]), eidas_link_input[2]))
 
+    """
     print(bcolors.HEADER + "\n2.- calling eidas get service endpoint struct " + bcolors.ENDC)
-    print (eidas_get_service_endpoint_struct(endpoints[0]))
-
+    print (eidas_get_service_endpoint_struct(service_endpoints[0], service_endpoints[1]))
+    """
     print(bcolors.HEADER + "\n3.- calling eidas sign credential " + bcolors.ENDC)
     print (eidas_sign_credential(credentials[0]))
 

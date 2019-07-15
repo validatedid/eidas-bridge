@@ -6,7 +6,7 @@ from eidas_bridge.eidas_bridge import eidas_link_did, \
         eidas_get_service_endpoint_struct, eidas_sign_credential, eidas_verify_credential
 from eidas_bridge.utils.util import timestamp
 from tests.data.common_data import all_type_dids, all_type_certificates, bad_type_proofs, \
-        dids, bad_type_endpoints, endpoints, bad_type_credentials, credentials, \
+        dids, bad_type_endpoints, service_endpoints, bad_type_credentials, credentials, \
         eidas_link_inputs
 
 @pytest.mark.parametrize("did", all_type_dids)
@@ -28,9 +28,9 @@ def test_eidas_get_service_endpoint_struct_bad_types(storage_endpoint):
     with pytest.raises(TypeError):
         eidas_get_service_endpoint_struct(storage_endpoint)
 
-@pytest.mark.parametrize("storage_endpoint", endpoints)
-def test_eidas_get_service_endpoint_struct(storage_endpoint):
-    result = eidas_get_service_endpoint_struct(storage_endpoint)
+@pytest.mark.parametrize("service_endpoint", service_endpoints)
+def test_eidas_get_service_endpoint_struct(service_endpoint):
+    result = eidas_get_service_endpoint_struct(service_endpoint[1])
     assert result == ""
 
 @pytest.mark.parametrize("credential", bad_type_credentials)

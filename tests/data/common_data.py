@@ -126,8 +126,11 @@ bad_type_proofs = [
     20
 ]
 
-endpoints = [
-    "http://service_endpoint.sample"
+service_endpoints = [
+    (
+        "did:sov:55GkHamhTU1ZbTbV2ab9DE", 
+        "http://service_endpoint.sample/did:sov:55GkHamhTU1ZbTbV2ab9DE/eidas"
+    )
 ]
 
 bad_type_endpoints = [
