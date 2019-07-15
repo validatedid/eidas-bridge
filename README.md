@@ -80,7 +80,7 @@ EIDAS Link DID JSON **sample** structure:
 }
 ```
 
-#### eidas_get_service_endpoint_struct
+#### eidas_get_service_endpoint
 ```python
 def eidas_get_service_endpoint(did, service_endpoint) -> str:
 ```
