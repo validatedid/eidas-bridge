@@ -7,6 +7,9 @@ import json
 class EIDASService():
     """ Represents an eIDAS Service Endpoint structure """
 
+    EIDAS_SERVICE_TYPE = "EidasService"
+    EIDAS_SERVICE_FRAGMENT = "#eidas"
+
     def __init__(self, did, endpoint):
         check_args(did, str)
         check_args(endpoint, str)
@@ -32,8 +35,8 @@ class EIDASService():
             dict representation of current eIDAS Service Endpoint
         """
         return {
-            "id": self._did + "#eidas",
-            "type": "EidasService",
+            "id": self._did + EIDASService.EIDAS_SERVICE_FRAGMENT,
+            "type": EIDASService.EIDAS_SERVICE_TYPE,
             "serviceEndpoint": self._endpoint
             }
     

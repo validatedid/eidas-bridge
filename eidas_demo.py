@@ -1,13 +1,14 @@
 # eidas_demo.py
 """ EIDAS LIBRARY DEMO TO TEST ALL API FUNCTIONS """
 
-import time
+import time, json
 from eidas_bridge.eidas_bridge import eidas_link_did, \
     eidas_get_service_endpoint, eidas_sign_credential, eidas_verify_credential, \
     EIDASNotSupportedException
 from eidas_bridge.utils.crypto import InvalidSignatureException, x509_load_certificate_from_data_bytes, \
     PKCS1v15_PADDING, PSS_PADDING, rsa_verify
-from tests.data.common_data import eidas_link_inputs, service_endpoints, credentials, paddings
+from tests.data.common_data import eidas_link_inputs, service_endpoints, credentials, paddings, \
+    did_documents
 from tests.util import bcolors, print_object
 from tests.crypto import create_selfsigned_x509_certificate, store_rsa_key_and_x509cert_to_disk, \
     print_rsa_pub_key, print_x509cert, eidas_crypto_hash_byte, eidas_crypto_hash_str, \
@@ -38,7 +39,7 @@ def basic_demo():
         print(bcolors.WARNING + "\n\r--- EIDAS Library function NOT supported yet. ---\n\r" + bcolors.ENDC)
 
     print(bcolors.HEADER + "\n4.- calling eidas verify credential " + bcolors.ENDC)
-    print (eidas_verify_credential(credentials[0]))
+    print (eidas_verify_credential(json.dumps(credentials[0]), json.dumps(did_documents[0])))
 
 """"""""""""""""""
 """ HASH TESTS """
