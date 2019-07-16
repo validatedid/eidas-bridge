@@ -100,18 +100,32 @@ Returns the correspondent JSON to be added to the Service Endpoint Section of th
 ```
 
 
-#### eidas_sign_credential
+#### eidas_sign_credential (Not Supported at this Phase 0.)
 ```python
 def eidas_sign_credential(json_credential) -> str:
 ```
 Checks the validity of the issuer's eIDAS certificate against a Trusted Service Provider and adds the corresponde response to the received credential JSON structure.
 
+Raises an `EIDASNotSupportedException` with the followint text:`eIDAS library call NOT supported.`
+
 #### eidas_verify_credential
 ```python
-def eidas_verify_credential(json_credential) -> str:
+def eidas_verify_credential(json_credential, json_did_document):
 ```
 Verifies that the credential issuer had a valid eIDAS certificate at the moment of issuing the passed credential.
-Returns: VALID or NOT VALID
+Throws `EIDASProofException` on signarure not valid.
+
+The current implementation does NOT support for DID resolution.
+
+The algorithm executes the following procedure:
+
+1. Get DID from the `json_credential` and from `did_document` and check they are the same
+2. Get `EIDASLink` service endpoint from `did_document`
+3. Retrieve the EIDAS Link json structure and check that the DID correspond to the one from `did_document`
+4. Verify signature with the public key of the EIDAS Link and the proof that contains
+5. Throw `EIDASProofException` on signarure not valid
+
+
 
 REQUISITES
 ==========
