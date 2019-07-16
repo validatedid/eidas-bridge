@@ -24,6 +24,16 @@ class EIDASLink():
 
         """ check signarure proof before finishing the object creation """
         self._check_proof()
+    
+    @classmethod
+    def from_json(cls, eidaslink_as_json: str) -> 'EIDASLink':
+        eidas_str = json.loads(eidaslink_as_json)
+        return cls(
+            did=eidas_str['did'], 
+            x509cert=eidas_str['certificate'].encode(),
+            proof=bytes.fromhex(eidas_str['proof']['signatureValue']),
+            padding=eidas_str['proof']['padding']
+        )
 
     def _check_proof(self):
         """ checks that the proof really corresponds to the signed hash of the DID 

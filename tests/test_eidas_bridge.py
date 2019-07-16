@@ -8,7 +8,7 @@ from eidas_bridge.eidas_bridge import eidas_link_did, \
 from eidas_bridge.utils.util import timestamp
 from tests.data.common_data import all_type_dids, all_type_certificates, bad_type_proofs, \
         dids, bad_type_endpoints, service_endpoints, bad_type_credentials, credentials, \
-        eidas_link_inputs
+        eidas_link_inputs, did_documents
 
 @pytest.mark.parametrize("did", all_type_dids)
 @pytest.mark.parametrize("certificate", all_type_certificates)
@@ -49,12 +49,13 @@ def test_eidas_sign_credential():
 @pytest.mark.parametrize("credential", bad_type_credentials)
 def test_eidas_verify_credential_bad_types(credential):
     with pytest.raises(TypeError):
-        eidas_verify_credential(credential)
+        eidas_verify_credential(credential, "")
 
 @pytest.mark.parametrize("credential", credentials)
-def test_eidas_verify_credential(credential):
-    result = eidas_verify_credential(credential)
-    assert result == "NOT VALID"
+@pytest.mark.parametrize("did_doc", did_documents)
+def test_eidas_verify_credential(credential, did_doc):
+        eidas_verify_credential(json.dumps(credential), json.dumps(did_doc))
+        pass
 
 def _to_json_eidas_link(did, x509cert, proof, padding, created) -> str:
     """

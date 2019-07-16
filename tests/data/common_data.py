@@ -130,6 +130,10 @@ service_endpoints = [
     (
         "did:sov:55GkHamhTU1ZbTbV2ab9DE", 
         "http://service_endpoint.sample/did:sov:55GkHamhTU1ZbTbV2ab9DE/eidas"
+    ),
+    (
+        "did:example:21tDAKCERh95uGgKbJNHYp",
+        "http://service_endpoint.sample/did:example:21tDAKCERh95uGgKbJNHYp/eidas"
     )
 ]
 
@@ -139,13 +143,45 @@ bad_type_endpoints = [
 ]
 
 credentials = [
-    "{this is a json credential}"
+    {
+        "@context": [
+            "https://www.w3.org/2018/credentials/v1",
+            "https://www.w3.org/2018/credentials/examples/v1"
+        ],
+        "id": "http://example.edu/credentials/3732",
+        "type": ["VerifiableCredential", "UniversityDegreeCredential"],
+        "credentialSubject": {
+            "id": "did:example:123456789abcdefghi",
+            "degree": {
+            "type": "BachelorDegree",
+            "name": "Bachelor of Science and Arts"
+            }
+        },
+        "proof": "proof"
+    }
 ] 
 
 bad_type_credentials = [
     b"\xd6\x98\x04\x88\xd2-\xc1D\x02\x15\xc9Z\x9bK \x8f\xe0\x8b5\xd0Z$",
     0
 ] 
+
+did_documents = [
+    {
+        "@context": "https://w3id.org/did/v1",
+        "id": "did:example:123456789abcdefghi",
+        "authentication": [{
+            "id": "did:example:123456789abcdefghi#keys-1",
+            "type": "RsaVerificationKey2018",
+            "controller": "did:example:123456789abcdefghi",
+            "publicKeyPem": "-----BEGIN PUBLIC KEY...END PUBLIC KEY-----\r\n"
+        }],
+        "service": [{
+            "type": "VerifiableCredentialService",
+            "serviceEndpoint": "https://example.com/vc/"
+        }]
+    }
+]
 
 bad_obj_type_paddings = [
     b"\xd6\x98\x04\x88\xd2-\xc1D\x02\x15\xc9Z\x9bK \x8f\xe0\x8b5\xd0Z$",
