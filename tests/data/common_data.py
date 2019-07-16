@@ -204,6 +204,22 @@ did_documents = [
     }
 ]
 
+bad_did_documents = [
+    {
+        "@context": "https://w3id.org/did/v1",
+        "authentication": [{
+            "id": "did:example:123456789abcdefghi#keys-1",
+            "type": "RsaVerificationKey2018",
+            "controller": "did:example:123456789abcdefghi",
+            "publicKeyPem": "-----BEGIN PUBLIC KEY...END PUBLIC KEY-----\r\n"
+        }],
+        "service": [{
+            "type": "VerifiableCredentialService",
+            "serviceEndpoint": "https://example.com/vc/"
+        }]
+    }
+]
+
 bad_obj_type_paddings = [
     b"\xd6\x98\x04\x88\xd2-\xc1D\x02\x15\xc9Z\x9bK \x8f\xe0\x8b5\xd0Z$",
     0
