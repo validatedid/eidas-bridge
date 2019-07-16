@@ -157,7 +157,7 @@ credentials = [
             "name": "Bachelor of Science and Arts"
             }
         },
-        "proof": "proof"
+        "proof": {}
     }
 ] 
 

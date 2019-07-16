@@ -15,3 +15,16 @@ class VerifiableCredential():
         """ Returns the Issuer's DID from the Verifiable Credential """
 
         return self._verifiable_credential['credentialSubject']['id']
+    
+    def to_json(self) -> str:
+        """
+        Create a JSON representation of the model instance.
+
+        Returns:
+            A JSON representation of this message
+
+        """
+
+        return json.dumps(self._verifiable_credential, indent=4)
+
+
