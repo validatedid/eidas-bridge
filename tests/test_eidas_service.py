@@ -26,3 +26,8 @@ def test_EIDASService_compare_jsons(eida_service):
         eida_service['serviceEndpoint']
         ).to_json()
     assert expected_json == output_json
+
+@pytest.mark.parametrize("eida_service", eidas_services)
+def test_get_endpoint(eida_service):
+    out_service = EIDASService(eida_service['id'], eida_service['serviceEndpoint'])
+    assert out_service.get_endpoint() == eida_service['serviceEndpoint']
