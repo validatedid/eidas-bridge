@@ -110,7 +110,7 @@ def eidas_verify_credential(json_credential, json_did_document):
         raise EIDASDIDMismatchException("Issuer's DID differs from the DID_Document's DID subject")
     
     # Creates an EIDAS Service Endpoint to retrieve the EIDAS Link DID Structure 
-    eidas_service = EIDASService(did_from_doc, did_document.get_eidas_service_endpoint())
+    eidas_service = did_document.get_eidas_service_endpoint()
     # checks the signature in the EIDAS Link constructor
     # Throws EIDASProofException on signarure not valid
     EIDASLink.from_json(eidas_service.get_eidas_link_did())

@@ -36,9 +36,9 @@ class DIDDocument():
         """ Returns the DID Subject from the DID Document """
         return self._did
     
-    def get_eidas_service_endpoint(self) -> str:
-        """ Returns the service endpoint to retrieve an EIDAS Link structure """
-        return self._eidas_service.get_endpoint()
+    def get_eidas_service_endpoint(self) -> EIDASService:
+        """ Returns an EIDAS Service to retrieve an EIDAS Link structure """
+        return self._eidas_service
 
     def _check_id_property_exist(self) -> str:
         """ checks for the id property and throws an exception otherwise """

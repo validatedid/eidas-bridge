@@ -11,12 +11,16 @@ class EIDASProofException(Exception):
 class EIDASLink():
     """ Represents an eIDAS Link structure """
 
-    def __init__(self, did, x509cert, proof, padding):
+    def __init__(self, did, x509cert, proof, padding, created = None):
         check_args(did, str)
         check_args(x509cert, bytes)
         check_args(proof, bytes)
         check_args_padding(padding, str)
 
+        if not created:
+            self._created = timestamp()
+        else:
+            self._created = created
         self._did = did
         self._x509cert = x509cert
         self._proof = proof
@@ -32,7 +36,8 @@ class EIDASLink():
             did=eidas_str['did'], 
             x509cert=eidas_str['certificate'].encode(),
             proof=bytes.fromhex(eidas_str['proof']['signatureValue']),
-            padding=eidas_str['proof']['padding']
+            padding=eidas_str['proof']['padding'],
+            created=eidas_str['created']
         )
 
     def _check_proof(self):
@@ -66,7 +71,7 @@ class EIDASLink():
         """
         return {
             "type": "EidasLink",
-            "created": timestamp(),
+            "created": self._created,
             "did": self._did,
             "certificate": "{}".format(self._x509cert.decode()),
             "proof": {

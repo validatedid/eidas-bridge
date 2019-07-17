@@ -17,6 +17,14 @@ class EIDASService():
         # remove all possible delimiters '#', ';', '?'
         self._did = clean_did(did)
         self._endpoint = endpoint
+    
+    @classmethod
+    def from_json(cls, eidas_service_as_json: str) -> 'EIDASService':
+        eidas_str = json.loads(eidas_service_as_json)
+        return cls(
+            did=clean_did(eidas_str['did']), 
+            endpoint=eidas_str['serviceEndpoint']
+        )
 
     def get_endpoint(self) -> str:
         return self._endpoint

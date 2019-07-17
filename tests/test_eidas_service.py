@@ -2,8 +2,10 @@
 
 import pytest, json
 from eidas_bridge.eidas_service import EIDASService
+from eidas_bridge.did_document import DIDDocument
+from eidas_bridge.eidaslink import EIDASLink
 from tests.data.common_data import all_type_dids, bad_type_endpoints, service_endpoints, \
-    eidas_services
+    eidas_services, eidas_link_and_diddocs_jsons
 from eidas_bridge.utils.util import clean_did
 
 @pytest.mark.parametrize("did", all_type_dids)
@@ -31,3 +33,17 @@ def test_EIDASService_compare_jsons(eida_service):
 def test_get_endpoint(eida_service):
     out_service = EIDASService(eida_service['id'], eida_service['serviceEndpoint'])
     assert out_service.get_endpoint() == eida_service['serviceEndpoint']
+
+@pytest.mark.parametrize("input_struct", eidas_link_and_diddocs_jsons[0])
+def test_get_eidas_link_did(input_struct):
+    
+    # get eidas service from the did doc and retrieve the eidas link structure
+    did_doc = DIDDocument(json.dumps(input_struct[0]))
+    eidas_service = did_doc.get_eidas_service_endpoint()
+    eidas_link_output = eidas_service.get_eidas_link_did()
+
+    # json eidas link expected
+    eidas_link_expected = json.dumps(input_struct[1], indent=2)
+
+    assert eidas_link_output == eidas_link_expected
+    
