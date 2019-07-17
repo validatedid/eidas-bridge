@@ -17,6 +17,9 @@ class EIDASService():
         self._did = did
         self._endpoint = endpoint
 
+    def get_endpoint(self) -> str:
+        return self._endpoint
+
     def to_json(self) -> str:
             """
             Create a JSON representation of the model instance.

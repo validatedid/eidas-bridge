@@ -38,7 +38,7 @@ class DIDDocument():
     
     def get_eidas_service_endpoint(self) -> str:
         """ Returns the service endpoint to retrieve an EIDAS Link structure """
-        return self._eidas_service
+        return self._eidas_service.get_endpoint()
 
     def _check_id_property_exist(self) -> str:
         """ checks for the id property and throws an exception otherwise """

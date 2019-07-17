@@ -25,6 +25,20 @@ def test_did_document(did_doc):
 def test_get_did(did_doc):
     assert DIDDocument(json.dumps(did_doc)).get_did() == did_doc['id']
 
+@pytest.mark.parametrize("did_doc", did_documents)
+def test_get_eidas_service_endpoint(did_doc):
+    
+    expected_endpoint = ""
+
+    # get eidas service block and then get its endpoint
+    for a_service in did_doc['service']:
+        if a_service['type'] == EIDASService.EIDAS_SERVICE_TYPE:
+            expected_endpoint = a_service['serviceEndpoint']
+    
+    output = DIDDocument(json.dumps(did_doc)).get_eidas_service_endpoint()
+
+    assert output == expected_endpoint
+
 @pytest.mark.parametrize("eidas_service", eidas_services)
 def test_set_eidas_service(eidas_service):
     output = _set_eidas_service(eidas_service).to_json()
