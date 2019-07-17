@@ -57,7 +57,7 @@ def eidas_sign_credential(json_credential) -> str:
     """
     raise EIDASNotSupportedException("eIDAS library call NOT supported.")
 
-def eidas_verify_credential(json_credential, json_did_document):
+def eidas_verify_credential(json_credential, json_did_document) -> str:
     """
     Verifies that the credential issuer had a valid eIDAS certificate 
     at the moment of issuing the passed credential.
@@ -114,3 +114,5 @@ def eidas_verify_credential(json_credential, json_did_document):
     # checks the signature in the EIDAS Link constructor
     # Throws EIDASProofException on signarure not valid
     EIDASLink.from_json(eidas_service.get_eidas_link_did())
+
+    return "VALID"

@@ -210,7 +210,7 @@ did_documents = [
         }, {
             "id": "did:example:21tDAKCERh95uGgKbJNHYp#eidas",
             "type": "EidasService",
-            "serviceEndpoint": "http://service_endpoint.sample/did:example:21tDAKCERh95uGgKbJNHYp/eidas"
+            "serviceEndpoint": "http://localhost:8000/did:example:21tDAKCERh95uGgKbJNHYp/eidas"
         }]
     }
 ]
@@ -364,7 +364,7 @@ eidas_link_and_diddocs_jsons = [
             }, {
                 "id": "did:sov:55GkHamhTU1ZbTbV2ab9DE#eidas",
                 "type": "EidasService",
-                "serviceEndpoint": "http://service_endpoint.sample/did:example:21tDAKCERh95uGgKbJNHYp/eidas"
+                "serviceEndpoint": "http://localhost:8000/did:example:21tDAKCERh95uGgKbJNHYp/eidas"
             }]
         },
         {
@@ -396,7 +396,7 @@ eidas_link_and_diddocs_jsons = [
             }, {
                 "id": "did:sov:55GkHamhTU1ZbTbV2ab9DE#eidas",
                 "type": "EidasService",
-                "serviceEndpoint": "http://service_endpoint.sample/did:example:21tDAKCERh95uGgKbJNHYp/eidas"
+                "serviceEndpoint": "http://localhost:8000/did:example:21tDAKCERh95uGgKbJNHYp/eidas"
             }]
         },
         {

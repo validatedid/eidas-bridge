@@ -34,9 +34,11 @@ def test_get_endpoint(eida_service):
     out_service = EIDASService(eida_service['id'], eida_service['serviceEndpoint'])
     assert out_service.get_endpoint() == eida_service['serviceEndpoint']
 
-@pytest.mark.parametrize("input_struct", eidas_link_and_diddocs_jsons[0])
-def test_get_eidas_link_did(input_struct):
+def test_get_eidas_link_did():
     
+    # getting the first element that is the one it is saved in the server
+    input_struct = eidas_link_and_diddocs_jsons[0]
+
     # get eidas service from the did doc and retrieve the eidas link structure
     did_doc = DIDDocument(json.dumps(input_struct[0]))
     eidas_service = did_doc.get_eidas_service_endpoint()
