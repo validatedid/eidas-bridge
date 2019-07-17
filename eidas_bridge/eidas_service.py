@@ -1,7 +1,7 @@
 # eidas_service.py
 """ Represents an eIDAS Service Endpoint structure """
 
-from .utils.util import check_args
+from .utils.util import check_args, clean_did
 import json
 
 class EIDASService():
@@ -14,7 +14,8 @@ class EIDASService():
         check_args(did, str)
         check_args(endpoint, str)
 
-        self._did = did
+        # remove all possible delimiters '#', ';', '?'
+        self._did = clean_did(did)
         self._endpoint = endpoint
 
     def get_endpoint(self) -> str:

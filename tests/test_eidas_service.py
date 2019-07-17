@@ -1,8 +1,10 @@
 # test_eidas_service.py
 
-import pytest
+import pytest, json
 from eidas_bridge.eidas_service import EIDASService
-from tests.data.common_data import all_type_dids, bad_type_endpoints, service_endpoints
+from tests.data.common_data import all_type_dids, bad_type_endpoints, service_endpoints, \
+    eidas_services
+from eidas_bridge.utils.util import clean_did
 
 @pytest.mark.parametrize("did", all_type_dids)
 @pytest.mark.parametrize("service_endpoint", bad_type_endpoints)
@@ -10,8 +12,17 @@ def test_EIDASService_class_bad_types(did, service_endpoint):
     with pytest.raises(TypeError):
         EIDASService(did, service_endpoint)
 
-@pytest.mark.parametrize("service_endpoint", service_endpoints)
-def test_EIDASService_class(service_endpoint):
-    eidas_service = EIDASService(service_endpoint[0], service_endpoint[1])
-    assert eidas_service._did == service_endpoint[0]
-    assert eidas_service._endpoint == service_endpoint[1]
+@pytest.mark.parametrize("eida_service", eidas_services)
+def test_EIDASService_class(eida_service):
+    out_service = EIDASService(eida_service['id'], eida_service['serviceEndpoint'])
+    assert out_service._did == clean_did(eida_service['id'])
+    assert out_service._endpoint == eida_service['serviceEndpoint']
+
+@pytest.mark.parametrize("eida_service", eidas_services)
+def test_EIDASService_compare_jsons(eida_service):
+    expected_json = json.dumps(eida_service, indent=1)
+    output_json = EIDASService(
+        eida_service['id'], 
+        eida_service['serviceEndpoint']
+        ).to_json()
+    assert expected_json == output_json
