@@ -67,9 +67,9 @@ class DIDDocument():
 """"""""""""""""""
 """ AUX METHODS """
 """"""""""""""""""
-def _get_services(services: dict) -> (List[Service], EIDASService):
+def _get_services(services: list) -> (List[Service], EIDASService):
     """ Get a List of Service objects from the service property of a DID Document """
-    list_services = None
+    list_services = []
     eidas_service = None
 
     for a_service in services:
@@ -94,8 +94,8 @@ def _set_eidas_service(a_service: dict) -> EIDASService:
 
     if a_service['type'] == EIDASService.EIDAS_SERVICE_TYPE:
         eidas_service = EIDASService (
-            a_service['id'],
-            a_service['serviceEndpoint']
+            did = get_did_in_service(a_service['id']),
+            endpoint = a_service['serviceEndpoint']
         )
     
     return eidas_service

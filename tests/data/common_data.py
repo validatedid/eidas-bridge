@@ -198,8 +198,13 @@ did_documents = [
             "publicKeyPem": "-----BEGIN PUBLIC KEY...END PUBLIC KEY-----\r\n"
         }],
         "service": [{
+            "id": "did:example:123456789abcdefghi#vc",
             "type": "VerifiableCredentialService",
             "serviceEndpoint": "https://example.com/vc/"
+        }, {
+            "id": "did:example:21tDAKCERh95uGgKbJNHYp#eidas",
+            "type": "EidasService",
+            "serviceEndpoint": "http://service_endpoint.sample/did:example:21tDAKCERh95uGgKbJNHYp/eidas"
         }]
     }
 ]
@@ -214,6 +219,22 @@ bad_did_documents = [
             "publicKeyPem": "-----BEGIN PUBLIC KEY...END PUBLIC KEY-----\r\n"
         }],
         "service": [{
+            "id": "did:example:123456789abcdefghi#vc",
+            "type": "VerifiableCredentialService",
+            "serviceEndpoint": "https://example.com/vc/"
+        }]
+    },
+    {
+        "@context": "https://w3id.org/did/v1",
+        "id": "did:example:123456789abcdefghi",
+        "authentication": [{
+            "id": "did:example:123456789abcdefghi#keys-1",
+            "type": "RsaVerificationKey2018",
+            "controller": "did:example:123456789abcdefghi",
+            "publicKeyPem": "-----BEGIN PUBLIC KEY...END PUBLIC KEY-----\r\n"
+        }],
+        "service": [{
+            "id": "did:example:123456789abcdefghi#vc",
             "type": "VerifiableCredentialService",
             "serviceEndpoint": "https://example.com/vc/"
         }]
@@ -238,4 +259,83 @@ crypto_testdata = [
     ("55GkHamhTU1ZbTbV2ab9DE", "9f4fc75928e784dbe2e5a33500aaa08a11906b02ef38309bf23208dca4452ef8"),
     ("did:sov:55GkHamhTU1ZbTbV2ab9DE","32eaebf15929b44167130a124c73b4652f122b9fc92ef5bde91a32f70c2bf049"),
     ("did:test:abcdefghijkl","eff857db6f037dec456ab0802998313059731f39a3f45b72413af30610f79f8c")
+]
+
+eidas_services = [
+    {
+        "id": "did:sov:55GkHamhTU1ZbTbV2ab9DE#eidas",
+        "type": "EidasService",
+        "serviceEndpoint": "http://service_endpoint.sample/did:sov:55GkHamhTU1ZbTbV2ab9DE/eidas"
+    },
+    {
+        "id": "did:example:21tDAKCERh95uGgKbJNHYp#eidas",
+        "type": "EidasService",
+        "serviceEndpoint": "http://service_endpoint.sample/did:example:21tDAKCERh95uGgKbJNHYp/eidas"
+    }
+]
+
+did_doc_services = [
+    {
+        "id": "did:example:123456789abcdefghi#openid",
+        "type": "OpenIdConnectVersion1.0Service",
+        "serviceEndpoint": "https://openid.example.com/"
+    }, 
+    {
+        "id": "did:example:123456789abcdefghi#vcr",
+        "type": "CredentialRepositoryService",
+        "serviceEndpoint": "https://repository.example.com/service/8377464"
+    }, 
+    {
+        "id": "did:example:123456789abcdefghi#xdi",
+        "type": "XdiService",
+        "serviceEndpoint": "https://xdi.example.com/8377464"
+    }, 
+    {
+        "id": "did:example:123456789abcdefghi#agent",
+        "type": "AgentService",
+        "serviceEndpoint": "https://agent.example.com/8377464"
+    }, 
+    {
+        "id": "did:example:123456789abcdefghi#hub",
+        "type": "HubService",
+        "serviceEndpoint": "https://hub.example.com/.identity/did:example:0123456789abcdef/"
+    }, 
+    {
+        "id": "did:example:123456789abcdefghi#messages",
+        "type": "MessagingService",
+        "serviceEndpoint": "https://example.com/messages/8377464"
+    }, 
+    {
+        "id": "did:example:123456789abcdefghi#inbox",
+        "type": "SocialWebInboxService",
+        "serviceEndpoint": "https://social.example.com/83hfh37dj",
+        "description": "My public social inbox",
+            "spamCost": {
+            "amount": "0.50",
+            "currency": "USD"
+        }
+    }, 
+    {
+        "id": "did:example:123456789abcdefghi#authpush",
+        "type": "DidAuthPushModeVersion1",
+        "serviceEndpoint": "http://auth.example.com/did:example:123456789abcdefg"
+    },
+    {
+        "id": "did:sov:55GkHamhTU1ZbTbV2ab9DE#eidas",
+        "type": "EidasService",
+        "serviceEndpoint": "http://service_endpoint.sample/did:sov:55GkHamhTU1ZbTbV2ab9DE/eidas"
+    }
+]
+
+did_doc_services_no_eidas = [
+    {
+        "id": "did:example:123456789abcdefghi#openid",
+        "type": "OpenIdConnectVersion1.0Service",
+        "serviceEndpoint": "https://openid.example.com/"
+    }, 
+    {
+        "id": "did:example:123456789abcdefghi#vcr",
+        "type": "CredentialRepositoryService",
+        "serviceEndpoint": "https://repository.example.com/service/8377464"
+    }
 ]

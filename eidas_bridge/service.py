@@ -17,6 +17,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 """
 
+""" 
+    Adapted from Aries Cloud Agent Python: https://github.com/hyperledger/aries-cloudagent-python/blob/master/aries_cloudagent/messaging/connections/models/diddoc/service.py
+"""
+
 class Service:
     """
     Service specification to embed in DID document.
@@ -82,7 +86,7 @@ class Service:
         """Return dict representation of service to embed in DID document."""
 
         return {
-            "id": self.id, 
+            "id": self.did + "#" + self.id, 
             "type": self.type, 
             "serviceEndpoint": self.endpoint
         }
