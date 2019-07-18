@@ -54,8 +54,7 @@ def test_eidas_verify_credential_bad_types(credential):
 @pytest.mark.parametrize("credential", credentials)
 @pytest.mark.parametrize("did_doc", did_documents)
 def test_eidas_verify_credential(credential, did_doc):
-        eidas_verify_credential(json.dumps(credential), json.dumps(did_doc))
-        pass
+        assert eidas_verify_credential(json.dumps(credential), json.dumps(did_doc)) == "VALID"
 
 def _to_json_eidas_link(did, x509cert, proof, padding, created) -> str:
     """
