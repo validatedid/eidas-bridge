@@ -2,7 +2,6 @@
 """ Auxiliary functions """
 """ some functions extracted from https://github.com/hyperledger/aries-cloudagent-python/blob/master/aries_cloudagent/messaging/connections/models/diddoc/util.py """
 
-
 import datetime
 
 def timestamp():
@@ -17,10 +16,6 @@ def get_did_in_service(uri_did:str) -> str:
 
 def get_fragment_in_service(uri_did:str) -> str:
         return resource(uri_did)[1]
-
-#def split_did(did:str) -> list:
-#        return did.split('#')
-
 
 def clean_did(ref: str) -> str:
     """ extract the resource for an identifier, 
