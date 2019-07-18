@@ -37,7 +37,7 @@ $ source env/bin/activate
 
 Execute `eidas_demo`:
 ```sh
-$ python eidas_demo.py
+$ python demo/eidas_demo.py
 ```
 
 #### Running Pytest suite tests
@@ -48,6 +48,7 @@ $ python eidas_demo.py
 ##### Test execution
 
 ```sh
+$ python demo/server.py
 $ pytest
 ```
 
@@ -106,7 +107,7 @@ def eidas_sign_credential(json_credential) -> str:
 ```
 Checks the validity of the issuer's eIDAS certificate against a Trusted Service Provider and adds the corresponde response to the received credential JSON structure.
 
-Raises an `EIDASNotSupportedException` with the followint text:`eIDAS library call NOT supported.`
+Raises an `EIDASNotSupportedException` with the following text:`eIDAS library call NOT supported.`
 
 #### eidas_verify_credential
 ```python
@@ -123,9 +124,7 @@ The algorithm executes the following procedure:
 2. Get `EIDASLink` service endpoint from `did_document`
 3. Retrieve the EIDAS Link json structure and check that the DID correspond to the one from `did_document`
 4. Verify signature with the public key of the EIDAS Link and the proof that contains
-5. Throw `EIDASProofException` on signarure not valid
-
-
+5. Return `VALID` or throw `EIDASProofException` on signature not valid
 
 REQUISITES
 ==========
@@ -146,8 +145,8 @@ ROADMAP
 - ~~Create a Readme.md to explain each API call~~
 
 ### Step 0
-- Code the Unit test for each API function
-- Develop the basic functionality for each API call (no outside interaction)
+- ~~Code the Unit test for each API function~~
+- ~~Develop the basic functionality for each API call (no outside interaction)~~
 - Expose the API to an Open API / Swapper REST API
 
 ### Step 1
