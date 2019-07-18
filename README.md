@@ -37,7 +37,7 @@ $ source env/bin/activate
 
 Execute `eidas_demo`:
 ```sh
-$ python demo/eidas_demo.py
+$ python eidas_demo.py
 ```
 
 #### Running Pytest suite tests
@@ -48,7 +48,6 @@ $ python demo/eidas_demo.py
 ##### Test execution
 
 ```sh
-$ python demo/server.py
 $ pytest
 ```
 
