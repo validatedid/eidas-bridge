@@ -1,7 +1,7 @@
 # eidas_demo.py
 """ EIDAS LIBRARY DEMO TO TEST ALL API FUNCTIONS """
 
-import time, json
+import time, json, threading
 from eidas_bridge.eidas_bridge import eidas_link_did, \
     eidas_get_service_endpoint, eidas_sign_credential, eidas_verify_credential, \
     EIDASNotSupportedException
@@ -9,7 +9,7 @@ from eidas_bridge.utils.crypto import InvalidSignatureException, x509_load_certi
     PKCS1v15_PADDING, PSS_PADDING, rsa_verify
 from tests.data.common_data import eidas_link_inputs, service_endpoints, credentials, paddings, \
     did_documents
-from tests.util import bcolors, print_object
+from tests.util import bcolors, print_object, LocalServer
 from tests.crypto import create_selfsigned_x509_certificate, store_rsa_key_and_x509cert_to_disk, \
     print_rsa_pub_key, print_x509cert, eidas_crypto_hash_byte, eidas_crypto_hash_str, \
     eidas_crypto_hash_hex, rsa_load_private_key_from_file, x509_load_certificate_from_file, \
@@ -283,14 +283,14 @@ def test_crypto_suite_loop(tests_to_execute, path_to_dir_to_store, path_to_key_f
                 padding, # padding type on new signatures
                 bprint
             )
+def init_server():
+    server = LocalServer()
+    server.start_server_localhost()
 
-""""""""""""
-""" MAIN """
-""""""""""""
-if __name__ == '__main__':
+def main_tests():
     start_time = time.time()
     print(bcolors.BOLD + "\n--- INIT EIDAS MAIN DEMO TEST SUITE ---\n\r" + bcolors.ENDC)
-    
+
     print(bcolors.HEADER + "\n--- INIT BASIC DEMO TEST SUITE ---\n\r" + bcolors.ENDC)
     input("Press Enter to continue...")
     basic_demo()
@@ -319,3 +319,21 @@ if __name__ == '__main__':
     print(bcolors.BOLD + "\n--- END EIDAS MAIN DEMO TEST SUITE ---\n\r" + bcolors.ENDC)
     print("--- Total time: " + bcolors.OKGREEN + str(round(elapsed_time, 2)) + " seconds " + \
         bcolors.ENDC + "---\n\r")
+
+
+""""""""""""
+""" MAIN """
+""""""""""""
+if __name__ == '__main__':
+    server_thread = threading.Thread(target=init_server, daemon=True)
+    demo_thread = threading.Thread(target=main_tests)
+
+    # launch localhost server
+    server_thread.start()
+    # check if server started
+    if server_thread.is_alive():
+        # launch demo
+        demo_thread.start()
+
+
+    

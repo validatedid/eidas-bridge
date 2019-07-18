@@ -7,6 +7,7 @@ from eidas_bridge.eidaslink import EIDASLink
 from tests.data.common_data import all_type_dids, bad_type_endpoints, service_endpoints, \
     eidas_services, eidas_link_and_diddocs_jsons
 from eidas_bridge.utils.util import clean_did
+from .util import start_server_thread
 
 @pytest.mark.parametrize("did", all_type_dids)
 @pytest.mark.parametrize("service_endpoint", bad_type_endpoints)
@@ -35,17 +36,19 @@ def test_get_endpoint(eida_service):
     assert out_service.get_endpoint() == eida_service['serviceEndpoint']
 
 def test_get_eidas_link_did():
-    
-    # getting the first element that is the one it is saved in the server
-    input_struct = eidas_link_and_diddocs_jsons[0]
+    # run server daemon thread
+    if start_server_thread():
+        # getting the first element that is the one it is saved in the server
+        input_struct = eidas_link_and_diddocs_jsons[0]
 
-    # get eidas service from the did doc and retrieve the eidas link structure
-    did_doc = DIDDocument(json.dumps(input_struct[0]))
-    eidas_service = did_doc.get_eidas_service_endpoint()
-    eidas_link_output = eidas_service.get_eidas_link_did()
+        # get eidas service from the did doc and retrieve the eidas link structure
+        did_doc = DIDDocument(json.dumps(input_struct[0]))
+        eidas_service = did_doc.get_eidas_service_endpoint()
+        eidas_link_output = eidas_service.get_eidas_link_did()
 
-    # json eidas link expected
-    eidas_link_expected = json.dumps(input_struct[1], indent=2)
+        # json eidas link expected
+        eidas_link_expected = json.dumps(input_struct[1], indent=2)
 
-    assert eidas_link_output == eidas_link_expected
-    
+        assert eidas_link_output == eidas_link_expected
+    else:
+        assert False

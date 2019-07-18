@@ -18,6 +18,11 @@ class RequestHandler(BaseHTTPRequestHandler):
             self.wfile.write(json.dumps(eidas_data, indent=2).encode())
         return
 
+def start_server():
+    server = HTTPServer(('localhost', 8000), RequestHandler)
+    print('Starting server at http://localhost:8000')
+    server.serve_forever()
+
 if __name__ == '__main__':
     server = HTTPServer(('localhost', 8000), RequestHandler)
     print('Starting server at http://localhost:8000')

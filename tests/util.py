@@ -1,8 +1,8 @@
 # util.py
 """ data and functions to better testing """
 
-import base58
-import base64
+import base58, base64, threading
+from demo.server import start_server
 
 class bcolors:
     HEADER = '\033[95m'
@@ -39,3 +39,29 @@ def bytes_to_b58(val: bytes) -> str:
 
 def print_object(input_obj):
     print("{}".format(input_obj.decode()))
+
+class LocalServer():
+    
+    def __init__(self):
+        self.server_started = False
+
+    def start_server_localhost(self):
+        """ Start localhost server to retrieve EIDAS LINK DID structure """
+        if not self.server_started:
+            self.server_started = True
+            start_server()
+
+def _init_server():
+    server = LocalServer()
+    server.start_server_localhost()
+
+def start_server_thread() -> bool:
+    server_thread = threading.Thread(target=_init_server, daemon=True)
+    
+    # launch localhost server
+    server_thread.start()
+    # check if server started
+    if server_thread.is_alive():
+        return True
+    else:
+        return False
