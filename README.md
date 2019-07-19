@@ -11,13 +11,13 @@ Quick Start Guide
 #### Requirements
 
 - Python 3.6 or higher
-- Cryptograhic libraries with RSA support and X509 capabilities
+- Cryptograhic libraries with RSA support and X509 capabilities. This library will be auto-installed with `eidas_bridge` package
   - In python use `cryptography`, an easy-to-use library that contains the required crypto & x509 functions:
    ```sh
     $ pip install cryptography
     ```
 
-#### Running the included demo
+#### Running the included demo (from github repo)
 
 Clone the repository
 ```sh
@@ -35,9 +35,39 @@ $ python3 -m venv env
 $ source env/bin/activate
 ```
 
+Install required `requests` library:
+- `requests` library (just for testing and demo)
+   ```sh
+    $ pip install requests
+    ```
+
 Execute `eidas_demo`:
 ```sh
-$ python eidas_demo.py
+$ python demo/eidas_demo.py
+```
+
+
+#### Installing eidas_bridge library
+
+Move to the base directory (example: `test-eidas-bridge`)
+```sh
+$ cd test-eidas-bridge
+```
+
+Create and activate python virtual environment:
+```sh
+$ python3 -m venv env
+$ source env/bin/activate
+```
+
+Install `eidas-bridge`:
+ ```sh
+  $ python -m pip install [path_to_the_eidas_bridge_lib_file]/dist/eidas_bridge-0.1.0-py3-none-any.whl
+  ```
+If you want to test the demo, download demo directory from github repo, install required `requests` library and execute `eidas_demo.py`:
+```sh
+$ pip install requests
+$ python demo/eidas_demo.py
 ```
 
 #### Running Pytest suite tests
