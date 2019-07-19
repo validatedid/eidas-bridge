@@ -3,7 +3,7 @@
 import pytest, json
 from eidas_bridge.did_document import DIDDocument, EIDASDIDDocNoSubjectIdException, \
     EIDASServiceEndpointException, _set_eidas_service, _get_services
-from tests.data.common_data import did_documents, bad_did_documents, eidas_services, \
+from demo.data.common_data import did_documents, bad_did_documents, eidas_services, \
         did_doc_services, did_doc_services_no_eidas
 from eidas_bridge.eidas_service import EIDASService
 

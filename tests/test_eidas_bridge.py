@@ -6,10 +6,10 @@ from eidas_bridge.eidas_bridge import eidas_link_did, \
         eidas_get_service_endpoint, eidas_sign_credential, eidas_verify_credential, \
         EIDASNotSupportedException
 from eidas_bridge.utils.util import timestamp
-from tests.data.common_data import all_type_dids, all_type_certificates, bad_type_proofs, \
+from demo.data.common_data import all_type_dids, all_type_certificates, bad_type_proofs, \
         dids, bad_type_endpoints, service_endpoints, bad_type_credentials, credentials, \
         eidas_link_inputs, did_documents
-from .util import start_server_thread
+from demo.util.util import start_server_thread
 
 @pytest.mark.parametrize("did", all_type_dids)
 @pytest.mark.parametrize("certificate", all_type_certificates)

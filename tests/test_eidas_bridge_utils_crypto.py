@@ -4,7 +4,7 @@
 import pytest
 from cryptography import x509
 from cryptography.hazmat.primitives import serialization
-from tests.data.common_data import eidas_link_inputs, bad_obj_type_paddings, paddings, bad_type_paddings, \
+from demo.data.common_data import eidas_link_inputs, bad_obj_type_paddings, paddings, bad_type_paddings, \
     PKCS1v15_PADDING, PSS_PADDING
 from eidas_bridge.utils.crypto import x509_load_certificate_from_data_bytes, check_args_padding, \
         InvalidPaddingException, InvalidSignatureException, get_public_key_from_x509cert_obj, \

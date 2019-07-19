@@ -1,5 +1,9 @@
 # eidas_demo.py
 """ EIDAS LIBRARY DEMO TO TEST ALL API FUNCTIONS """
+import os,sys,inspect
+currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+parentdir = os.path.dirname(currentdir)
+sys.path.insert(0,parentdir) 
 
 import time, json, threading
 from eidas_bridge.eidas_bridge import eidas_link_did, \
@@ -7,10 +11,10 @@ from eidas_bridge.eidas_bridge import eidas_link_did, \
     EIDASNotSupportedException
 from eidas_bridge.utils.crypto import InvalidSignatureException, x509_load_certificate_from_data_bytes, \
     PKCS1v15_PADDING, PSS_PADDING, rsa_verify
-from tests.data.common_data import eidas_link_inputs, service_endpoints, credentials, paddings, \
+from data.common_data import eidas_link_inputs, service_endpoints, credentials, paddings, \
     did_documents
-from tests.util import bcolors, print_object, LocalServer
-from tests.crypto import create_selfsigned_x509_certificate, store_rsa_key_and_x509cert_to_disk, \
+from util.util import bcolors, print_object, LocalServer
+from util.crypto import create_selfsigned_x509_certificate, store_rsa_key_and_x509cert_to_disk, \
     print_rsa_pub_key, print_x509cert, eidas_crypto_hash_byte, eidas_crypto_hash_str, \
     eidas_crypto_hash_hex, rsa_load_private_key_from_file, x509_load_certificate_from_file, \
     x509_get_PEM_certificate_from_obj, print_rsa_priv_key, rsa_sign, load_pkcs12_file
@@ -295,7 +299,6 @@ def main_tests():
     input("Press Enter to continue...")
     basic_demo()
 
-    """
     print(bcolors.HEADER + "\n--- INIT CRYPTO HASH TEST SUITE ---\n\r" + bcolors.ENDC)
     input("Press Enter to continue...")
     test_crypto_hash_suite()
@@ -314,7 +317,7 @@ def main_tests():
         paddings,
         True
     )
-    """
+    
     elapsed_time = time.time() - start_time
     print(bcolors.BOLD + "\n--- END EIDAS MAIN DEMO TEST SUITE ---\n\r" + bcolors.ENDC)
     print("--- Total time: " + bcolors.OKGREEN + str(round(elapsed_time, 2)) + " seconds " + \

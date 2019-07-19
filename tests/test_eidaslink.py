@@ -2,7 +2,7 @@
 
 import pytest
 from eidas_bridge.eidaslink import EIDASLink
-from tests.data.common_data import all_type_dids, all_type_certificates, bad_type_proofs, \
+from demo.data.common_data import all_type_dids, all_type_certificates, bad_type_proofs, \
     dids, bad_obj_type_paddings, bad_type_paddings, eidas_link_inputs
 from eidas_bridge.utils.crypto import InvalidPaddingException
 

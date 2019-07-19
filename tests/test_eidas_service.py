@@ -4,10 +4,10 @@ import pytest, json
 from eidas_bridge.eidas_service import EIDASService
 from eidas_bridge.did_document import DIDDocument
 from eidas_bridge.eidaslink import EIDASLink
-from tests.data.common_data import all_type_dids, bad_type_endpoints, service_endpoints, \
+from demo.data.common_data import all_type_dids, bad_type_endpoints, service_endpoints, \
     eidas_services, eidas_link_and_diddocs_jsons
 from eidas_bridge.utils.util import clean_did
-from .util import start_server_thread
+from demo.util.util import start_server_thread
 
 @pytest.mark.parametrize("did", all_type_dids)
 @pytest.mark.parametrize("service_endpoint", bad_type_endpoints)
