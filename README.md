@@ -1,7 +1,7 @@
-eIDAS Bridge API DEMO
-=====================
+eIDAS Bridge Library
+====================
 
-This repo contains an implementation of a demo that exposes a RESTFUL API to call eIDAS Bridge Library in Python.
+This repo contains an implementation of an eIDAS Bridge Library in Python.
 
 An eIDAS Bridge links the european Trust and Legal Framework, named eIDAS (electronic IDentification, Authentication and trust Services), with the Self-Sovereign Identification (SSI) global trust framework, based on Decentralized IDentifers, or DIDs.
 
@@ -16,10 +16,6 @@ Quick Start Guide
    ```sh
     $ pip install cryptography
     ```
-- Libraries for REST API:
-```sh
-$ pip install install flask flask-jsonpify flask-sqlalchemy flask-restful
-```
 
 #### Running the included demo (from github repo)
 
@@ -83,6 +79,27 @@ $ python demo/eidas_demo.py
 
 ```sh
 $ pytest
+```
+
+eIDAS Bridge API DEMO
+=====================
+
+Implementation of a demo that exposes a RESTFUL API to call eIDAS Bridge Library in Python.
+
+Quick Start Guide
+=================
+
+#### Requirements
+
+- Python 3.6 or higher
+- Cryptograhic libraries with RSA support and X509 capabilities. This library will be auto-installed with `eidas_bridge` package
+  - In python use `cryptography`, an easy-to-use library that contains the required crypto & x509 functions:
+   ```sh
+    $ pip install cryptography
+    ```
+- Libraries for REST API:
+```sh
+$ pip install install flask flask-jsonpify flask-sqlalchemy flask-restful
 ```
 
 eIDAS Bridge Library calls
