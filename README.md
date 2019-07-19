@@ -16,6 +16,10 @@ Quick Start Guide
    ```sh
     $ pip install cryptography
     ```
+- `requests` library (just for testing and demo)
+   ```sh
+    $ pip install requests
+    ```
 
 #### Running the included demo
 
