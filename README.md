@@ -99,8 +99,34 @@ Quick Start Guide
     ```
 - Libraries for REST API:
 ```sh
-$ pip install install flask flask-jsonpify flask-sqlalchemy flask-restful
+$ pip install install flask flask-jsonpify flask-restplus
 ```
+
+#### Running the api demo (via direct url call)
+
+- Execute the python demo
+Execute `eidas_demo`:
+```sh
+$ python demo/eidas_api_demo.py
+```
+- API calls will be located at `http://localhost:5002`
+  - `/eidas/link-did`
+  - `/eidas/service-endpoint`
+  - `/eidas/sign-credential`
+  - `/eidas/verify-credential`
+
+#### Running the api demo (via swagger interface)
+
+- Execute the demo via flask executable
+```sh
+$ export FLASK_APP=demo/eidas_api_demo.py
+$ flask run
+```
+- SWAGGER API calls will be located at `http://localhost:5000` and will expose:
+  - `/eidas/link-did`
+  - `/eidas/service-endpoint`
+  - `/eidas/sign-credential`
+  - `/eidas/verify-credential`
 
 eIDAS Bridge Library calls
 ==========================
