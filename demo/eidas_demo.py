@@ -23,27 +23,50 @@ from util.crypto import create_selfsigned_x509_certificate, store_rsa_key_and_x5
 """ EIDAS BRIDGE TESTS """
 """"""""""""""""""""""""
 
+def demo_eidas_link_did() -> str:
+    for eidas_link_input in eidas_link_inputs:
+        print(bcolors.OKBLUE + "\n\r--- EIDAS LINK DID JSON STRUCT ---\n\r" + bcolors.ENDC)
+        return eidas_link_did(
+                eidas_link_input[3], 
+                eidas_link_input[0], 
+                bytes.fromhex(eidas_link_input[1]), 
+                eidas_link_input[2]
+            )
+
+def demo_eidas_get_service_endpoint() -> str:
+    for service_endpoint in service_endpoints:
+        print(bcolors.OKBLUE + "\n\r--- EIDAS SERVICE ENDPOINT JSON STRUCT ---\n\r" + bcolors.ENDC)
+        return eidas_get_service_endpoint(
+                service_endpoint[0], 
+                service_endpoint[1]
+            )
+
+def demo_eidas_sign_credential() -> str:
+    try:
+        return eidas_sign_credential(credentials[0])
+    except EIDASNotSupportedException:
+        return str(bcolors.WARNING + "\n\r--- EIDAS Library function NOT supported yet. ---\n\r" + bcolors.ENDC)
+
+def demo_eidas_verify_credential() -> str:
+    return eidas_verify_credential(
+            json.dumps(credentials[0]), 
+            json.dumps(did_documents[0])
+        )
+
 def basic_demo():
 
     """ Initial Demo: very basic """
     print(bcolors.HEADER + "1.- calling eidas link did: " + bcolors.ENDC)
-    for eidas_link_input in eidas_link_inputs:
-        print(bcolors.OKBLUE + "\n\r--- EIDAS LINK DID JSON STRUCT ---\n\r" + bcolors.ENDC)
-        print (eidas_link_did(eidas_link_input[3], eidas_link_input[0], bytes.fromhex(eidas_link_input[1]), eidas_link_input[2]))
+    print(demo_eidas_link_did())
 
     print(bcolors.HEADER + "\n2.- calling eidas get service endpoint struct " + bcolors.ENDC)
-    for service_endpoint in service_endpoints:
-        print(bcolors.OKBLUE + "\n\r--- EIDAS SERVICE ENDPOINT JSON STRUCT ---\n\r" + bcolors.ENDC)
-        print (eidas_get_service_endpoint(service_endpoint[0], service_endpoint[1]))
+    print (demo_eidas_get_service_endpoint())
 
     print(bcolors.HEADER + "\n3.- calling eidas sign credential " + bcolors.ENDC)
-    try:
-        print (eidas_sign_credential(credentials[0]))
-    except EIDASNotSupportedException:
-        print(bcolors.WARNING + "\n\r--- EIDAS Library function NOT supported yet. ---\n\r" + bcolors.ENDC)
+    print(demo_eidas_sign_credential())
 
     print(bcolors.HEADER + "\n4.- calling eidas verify credential " + bcolors.ENDC)
-    print (eidas_verify_credential(json.dumps(credentials[0]), json.dumps(did_documents[0])))
+    print(demo_eidas_verify_credential())
 
 """"""""""""""""""
 """ HASH TESTS """
@@ -299,10 +322,10 @@ def main_tests():
     input("Press Enter to continue...")
     basic_demo()
 
-    print(bcolors.HEADER + "\n--- INIT CRYPTO HASH TEST SUITE ---\n\r" + bcolors.ENDC)
-    input("Press Enter to continue...")
-    test_crypto_hash_suite()
-
+    #print(bcolors.HEADER + "\n--- INIT CRYPTO HASH TEST SUITE ---\n\r" + bcolors.ENDC)
+    #input("Press Enter to continue...")
+    #test_crypto_hash_suite()
+    """
     print(bcolors.HEADER + "\n--- INIT CRYPTO TEST SUITE ---\n\r" + bcolors.ENDC)
     input("Press Enter to continue...")
     test_crypto_suite_loop(
@@ -317,7 +340,7 @@ def main_tests():
         paddings,
         True
     )
-    
+    """
     elapsed_time = time.time() - start_time
     print(bcolors.BOLD + "\n--- END EIDAS MAIN DEMO TEST SUITE ---\n\r" + bcolors.ENDC)
     print("--- Total time: " + bcolors.OKGREEN + str(round(elapsed_time, 2)) + " seconds " + \
