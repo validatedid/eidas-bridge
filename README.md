@@ -81,6 +81,27 @@ $ python demo/eidas_demo.py
 $ pytest
 ```
 
+eIDAS Bridge API DEMO
+=====================
+
+Implementation of a demo that exposes a RESTFUL API to call eIDAS Bridge Library in Python.
+
+Quick Start Guide
+=================
+
+#### Requirements
+
+- Python 3.6 or higher
+- Cryptograhic libraries with RSA support and X509 capabilities. This library will be auto-installed with `eidas_bridge` package
+  - In python use `cryptography`, an easy-to-use library that contains the required crypto & x509 functions:
+   ```sh
+    $ pip install cryptography
+    ```
+- Libraries for REST API:
+```sh
+$ pip install install flask flask-jsonpify flask-sqlalchemy flask-restful
+```
+
 eIDAS Bridge Library calls
 ==========================
 
