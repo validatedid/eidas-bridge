@@ -20,8 +20,8 @@ eidas = api.namespace('eidas', description="eIDAS bridge API calls")
 
 eidas_link_input_model = api.model('EIDASLink_in', {
     'did': fields.String(description="DID", required=True),
-    'certificate': fields.Raw(description="x509 certificate", required=True),
-    'proof': fields.Raw(description="DID-hashed signature with public key", required=True),
+    'certificate': fields.String(description="x509 certificate", required=True),
+    'proof': fields.String(description="DID-hashed signature with public key", required=True),
     'padding': fields.String(description="Signature padding: PKCS1-v1_5 or PSS. Default = PSS", default=PSS_PADDING)
 })
 
@@ -43,7 +43,8 @@ eidas_link_output_model = api.model('EIDASLink_out', {
 @eidas.route('/link-did')
 class EIDASLinkDID(Resource):
     @eidas.marshal_with(eidas_link_output_model)
-    def get(self):
+    @eidas.expect(eidas_link_input_model)
+    def post(self):
         """ 
         Link the Issuer DID with eIDAS certificate
 
@@ -53,12 +54,11 @@ class EIDASLinkDID(Resource):
         Returns the JSON that needs to be stored on the Agent public Storage
         (i.e: an Identity Hub)
         """
-
         output = eidas_link_did(
-                eidas_link_inputs[0][3], 
-                eidas_link_inputs[0][0], 
-                bytes.fromhex(eidas_link_inputs[0][1]), 
-                eidas_link_inputs[0][2]
+                request.json['did'], 
+                (request.json['certificate']).encode(), 
+                bytes.fromhex(request.json['proof']), 
+                request.json['padding']
             )
         return json.loads(output)
 
