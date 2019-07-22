@@ -57,7 +57,7 @@ def test_eidas_verify_credential_bad_types(credential):
 def test_eidas_verify_credential(credential, did_doc):
     # run server daemon thread
     if start_server_thread():
-        assert eidas_verify_credential(json.dumps(credential), json.dumps(did_doc)) == "VALID"
+        assert eidas_verify_credential(credential, did_doc) == "VALID"
     else:
         assert False
 

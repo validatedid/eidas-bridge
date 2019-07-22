@@ -4,13 +4,10 @@
 import json, threading
 from flask import Flask, request
 from flask_restplus import Resource, Api, fields
-from flask_jsonpify import jsonify
 from eidas_demo import init_server
 from eidas_bridge.eidas_bridge import eidas_link_did, eidas_get_service_endpoint, \
     eidas_sign_credential, eidas_verify_credential, EIDASNotSupportedException
 from eidas_bridge.utils.crypto import PSS_PADDING
-from data.common_data import eidas_link_inputs, service_endpoints, credentials, paddings, \
-    did_documents
 
 app = Flask(__name__)
 app.config['JSON_SORT_KEYS'] = False
@@ -111,13 +108,13 @@ eidas_service_input_model = api.model('EIDASService_in', {
         example="http://service_endpoint.sample/did:example:21tDAKCERh95uGgKbJNHYp/eidas")
 })
 
-eidas_service_output_model = api.model('EIDASService_out', {
+service_output_model = api.model('ServiceEndpoint', {
     'id': fields.String(
         description="Service Endpoint Identifier", 
         required=True,
         example="did:example:21tDAKCERh95uGgKbJNHYp#eidas"),
     'type': fields.String(
-        description="Service Endpoint type: should be EidasService", 
+        description="Service Endpoint type", 
         required=True,
         example="EidasService"),
     'serviceEndpoint': fields.String(
@@ -128,7 +125,7 @@ eidas_service_output_model = api.model('EIDASService_out', {
 
 @eidas.route('/service-endpoint')
 class EIDASServiceEndpoint(Resource):
-    @eidas.marshal_with(eidas_service_output_model)
+    @eidas.marshal_with(service_output_model)
     @eidas.expect(eidas_service_input_model)
     def post(self):
         """ 
@@ -209,7 +206,7 @@ credential_input_model = api.model('Credential_in', {
     'issuer': fields.String(
         description="Issuer DID", 
         required=True,
-        example="did:example:21tDAKCERh95uGgKbJNHYp"),
+        example="did:example:21tDAKCERh95uGgKbJNHY"),
     'issuanceDate': fields.String(
         description="Credential Issuance date timestamp", 
         required=False,
@@ -238,26 +235,75 @@ class EIDASSignCredential(Resource):
         except EIDASNotSupportedException:
             return "--- EIDAS Library function NOT supported yet. ---"
 
+auth_diddoc_model = api.model('AuthenticationDIDDocModel', {
+    'id': fields.String(
+        description="Authentication Identifier Key", 
+        required=True,
+        example="did:example:21tDAKCERh95uGgKbJNHY#keys-1"),
+    'type': fields.String(
+        description="Authentication Identifier Key type", 
+        required=True,
+        example="RsaVerificationKey2018"),
+    'controller': fields.String(
+        description="Owner of Identifier Key", 
+        required=True,
+        example="did:example:21tDAKCERh95uGgKbJNHY"),
+    'publicKeyPem': fields.String(
+        description="Public Key", 
+        required=True,
+        example="-----BEGIN PUBLIC KEY...END PUBLIC KEY-----\r\n"),
+})
+
+did_document_input_model = api.model('DIDDocument', {
+    '@context': fields.String(
+        description="Context attributes", 
+        required=True,
+        example='https://w3id.org/did/v1'),
+    'id': fields.String(
+        description="Decentralized IDentifier", 
+        required=True,
+        example="did:example:21tDAKCERh95uGgKbJNHY"),
+    'authentication': fields.List(fields.Nested(auth_diddoc_model), 
+        description="List of Authentication Mechanisms", 
+        required=True),
+    'service': fields.List(fields.Nested(service_output_model), 
+        description="List of Service Endpoints", 
+        required=True)
+})
+
+eidas_verify_credential_model = api.model('EIDASVerifyCredential', {
+    'credential': fields.Nested(
+        credential_input_model,
+        description="Verifiable Credential to verify", 
+        required=True),
+    'did_document': fields.Nested(
+        did_document_input_model, 
+        description="DID Document", 
+        required=True)
+})
+
 @eidas.route('/verify-credential')
 class EIDASVerifyCredential(Resource):
-    def get(self):
+    @eidas.expect(eidas_verify_credential_model)
+    def post(self):
         """
         Verifies that the credential issuer had a valid eIDAS certificate at the moment of issuing the passed credential.
 
-        Return "VALID" or Throws EIDASProofException on signarure not valid
+        Return "VALID" or Throws EIDASProofException on signature not valid
         """
-        server_thread = threading.Thread(target=init_server, daemon=True)
-
-        # launch localhost server
-        server_thread.start()
-        # check if server started
-        if server_thread.is_alive():
-            return eidas_verify_credential(
-                    json.dumps(credentials[0]), 
-                    json.dumps(did_documents[0])
-            )
-        else:
-            return "ERROR: Cannot start server"
+        
+        return eidas_verify_credential(
+            request.json['credential'], 
+            request.json['did_document']
+        )
 
 if __name__ == '__main__':
-     app.run(port='5002')
+    server_thread = threading.Thread(target=init_server, daemon=True)
+
+    # launch localhost server
+    server_thread.start()
+    # check if server started
+    if server_thread.is_alive():
+        # run demo
+        app.run(port='5002')
+     

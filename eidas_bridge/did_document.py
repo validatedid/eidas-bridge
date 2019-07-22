@@ -23,8 +23,8 @@ class DIDDocument():
     """ Represents a DID Document instance according to W3C spec """
 
     def __init__(self, json_did_document):
-        check_args(json_did_document, str)
-        self._did_document = json.loads(json_did_document)
+        check_args(json_did_document, dict)
+        self._did_document = json_did_document
         # checks for id property and returns it or throws an exception
         self._did = self._check_id_property_exist()
         # checks for service property

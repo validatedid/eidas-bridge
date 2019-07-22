@@ -42,7 +42,7 @@ def test_get_eidas_link_did():
         input_struct = eidas_link_and_diddocs_jsons[0]
 
         # get eidas service from the did doc and retrieve the eidas link structure
-        did_doc = DIDDocument(json.dumps(input_struct[0]))
+        did_doc = DIDDocument(input_struct[0])
         eidas_service = did_doc.get_eidas_service_endpoint()
         eidas_link_output = eidas_service.get_eidas_link_did()
 

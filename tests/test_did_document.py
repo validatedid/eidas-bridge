@@ -10,20 +10,20 @@ from eidas_bridge.eidas_service import EIDASService
 
 def test_did_document_bad_types():
     with pytest.raises(TypeError):
-        DIDDocument(bad_did_documents[0])
-    with pytest.raises(EIDASDIDDocNoSubjectIdException):
         DIDDocument(json.dumps(bad_did_documents[0]))
+    with pytest.raises(EIDASDIDDocNoSubjectIdException):
+        DIDDocument(bad_did_documents[0])
     with pytest.raises(EIDASServiceEndpointException):
-        DIDDocument(json.dumps(bad_did_documents[1]))
+        DIDDocument(bad_did_documents[1])
 
 @pytest.mark.parametrize("did_doc", did_documents)
 def test_did_document(did_doc):
     str_diddoc = json.dumps(did_doc, indent=4)
-    assert DIDDocument(str_diddoc).to_json() == str_diddoc
+    assert DIDDocument(did_doc).to_json() == str_diddoc
 
 @pytest.mark.parametrize("did_doc", did_documents)
 def test_get_did(did_doc):
-    assert DIDDocument(json.dumps(did_doc)).get_did() == did_doc['id']
+    assert DIDDocument(did_doc).get_did() == did_doc['id']
 
 @pytest.mark.parametrize("did_doc", did_documents)
 def test_get_eidas_service_endpoint(did_doc):
@@ -35,7 +35,7 @@ def test_get_eidas_service_endpoint(did_doc):
         if a_service['type'] == EIDASService.EIDAS_SERVICE_TYPE:
             expected_service_endpoint = json.dumps(a_service, indent=1)
     
-    output_service_endpoint = DIDDocument(json.dumps(did_doc)).get_eidas_service_endpoint()
+    output_service_endpoint = DIDDocument(did_doc).get_eidas_service_endpoint()
 
     assert output_service_endpoint.to_json() == expected_service_endpoint
 

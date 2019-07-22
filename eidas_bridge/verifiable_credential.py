@@ -11,8 +11,8 @@ class VerifiableCredential():
     """ Represents a Verifiable Credential instance according to W3C spec """
 
     def __init__(self, json_credential):
-        check_args(json_credential, str)
-        self._verifiable_credential = json.loads(json_credential)
+        check_args(json_credential, dict)
+        self._verifiable_credential = json_credential
         #checks for issuer property
         self._check_issuer_did_exist()
     
