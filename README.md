@@ -94,7 +94,7 @@ Execute `eidas_bridge_api.py`:
 ```sh
 $ python demo/eidas_bridge_api.py
 ```
-- SWAGGER API calls will be located at `http://localhost:5002` and will expose:
+SWAGGER API calls will be located at `http://localhost:5002` and will expose:
   - `/eidas/link-did`
   - `/eidas/service-endpoint`
   - `/eidas/sign-credential`
