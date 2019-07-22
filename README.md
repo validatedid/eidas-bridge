@@ -44,7 +44,7 @@ $ python setup.py bdist_wheel
 ```
 Install `eidas-bridge` using the binary file generated:
  ```sh
-  $ python -m pip install dist/eidas_bridge-0.1.0-py3-none-any.whl
+  $ python -m pip install dist/eidas_bridge-0.2.0-py3-none-any.whl
   ```
 
 If you want to test the demo, install required `requests` library and execute `eidas_demo.py`:
