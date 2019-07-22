@@ -13,9 +13,9 @@ if __name__ == '__main__':
 
     setup(
         name='eidas_bridge',
-        version='0.1.0',
+        version='0.2.0',
         author='Validated Id <info@validatedid.com>',
-        description='Library and example Python eIDAS Bridge Library',
+        description='Python eIDAS Bridge Library',
         long_description=long_description,
         long_description_content_type='text/markdown',
         url='https://www.validatedid.com',
