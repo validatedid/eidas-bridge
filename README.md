@@ -37,15 +37,10 @@ Create and activate python virtual environment:
 $ python3 -m venv env
 $ source env/bin/activate
 ```
-Create a binary eIDAS Bridge Library:
+Install dependencies and the library into the virtual environment:
 ```sh
-$ pip install wheel
-$ python setup.py bdist_wheel
+$ pip install -e .
 ```
-Install `eidas-bridge` using the binary file generated:
- ```sh
-  $ python -m pip install dist/eidas_bridge-0.2.0-py3-none-any.whl
-  ```
 
 If you want to test the demo, install required `requests` library and execute `eidas_demo.py`:
 ```sh
