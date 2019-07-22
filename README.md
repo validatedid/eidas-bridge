@@ -1,31 +1,33 @@
 eIDAS Bridge Library
 ====================
 
-This repo contains an implementation of an eIDAS Bridge Library in Python.
+This repo contains an implementation of an eIDAS Bridge Library in Python with a demo and unit tests.
 
 An eIDAS Bridge links the european Trust and Legal Framework, named eIDAS (electronic IDentification, Authentication and trust Services), with the Self-Sovereign Identification (SSI) global trust framework, based on Decentralized IDentifers, or DIDs.
 
-Quick Start Guide
-=================
-
-#### Requirements
+## Requirements
 
 - Python 3.6 or higher
-- Cryptograhic libraries with RSA support and X509 capabilities. This library will be auto-installed with `eidas_bridge` package
-  - In python use `cryptography`, an easy-to-use library that contains the required crypto & x509 functions:
-   ```sh
-    $ pip install cryptography
-    ```
 
-#### Running the included demo (from github repo)
+## Table of Contents <!-- omit in toc -->
 
-Clone the repository
+1. [Install eIDAS Bridge Library](#Install)
+2. [Run Pytest suite tests](#Tests)
+3. [Run eIDAS Bridge Library API Demo](#Demo)
+4. [eIDAS Bridge Library Calls](#Calls)
+5. [Requisites](#Requisites)
+5. [Roadmap](#Roadmap)
+
+## 1. Install eIDAS Bridge Library
+
+Move to the base directory (example: `test-eidas-bridge`)
 ```sh
-$ git clone https://github.com/validatedid/eidas-bridge
+$ cd test-eidas-bridge
 ```
 
-Move to the new directory
+Clone the repository and move to the project directory
 ```sh
+$ git clone https://github.com/validatedid/eidas-bridge
 $ cd eidas-bridge
 ```
 
@@ -34,102 +36,69 @@ Create and activate python virtual environment:
 $ python3 -m venv env
 $ source env/bin/activate
 ```
-
-Install required `requests` library:
-- `requests` library (just for testing and demo)
-   ```sh
-    $ pip install requests
-    ```
-
-Execute `eidas_demo`:
+Create a binary eIDAS Bridge Library:
 ```sh
-$ python demo/eidas_demo.py
+$ pip install wheel
+$ python setup.py bdist_wheel
 ```
-
-
-#### Installing eidas_bridge library
-
-Move to the base directory (example: `test-eidas-bridge`)
-```sh
-$ cd test-eidas-bridge
-```
-
-Create and activate python virtual environment:
-```sh
-$ python3 -m venv env
-$ source env/bin/activate
-```
-
-Install `eidas-bridge`:
+Install `eidas-bridge` using the binary file generated:
  ```sh
-  $ python -m pip install [path_to_the_eidas_bridge_lib_file]/dist/eidas_bridge-0.1.0-py3-none-any.whl
+  $ python -m pip install dist/eidas_bridge-0.1.0-py3-none-any.whl
   ```
-If you want to test the demo, download demo directory from github repo, install required `requests` library and execute `eidas_demo.py`:
+
+If you want to test the demo, install required `requests` library and execute `eidas_demo.py`:
 ```sh
 $ pip install requests
 $ python demo/eidas_demo.py
 ```
+## 2. Run Pytest suite tests
 
-#### Running Pytest suite tests
+Following previous instructions, we should have the project github repo and be placed on `eidas-bridge` directory.
 
-##### Requeriments
+### Requeriments
 - Pytest
+- Requests
 
-##### Test execution
+```sh
+$ pip install pytest requests
+```
+
+### Test execution
 
 ```sh
 $ pytest
 ```
 
-eIDAS Bridge API DEMO
-=====================
+## 3. Run eIDAS Bridge Library API Demo
 
-Implementation of a demo that exposes a RESTFUL API to call eIDAS Bridge Library in Python.
+Implementation of a demo that exposes a RESTFUL Open API / Swagger style to call eIDAS Bridge Library in Python.
+Following previous instructions, we should have the project github repo and be placed on `eidas-bridge` directory.
 
-Quick Start Guide
-=================
+This demo launches two localhost servers:
+- eIDAS Link local data repository on `http://localhost:8000`
+- eIDAS Bridge Swagger API on `http://127.0.0.1:5002/`
 
-#### Requirements
+### Requirements
+- Flask
+- Flask_RestPLus
 
-- Python 3.6 or higher
-- Cryptograhic libraries with RSA support and X509 capabilities. This library will be auto-installed with `eidas_bridge` package
-  - In python use `cryptography`, an easy-to-use library that contains the required crypto & x509 functions:
-   ```sh
-    $ pip install cryptography
-    ```
-- Libraries for REST API:
 ```sh
-$ pip install install flask flask-jsonpify flask-restplus
+$ pip install install flask flask-restplus
 ```
 
-#### Running the api demo (via direct url call)
+### Running the demo 
 
-- Execute the python demo
-Execute `eidas_demo`:
+Execute `eidas_bridge_api.py`:
 ```sh
-$ python demo/eidas_api_demo.py
+$ python demo/eidas_bridge_api.py
 ```
-- API calls will be located at `http://localhost:5002`
+- SWAGGER API calls will be located at `http://localhost:5002` and will expose:
   - `/eidas/link-did`
   - `/eidas/service-endpoint`
   - `/eidas/sign-credential`
   - `/eidas/verify-credential`
 
-#### Running the api demo (via swagger interface)
-
-- Execute the demo via flask executable
-```sh
-$ export FLASK_APP=demo/eidas_api_demo.py
-$ flask run
-```
-- SWAGGER API calls will be located at `http://localhost:5000` and will expose:
-  - `/eidas/link-did`
-  - `/eidas/service-endpoint`
-  - `/eidas/sign-credential`
-  - `/eidas/verify-credential`
-
-eIDAS Bridge Library calls
-==========================
+## 4. eIDAS Bridge Library calls
 
 #### eidas_link_did
 ```python
@@ -176,7 +145,6 @@ Returns the correspondent JSON to be added to the Service Endpoint Section of th
 }
 ```
 
-
 #### eidas_sign_credential (Not Supported at this Phase 0.)
 ```python
 def eidas_sign_credential(json_credential) -> str:
@@ -202,17 +170,14 @@ The algorithm executes the following procedure:
 4. Verify signature with the public key of the EIDAS Link and the proof that contains
 5. Return `VALID` or throw `EIDASProofException` on signature not valid
 
-REQUISITES
-==========
+## 5. Requisites
 
-1. DID Document needs to be updated with (a new publickey?? and) a new service endpoint linking to the Identity Hub web service where eIDAS key linkage info is stored.
-2. Verifiable Credential needs to be updated with a new service endpoint to check the certificate validity (via an OCSP response or via the stored info of the OCSP response at the moment of issuing the credential)
-3. An agent MUST have a storage repository with the capability of exposing a public web service endpoint with access control management (i.e. an Identity Hub)
-4. The issuer backoffice MUST implement a PKCS#1 from a given hash
-5. The issuer backoffice MUST have an eIDAS certificate.
+1. DID Document needs to be updated with a new service endpoint linking to the Identity Hub web service where eIDAS key linkage info is stored.
+2. An agent MUST have a storage repository with the capability of exposing a public web service endpoint with access control management (i.e. an Identity Hub)
+3. The issuer backoffice MUST implement a PKCS#1 from a given hash (Padding supported: PKCS#1 and PSS)
+4. The issuer backoffice MUST have an eIDAS certificate (RSA keys with 2048 or 4096 lenght).
 
-ROADMAP
-=======
+## 6. Roadmap
 
 ### Initial Step
 - ~~Code the interface eiDAS Bridge API~~
@@ -223,7 +188,7 @@ ROADMAP
 ### Step 0
 - ~~Code the Unit test for each API function~~
 - ~~Develop the basic functionality for each API call (no outside interaction)~~
-- Expose the API to an Open API / Swapper REST API
+- ~~Expose the API to an Open API / Swapper REST API~~
 
 ### Step 1
 - Add external components: Enterprise Agent (no ledger)
