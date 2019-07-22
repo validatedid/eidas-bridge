@@ -18,7 +18,7 @@ An eIDAS Bridge links the european Trust and Legal Framework, named eIDAS (elect
 5. [Requisites](#Requisites)
 5. [Roadmap](#Roadmap)
 
-## 1. Install eIDAS Bridge Library
+## Install eIDAS Bridge Library
 
 Move to the base directory (example: `test-eidas-bridge`)
 ```sh
@@ -51,7 +51,7 @@ If you want to test the demo, install required `requests` library and execute `e
 $ pip install requests
 $ python demo/eidas_demo.py
 ```
-## 2. Run Pytest suite tests
+## Run Pytest suite tests
 
 Following previous instructions, we should have the project github repo and be placed on `eidas-bridge` directory.
 
@@ -69,7 +69,7 @@ $ pip install pytest requests
 $ pytest
 ```
 
-## 3. Run eIDAS Bridge Library API Demo
+## Run eIDAS Bridge Library API Demo
 
 Implementation of a demo that exposes a RESTFUL Open API / Swagger style to call eIDAS Bridge Library in Python.
 Following previous instructions, we should have the project github repo and be placed on `eidas-bridge` directory.
@@ -98,7 +98,7 @@ $ python demo/eidas_bridge_api.py
   - `/eidas/sign-credential`
   - `/eidas/verify-credential`
 
-## 4. eIDAS Bridge Library calls
+## eIDAS Bridge Library calls
 
 #### eidas_link_did
 ```python
@@ -170,14 +170,14 @@ The algorithm executes the following procedure:
 4. Verify signature with the public key of the EIDAS Link and the proof that contains
 5. Return `VALID` or throw `EIDASProofException` on signature not valid
 
-## 5. Requisites
+## Requisites
 
 1. DID Document needs to be updated with a new service endpoint linking to the Identity Hub web service where eIDAS key linkage info is stored.
 2. An agent MUST have a storage repository with the capability of exposing a public web service endpoint with access control management (i.e. an Identity Hub)
 3. The issuer backoffice MUST implement a PKCS#1 from a given hash (Padding supported: PKCS#1 and PSS)
 4. The issuer backoffice MUST have an eIDAS certificate (RSA keys with 2048 or 4096 lenght).
 
-## 6. Roadmap
+## Roadmap
 
 ### Initial Step
 - ~~Code the interface eiDAS Bridge API~~
