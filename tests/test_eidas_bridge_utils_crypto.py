@@ -28,13 +28,13 @@ def test_check_args_padding_bad_type(padding):
 
 @pytest.mark.parametrize("eidas_link_input", eidas_link_inputs)
 def test_x509_load_certificate_from_data_bytes(eidas_link_input):
-    internal_cert = x509_load_certificate_from_data_bytes(eidas_link_input[0])
-    expected_cert = x509.load_pem_x509_certificate(eidas_link_input[0], default_backend())
+    internal_cert = x509_load_certificate_from_data_bytes((eidas_link_input[0]).encode())
+    expected_cert = x509.load_pem_x509_certificate((eidas_link_input[0]).encode(), default_backend())
     assert internal_cert == expected_cert
 
 @pytest.mark.parametrize("eidas_link_input", eidas_link_inputs)
 def test_get_public_key_from_x509cert_obj(eidas_link_input):
-        x509cert_obj = x509_load_certificate_from_data_bytes(eidas_link_input[0])
+        x509cert_obj = x509_load_certificate_from_data_bytes((eidas_link_input[0]).encode())
         pub_key_expected = x509cert_obj.public_key().public_bytes(
                 encoding=serialization.Encoding.PEM,
                 format=serialization.PublicFormat.SubjectPublicKeyInfo
@@ -47,12 +47,12 @@ def test_get_public_key_from_x509cert_obj(eidas_link_input):
 
 @pytest.mark.parametrize("eidas_link_input", eidas_link_inputs)
 def test_get_public_key_from_x509cert_pem(eidas_link_input):
-        x509cert_obj = x509_load_certificate_from_data_bytes(eidas_link_input[0])
+        x509cert_obj = x509_load_certificate_from_data_bytes((eidas_link_input[0]).encode())
         pub_key_expected = x509cert_obj.public_key().public_bytes(
                 encoding=serialization.Encoding.PEM,
                 format=serialization.PublicFormat.SubjectPublicKeyInfo
         )
-        returned_pub_key = get_public_key_from_x509cert_pem(eidas_link_input[0]).public_bytes(
+        returned_pub_key = get_public_key_from_x509cert_pem((eidas_link_input[0]).encode()).public_bytes(
                 encoding=serialization.Encoding.PEM,
                 format=serialization.PublicFormat.SubjectPublicKeyInfo
         )
@@ -61,8 +61,11 @@ def test_get_public_key_from_x509cert_pem(eidas_link_input):
 @pytest.mark.parametrize("eidas_link_input", eidas_link_inputs)
 def test_rsa_verify_pss(eidas_link_input):
         if eidas_link_input[2] == PSS_PADDING:
-                rsa_verify_pss(bytes.fromhex(eidas_link_input[1]), eidas_link_input[3].encode('utf-8'),
-                get_public_key_from_x509cert_pem(eidas_link_input[0]))
+                rsa_verify_pss(
+                    bytes.fromhex(eidas_link_input[1]), 
+                    eidas_link_input[3].encode('utf-8'),
+                    get_public_key_from_x509cert_pem((eidas_link_input[0]).encode())
+                )
         pass
 
 @pytest.mark.parametrize("eidas_link_input", eidas_link_inputs)
@@ -71,13 +74,13 @@ def test_rsa_verify_pss_invalid_signature(eidas_link_input):
                 with pytest.raises(InvalidSignatureException):
                         bad_signature = bytes.fromhex('e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855')
                         rsa_verify_pss(bad_signature, eidas_link_input[3].encode('utf-8'), 
-                        get_public_key_from_x509cert_pem(eidas_link_input[0]))
+                        get_public_key_from_x509cert_pem((eidas_link_input[0]).encode()))
 
 @pytest.mark.parametrize("eidas_link_input", eidas_link_inputs)
 def test_rsa_verify_pkcs1(eidas_link_input):
         if eidas_link_input[2] == PKCS1v15_PADDING:
                 rsa_verify_pkcs1(bytes.fromhex(eidas_link_input[1]), eidas_link_input[3].encode('utf-8'),
-                get_public_key_from_x509cert_pem(eidas_link_input[0]))
+                get_public_key_from_x509cert_pem((eidas_link_input[0]).encode()))
         pass
 
 @pytest.mark.parametrize("eidas_link_input", eidas_link_inputs)
@@ -86,17 +89,25 @@ def test_rsa_verify_pkcs1_invalid_signature(eidas_link_input):
                 with pytest.raises(InvalidSignatureException):
                         bad_signature = bytes.fromhex('e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855')
                         rsa_verify_pkcs1(bad_signature, eidas_link_input[3].encode('utf-8'), 
-                        get_public_key_from_x509cert_pem(eidas_link_input[0]))
+                        get_public_key_from_x509cert_pem((eidas_link_input[0]).encode()))
 
 @pytest.mark.parametrize("eidas_link_input", eidas_link_inputs)
 def test_rsa_verify(eidas_link_input):
-        rsa_verify(bytes.fromhex(eidas_link_input[1]), eidas_link_input[3].encode('utf-8'),
-        get_public_key_from_x509cert_pem(eidas_link_input[0]), eidas_link_input[2])
+        rsa_verify(
+            bytes.fromhex(eidas_link_input[1]), 
+            eidas_link_input[3].encode('utf-8'),
+            get_public_key_from_x509cert_pem((eidas_link_input[0]).encode()), 
+            eidas_link_input[2]
+        )
         pass
 
 @pytest.mark.parametrize("eidas_link_input", eidas_link_inputs)
 def test_rsa_verify_invalid_signature(eidas_link_input):
         with pytest.raises(InvalidSignatureException):
                 bad_signature = bytes.fromhex('e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855')
-                rsa_verify(bad_signature, eidas_link_input[3].encode('utf-8'), 
-                get_public_key_from_x509cert_pem(eidas_link_input[0]), eidas_link_input[2])
+                rsa_verify(
+                    bad_signature, 
+                    eidas_link_input[3].encode('utf-8'), 
+                    get_public_key_from_x509cert_pem((eidas_link_input[0]).encode()),
+                    eidas_link_input[2]
+                )

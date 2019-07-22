@@ -13,8 +13,8 @@ class EIDASLink():
 
     def __init__(self, did, x509cert, proof, padding, created = None):
         check_args(did, str)
-        check_args(x509cert, bytes)
-        check_args(proof, bytes)
+        check_args(x509cert, str)
+        check_args(proof, str)
         check_args_padding(padding, str)
 
         if not created:
@@ -22,8 +22,8 @@ class EIDASLink():
         else:
             self._created = created
         self._did = did
-        self._x509cert = x509cert
-        self._proof = proof
+        self._x509cert = x509cert.encode()
+        self._proof = bytes.fromhex(proof)
         self._padding = padding
 
         """ check signarure proof before finishing the object creation """
@@ -34,8 +34,8 @@ class EIDASLink():
         eidas_str = json.loads(eidaslink_as_json)
         return cls(
             did=eidas_str['did'], 
-            x509cert=eidas_str['certificate'].encode(),
-            proof=bytes.fromhex(eidas_str['proof']['signatureValue']),
+            x509cert=eidas_str['certificate'],
+            proof=eidas_str['proof']['signatureValue'],
             padding=eidas_str['proof']['padding'],
             created=eidas_str['created']
         )

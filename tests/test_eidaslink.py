@@ -19,13 +19,13 @@ def test_EIDASLINK_class_bad_types(did, certificate, proof, padding):
 @pytest.mark.parametrize("padding", bad_type_paddings)
 def test_EIDASLINK_class_bad_type_padding(did, eidas_link_input, padding):
     with pytest.raises(InvalidPaddingException):
-        EIDASLink(did, eidas_link_input[0], bytes.fromhex(eidas_link_input[1]), padding)
+        EIDASLink(did, eidas_link_input[0], eidas_link_input[1], padding)
 
 @pytest.mark.parametrize("did", dids)
 @pytest.mark.parametrize("eidas_link_input", eidas_link_inputs)
 def test_EIDASLINK_class(did, eidas_link_input):
-    eidas_link = EIDASLink(did, eidas_link_input[0], bytes.fromhex(eidas_link_input[1]), eidas_link_input[2])
+    eidas_link = EIDASLink(did, eidas_link_input[0], eidas_link_input[1], eidas_link_input[2])
     assert eidas_link._did == did
-    assert eidas_link._x509cert == eidas_link_input[0]
+    assert eidas_link._x509cert == (eidas_link_input[0]).encode()
     assert eidas_link._proof == bytes.fromhex(eidas_link_input[1])
     assert eidas_link._padding == eidas_link_input[2]

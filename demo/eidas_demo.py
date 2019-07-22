@@ -29,7 +29,7 @@ def demo_eidas_link_did() -> str:
         return eidas_link_did(
                 eidas_link_input[3], 
                 eidas_link_input[0], 
-                bytes.fromhex(eidas_link_input[1]), 
+                eidas_link_input[1], 
                 eidas_link_input[2]
             )
 

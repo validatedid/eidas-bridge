@@ -67,13 +67,15 @@ class EIDASLinkDID(Resource):
         Returns the JSON that needs to be stored on the Agent public Storage
         (i.e: an Identity Hub)
         """
-        output = eidas_link_did(
+        
+        return json.loads(
+            eidas_link_did(
                 request.json['did'], 
-                (request.json['certificate']).encode(), 
-                bytes.fromhex(request.json['proof']), 
+                request.json['certificate'], 
+                request.json['proof'], 
                 request.json['padding']
             )
-        return json.loads(output)
+        )
 
 @eidas.route('/service-endpoint')
 class EIDASServiceEndpoint(Resource):
