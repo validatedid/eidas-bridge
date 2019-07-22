@@ -148,16 +148,93 @@ class EIDASServiceEndpoint(Resource):
             )
         )
 
+degree_model = api.model('Degree', {
+    'type' : fields.String(
+        description="Credential Degree type", 
+        required=True,
+        example="BachelorDegree"),
+    'name' : fields.String(
+        description="Degree name", 
+        required=True,
+        example="Bachelor of Science and Arts")
+})
+
+cred_subject_model = api.model('Credential_subject', {
+    'did': fields.String(
+        description="DID", 
+        required=True,
+        example="did:example:21tDAKCERh95uGgKbJNHYp"),
+    'degree': fields.Nested(
+        degree_model, 
+        description="Degree Credential structure", 
+        required=True)
+})
+
+cred_proof_model = api.model('Credential_proof', {
+    'type' : fields.String(
+        description="Signature type", 
+        required=True,
+        example="RsaSignature2018"),
+    'created': fields.String(
+        description="Credential Issuance date timestamp", 
+        required=False,
+        example="2018-06-18T21:19:10Z"),
+    'proofPurpose': fields.String(
+        description="Proof of Purpose", 
+        required=False,
+        example="assertionMethod"),
+    'verificationMethod': fields.String(
+        description="Verification Method", 
+        required=False,
+        example="https://example.com/jdoe/keys/1"),
+    'jws' : fields.String(
+        description="Proof Value", 
+        required=True,
+        example="eyJhbGciOiJQUzI1NiIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19DJBMvvFAIC00nSGB6Tn0XKbbF9XrsaJZREWvR2aONYTQQxnyXirtXnlewJMBBn2h9hfcGZrvnC1b6PgWmukzFJ1IiH1dWgnDIS81BH-IxXnPkbuYDeySorc4QU9MJxdVkY5EL4HYbcIfwKj6X4LBQ2_ZHZIu1jdqLcRZqHcsDF5KKylKc1THn5VRWy5WhYg_gBnyWny8E6Qkrze53MR7OuAmmNJ1m1nN8SxDrG6a08L78J0-Fbas5OjAQz3c17GY8mVuDPOBIOVjMEghBlgl3nOi1ysxbRGhHLEK4s0KKbeRogZdgt1DkQxDFxxn41QWDw_mmMCjs9qxg0zcZzqEJw")
+})
+
+credential_input_model = api.model('Credential_in', {
+    '@context': fields.List(fields.String,
+        description="List of context attributes", 
+        required=True,
+        example='[ "https://www.w3.org/2018/credentials/v1", "https://www.w3.org/2018/credentials/examples/v1" ]'),
+    'id': fields.String(
+        description="Credential IDentifier", 
+        required=True,
+        example="http://example.edu/credentials/3732"),
+    'type': fields.List(fields.String,
+        description="List of credential types", 
+        required=True,
+        example='["VerifiableCredential", "UniversityDegreeCredential"]'),
+    'issuer': fields.String(
+        description="Issuer DID", 
+        required=True,
+        example="did:example:21tDAKCERh95uGgKbJNHYp"),
+    'issuanceDate': fields.String(
+        description="Credential Issuance date timestamp", 
+        required=False,
+        example="2010-01-01T19:23:24Z"),
+    'credentialSubject': fields.Nested(
+        cred_subject_model, 
+        description="Credential Subject structure", 
+        required=True),
+    'proof': fields.Nested(
+        cred_proof_model, 
+        description="Credential proof structure", 
+        required=True)
+})
+
 @eidas.route('/sign-credential')
 class EIDASSignCredential(Resource):
-    def get(self):
+    @eidas.expect(credential_input_model)
+    def post(self):
         """ 
         Checks the validity of the issuer's eIDAS certificate against a Trusted Service Provider and adds the corresponde response to the received credential JSON structure.
 
         Not Supported at this Phase 0.
         """
         try:
-            return eidas_sign_credential(credentials[0])
+            return eidas_sign_credential(request.get_json())
         except EIDASNotSupportedException:
             return "--- EIDAS Library function NOT supported yet. ---"
 
