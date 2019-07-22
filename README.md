@@ -11,12 +11,12 @@ An eIDAS Bridge links the european Trust and Legal Framework, named eIDAS (elect
 
 ## Table of Contents <!-- omit in toc -->
 
-1. [Install eIDAS Bridge Library](#Install)
-2. [Run Pytest suite tests](#Tests)
-3. [Run eIDAS Bridge Library API Demo](#Demo)
-4. [eIDAS Bridge Library Calls](#Calls)
-5. [Requisites](#Requisites)
-5. [Roadmap](#Roadmap)
+1. [Install eIDAS Bridge Library](##install-eidas-bridge-library)
+2. [Run Pytest suite tests](#run-pytest-suite-tests)
+3. [Run eIDAS Bridge Library API Demo](#run-eidas-bridge-library-api-demo)
+4. [eIDAS Bridge Library Calls](#eidas-bridge-library-calls)
+5. [Requisites](#requisites)
+5. [Roadmap](#roadmap)
 
 
 ## Install eIDAS Bridge Library
