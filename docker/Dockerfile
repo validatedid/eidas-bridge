@@ -14,5 +14,5 @@ RUN apk --update add --virtual build-dependencies libffi-dev openssl-dev python-
     && pip3 install --no-cache-dir -e . \
     && apk del gcc build-dependencies
 
-# Run app.py when the container launches
+# Run eidas_bridge_api.py when the container launches
 CMD ["python3", "./demo/eidas_bridge_api.py"]
