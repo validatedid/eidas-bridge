@@ -5,21 +5,46 @@ This repo contains an implementation of an eIDAS Bridge Library in Python with a
 
 An eIDAS Bridge links the european Trust and Legal Framework, named eIDAS (electronic IDentification, Authentication and trust Services), with the Self-Sovereign Identification (SSI) global trust framework, based on Decentralized IDentifers, or DIDs.
 
-## Requirements
-
-- Python 3.6 or higher
-
 ## Table of Contents <!-- omit in toc -->
 
-1. [Install eIDAS Bridge Library](##install-eidas-bridge-library)
-2. [Run Pytest suite tests](#run-pytest-suite-tests)
-3. [Run eIDAS Bridge Library API Demo](#run-eidas-bridge-library-api-demo)
+1. [Run eIDAS Bridge Docker Demo](#run-eidas-bridge-docker-demo)
+2. [Other Running and Tests Methods](##other-running-and-tests-methods)
+  * [Install eIDAS Bridge Library](##install-eidas-bridge-library)
+  * [Run Pytest suite tests](#run-pytest-suite-tests)
+  * [Run eIDAS Bridge Library API Demo](#run-eidas-bridge-library-api-demo)
 4. [eIDAS Bridge Library Calls](#eidas-bridge-library-calls)
 5. [Requisites](#requisites)
 5. [Roadmap](#roadmap)
 
+## Run eIDAS Bridge Docker Demo
 
-## Install eIDAS Bridge Library
+Move to the base directory (example: `test-eidas-bridge`)
+```sh
+$ cd test-eidas-bridge
+```
+
+Clone the repository and move to the project directory
+```sh
+$ git clone https://github.com/validatedid/eidas-bridge
+$ cd eidas-bridge
+```
+
+Execute a script to build and run the dockerized eIDAS Bridge library
+```sh
+$ ./scripts/build_and_run_docker
+```
+This docker demo exposes a server with the eIDAS Bridge Swagger API:
+- eIDAS Bridge Swagger API on `http://0.0.0.0:5002/`
+
+Open your browser and access to `http://0.0.0.0:5002/` to interact with the eIDAS Bridge Swagger API.
+
+In case you want to use the demo again, there is no need to rebuild the docker, just execute another script:
+```sh
+$ ./scripts/start_docker
+```
+## Other Running and Tests Methods
+
+### Install eIDAS Bridge Library
 
 Move to the base directory (example: `test-eidas-bridge`)
 ```sh
@@ -48,11 +73,11 @@ $ pip install requests
 $ python demo/eidas_demo.py
 ```
 
-## Run Pytest suite tests
+### Run Pytest suite tests
 
 Following previous instructions, we should have the project github repo and be placed on `eidas-bridge` directory.
 
-### Requeriments
+#### Requeriments
 - Pytest
 - Requests
 
@@ -60,13 +85,13 @@ Following previous instructions, we should have the project github repo and be p
 $ pip install pytest requests
 ```
 
-### Test execution
+#### Test execution
 
 ```sh
 $ pytest
 ```
 
-## Run eIDAS Bridge Library API Demo
+### Run eIDAS Bridge Library API Demo
 
 Implementation of a demo that exposes a RESTFUL Open API / Swagger style to call eIDAS Bridge Library in Python.
 Following previous instructions, we should have the project github repo and be placed on `eidas-bridge` directory.
@@ -75,7 +100,7 @@ This demo launches two localhost servers:
 - eIDAS Link local data repository on `http://localhost:8000`
 - eIDAS Bridge Swagger API on `http://127.0.0.1:5002/`
 
-### Requirements
+#### Requirements
 - Flask
 - Flask_RestPLus
 
@@ -83,7 +108,7 @@ This demo launches two localhost servers:
 $ pip install install flask flask-restplus
 ```
 
-### Running the demo 
+#### Running the demo 
 
 Execute `eidas_bridge_api.py`:
 ```sh
