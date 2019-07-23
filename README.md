@@ -9,11 +9,8 @@ An eIDAS Bridge links the european Trust and Legal Framework, named eIDAS (elect
 
 1. [Run eIDAS Bridge Docker Demo](#run-eidas-bridge-docker-demo)
 2. [Other Running and Tests Methods](##other-running-and-tests-methods)
-  * [Install eIDAS Bridge Library](##install-eidas-bridge-library)
-  * [Run Pytest suite tests](#run-pytest-suite-tests)
-  * [Run eIDAS Bridge Library API Demo](#run-eidas-bridge-library-api-demo)
-4. [eIDAS Bridge Library Calls](#eidas-bridge-library-calls)
-5. [Requisites](#requisites)
+3. [eIDAS Bridge Library Calls](#eidas-bridge-library-calls)
+4. [Requisites](#requisites)
 5. [Roadmap](#roadmap)
 
 ## Run eIDAS Bridge Docker Demo
