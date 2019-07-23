@@ -26,10 +26,16 @@ $ git clone https://github.com/validatedid/eidas-bridge
 $ cd eidas-bridge
 ```
 
-Execute a script to build and run the dockerized eIDAS Bridge library
+Execute a script to build and run the dockerized eIDAS Bridge library:
+* In \*nix style computers:
 ```sh
 $ ./scripts/build_and_run_docker
 ```
+* In Windows style computers, from a Powershell:
+```sh
+PS ~\eidas-bridge> bash .\scripts\build_and_run_docker
+```
+
 This docker demo exposes a server with the eIDAS Bridge Swagger API:
 - eIDAS Bridge Swagger API on `http://0.0.0.0:5002/`
 
