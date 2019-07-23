@@ -2,10 +2,5 @@
 
 docker build -t eidas-bridge-api-demo -f ./docker/Dockerfile . || exit 1
 
-ARGS=""
-for PORT in $PORTS; do
-	ARGS="${ARGS} -p $PORT"
-done
-
 RAND_NAME=$(cat /dev/urandom | env LC_CTYPE=C tr -dc 'a-zA-Z0-9' | fold -w 16 | head -n 1)
-docker run --rm -ti --name "eidas-bridge-api-demo_${RAND_NAME}" $ARGS eidas-bridge-api-demo
+docker run -ti --name "eidas-bridge-api-demo_${RAND_NAME}" -p 5002:5002 eidas-bridge-api-demo
