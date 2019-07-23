@@ -19,7 +19,10 @@ class RequestHandler(BaseHTTPRequestHandler):
             self.wfile.write(json.dumps(eidas_data, indent=2).encode())
         return
 
-def start_server():
-    server = HTTPServer(('localhost', 8000), RequestHandler)
-    print('Starting server at http://localhost:8000')
-    server.serve_forever()
+def start_hub_server():
+    try:
+        server = HTTPServer(('localhost', 8000), RequestHandler)
+        print(' * Starting Hub server at http://localhost:8000')
+        server.serve_forever()
+    except KeyboardInterrupt:
+        print (" * Exiting Hub server")

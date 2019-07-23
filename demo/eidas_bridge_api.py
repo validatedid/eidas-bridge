@@ -4,7 +4,7 @@
 import json, threading
 from flask import Flask, request
 from flask_restplus import Resource, Api, fields
-from eidas_demo import init_server
+from demo.util.hub_server import start_hub_server
 from eidas_bridge.eidas_bridge import eidas_link_did, eidas_get_service_endpoint, \
     eidas_sign_credential, eidas_verify_credential, EIDASNotSupportedException
 from eidas_bridge.utils.crypto import PSS_PADDING
@@ -297,8 +297,15 @@ class EIDASVerifyCredential(Resource):
             request.json['did_document']
         )
 
+def init_api_server(host='0.0.0.0', port='5002'):
+    try: 
+        # run api demo
+        app.run(host, port)
+    except:
+        print (" * Exiting Flask app server")
+
 if __name__ == '__main__':
-    server_thread = threading.Thread(target=init_server, daemon=True)
+    server_thread = threading.Thread(target=start_hub_server, daemon=True)
 
     # launch localhost server
     server_thread.start()
