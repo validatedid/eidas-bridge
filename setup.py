@@ -20,7 +20,7 @@ if __name__ == '__main__':
         long_description_content_type='text/markdown',
         url='https://www.validatedid.com',
         license='Apache 2.0',
-        packages=find_packages(exclude=['tests', 'demo']),
+        packages=find_packages(exclude=['tests', 'demo', 'scripts', 'docker']),
         install_requires=parse_requirements('requirements.txt'),
         python_requires='>=3.6',
         classifiers=[
