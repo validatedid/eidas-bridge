@@ -8,7 +8,7 @@ An eIDAS Bridge links the european Trust and Legal Framework, named eIDAS (elect
 ## Table of Contents <!-- omit in toc -->
 
 1. [Run eIDAS Bridge Docker Demo](#run-eidas-bridge-docker-demo)
-2. [Other Running and Tests Methods](##other-running-and-tests-methods)
+2. [Other Running and Test Methods](#other-running-and-test-methods)
 3. [eIDAS Bridge Library Calls](#eidas-bridge-library-calls)
 4. [Requisites](#requisites)
 5. [Roadmap](#roadmap)
@@ -39,7 +39,7 @@ In case you want to use the demo again, there is no need to rebuild the docker, 
 ```sh
 $ ./scripts/start_docker
 ```
-## Other Running and Tests Methods
+## Other Running and Test Methods
 
 ### Install eIDAS Bridge Library
 
