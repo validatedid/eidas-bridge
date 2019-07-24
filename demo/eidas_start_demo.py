@@ -4,13 +4,38 @@ currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentfram
 parentdir = os.path.dirname(currentdir)
 sys.path.insert(0,parentdir) 
 
-import threading, signal, argparse
+import argparse, multiprocessing, time
 from demo.util.hub_server import start_hub_server
 from demo.util.backend_server import start_backend_server
 from demo.eidas_bridge_api import init_api_server
 
+def main(args):
+
+    # Start the job processes
+    try:
+        hub_server_proc = multiprocessing.Process(target=start_hub_server)
+        api_server_proc = multiprocessing.Process(target=init_api_server, args=(args.host, args.apiport,))
+        web_demo_server_proc = multiprocessing.Process(target=start_backend_server, args=(args.host, args.webport,))
+
+        # launch servers
+        hub_server_proc.start()
+        api_server_proc.start()
+        web_demo_server_proc.start()
+
+        # Keep the main thread running, otherwise signals are ignored.
+        while True:
+            time.sleep(0.5)
+ 
+    except KeyboardInterrupt:
+        # Terminate the running processes.
+        hub_server_proc.terminate()
+        api_server_proc.terminate()
+        web_demo_server_proc.terminate()
+        print('\n * Exiting eIDAS Bridge demo')
+
 if __name__ == "__main__":
     
+    print (" * Starting eIDAS Bridge demo")
     parser = argparse.ArgumentParser(description="Runs an eIDAS Bridge demo with a University backend web")
     parser.add_argument(
         "-host",
@@ -39,17 +64,4 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    hub_server_thread = threading.Thread(target=start_hub_server, daemon=True)
-    api_server_thread = threading.Thread(target=init_api_server, args=(args.host, args.apiport,),)
-    web_demo_server_thread = threading.Thread(target=start_backend_server, args=(args.host, args.webport,),)
-
-    print (" * Starting eIDAS Bridge demo")
-    # launch hub server
-    hub_server_thread.start()
-    # check if server started
-    if hub_server_thread.is_alive():
-        # launch api server
-        web_demo_server_thread.start()
-        if web_demo_server_thread.is_alive():
-            # launch api server
-            api_server_thread.start()
+    main(args)

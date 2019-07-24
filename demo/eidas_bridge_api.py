@@ -298,12 +298,9 @@ class EIDASVerifyCredential(Resource):
         )
 
 def init_api_server(host='0.0.0.0', port='5002'):
-    try: 
-        # run api demo
-        app.run(host, port)
-    except:
-        print (" * Exiting Flask app server")
-
+    # run api demo
+    app.run(host, port)
+    
 if __name__ == '__main__':
     server_thread = threading.Thread(target=start_hub_server, daemon=True)
 
