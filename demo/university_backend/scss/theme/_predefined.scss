@@ -1,0 +1,119 @@
+//    Predefined
+.section-gap {
+    padding: 150px 0;
+    @media (max-width: 991px) {
+        padding: 80px 0;
+    }
+}
+
+.section-title {
+    padding-bottom: 80px;
+    @media (max-width: 991px) {
+        padding-bottom: 50px;
+    }
+    h1 {
+        margin-bottom: 20px;
+        font-size: 42px;
+        color: $black;
+        @media (max-width: 991px) {
+            font-size: 35px;
+        }
+        @media (max-width: 576px) {
+            font-size: 30px;
+        }
+    }
+    p {
+        font-size: 16px;
+        margin-bottom: 0;
+        @include media-breakpoint-down (md) {
+            br {
+                display: none;
+            }
+        }
+    }
+}
+
+// Go To Top
+#back-top {
+    position: fixed;
+    right: 20px;
+    bottom: 0px;
+    cursor: pointer;
+    z-index: 9999999;
+    @media (max-width: 768px) {
+        right: 5px;
+    }
+    a {
+        background: url(../img/rocket.png) no-repeat;
+        background-size: 95% 80%;
+        width: 50px;
+        height: 116px;
+        display: block;
+        @media (max-width: 768px) {
+            width: 35px;
+            height: 74px;
+        }
+    }
+}
+
+.p1-gradient-bg {
+    @include gradient(90deg, $primary-color 0%, $primary-color2 100%);
+}
+
+.p1-gradient-color {
+    @include gradient(90deg, $primary-color 0%, $primary-color2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.primary-btn {
+    @extend .p1-gradient-bg;
+    line-height: 42px;
+    padding: 0 36px;
+    border-radius: 5px;
+    color: $white;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 500;
+    position: relative;
+    cursor: pointer;
+    text-transform: capitalize;
+    @include transition( 0.5s all ease-in);
+    &:focus {
+        outline: none;
+    }
+    &:hover {
+        color: $white;
+        background-size: 200% auto;
+        background-position: right center;
+    }
+    &.transparent {
+        background: transparent;
+        height: 30px;
+        line-height: 30px;
+        border: 1px solid $white;
+        border-radius: 0px;
+        padding: 0 18px;
+        font-size: 12px;
+        &:hover {
+            background: $white;
+            color: $black;
+        }
+    }
+    &.white {
+        background: $white;
+        color: $black;
+        &:hover {
+            @extend .p1-gradient-bg;
+            color: $white;
+        }
+    }
+}
+
+.overlay {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
