@@ -1,7 +1,5 @@
 # test_eidas_bridge.py
-
-import pytest
-import json
+import json, multiprocessing, pytest
 from eidas_bridge.eidas_bridge import eidas_link_did, \
         eidas_get_service_endpoint, eidas_sign_credential, eidas_verify_credential, \
         EIDASNotSupportedException
@@ -9,7 +7,7 @@ from eidas_bridge.utils.util import timestamp
 from demo.data.common_data import all_type_dids, all_type_certificates, bad_type_proofs, \
         dids, bad_type_endpoints, service_endpoints, bad_type_credentials, credentials, \
         eidas_link_inputs, did_documents
-from demo.util.util import start_server_thread
+from demo.util.hub_server import start_hub_server
 
 @pytest.mark.parametrize("did", all_type_dids)
 @pytest.mark.parametrize("certificate", all_type_certificates)
@@ -55,12 +53,13 @@ def test_eidas_verify_credential_bad_types(credential):
 @pytest.mark.parametrize("credential", credentials)
 @pytest.mark.parametrize("did_doc", did_documents)
 def test_eidas_verify_credential(credential, did_doc):
-    # run server daemon thread
-    if start_server_thread():
-        assert eidas_verify_credential(credential, did_doc) == "VALID"
-    else:
-        assert False
 
+    # run server process
+    hub_server_proc = multiprocessing.Process(target=start_hub_server)
+    hub_server_proc.start()
+
+    assert eidas_verify_credential(credential, did_doc) == "VALID"
+    
 def _to_json_eidas_link(did, x509cert, proof, padding, created) -> str:
     """
     Create a JSON representation of the model instance.
