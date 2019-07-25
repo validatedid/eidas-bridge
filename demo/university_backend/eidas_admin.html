@@ -15,7 +15,7 @@
 	<!-- meta character set -->
 	<meta charset="UTF-8">
 	<!-- Site Title -->
-	<title>Contact</title>
+	<title>About</title>
 
 	<!--
 			Google Font
@@ -50,8 +50,8 @@
 					<ul class="nav-menu">
 						<li><a href="index.html">Home</a></li>
 						<li><a href="about.html">About</a></li>
-						<li class="menu-active"><a href="courses.html">Courses</a></li>
-						<li class="menu-has-children"><a href="">Pages</a>
+						<li><a href="courses.html">Courses</a></li>
+						<li class="menu-has-children menu-active"><a href="">Pages</a>
 							<ul>
                                 <li><a href="elements.html">Elements</a></li>
                                 <li><a href="eidas_admin.html">Eidas Admin</a></li>
@@ -71,24 +71,15 @@
 	</header>
 	<!-- End Header Area -->
 
-
 	<!-- Start Banner Area -->
 	<section class="banner-area relative">
 		<div class="container">
 			<div class="row d-flex align-items-center justify-content-center">
 				<div class="about-content col-lg-12">
 					<h1 class="text-white">
-							Contact Us
+						eIDAS Bridge Admin Page
 					</h1>
-					<p>In the history of modern astronomy, there is probably no one greater leap forward than the building and launch of
-						the space telescope.</p>
-					<div class="link-nav">
-						<span class="box">
-							<a href="index.html">Home </a>
-							<i class="lnr lnr-arrow-right"></i>
-							<a href="contact.html">Contact Us</a>
-						</span>
-					</div>
+					<p>Administration page to set-up your eIDAS and SSI solution, issue credentials and verify credentials.</p>
 				</div>
 			</div>
 		</div>
@@ -98,70 +89,88 @@
 	</section>
 	<!-- End Banner Area -->
 
-	<!-- Start contact-page Area -->
-	<section class="contact-page-area section-gap">
+
+	<!-- Start eIDAS setup Area -->
+	<section class="about-area section-gap">
 		<div class="container">
-			<div class="row">
-				<div class="map-wrap" style="width:100%; height: 445px;" id="map"></div>
-				<div class="col-lg-4 d-flex flex-column address-wrap">
-					<div class="single-contact-address d-flex flex-row">
-						<div class="icon">
-							<span class="lnr lnr-home"></span>
-						</div>
-						<div class="contact-details">
-							<h5>Binghamton, New York</h5>
-							<p>
-								4343 Hinkle Deegan Lake Road
-							</p>
-						</div>
-					</div>
-					<div class="single-contact-address d-flex flex-row">
-						<div class="icon">
-							<span class="lnr lnr-phone-handset"></span>
-						</div>
-						<div class="contact-details">
-							<h5>00 (958) 9865 562</h5>
-							<p>Mon to Fri 9am to 6 pm</p>
-						</div>
-					</div>
-					<div class="single-contact-address d-flex flex-row">
-						<div class="icon">
-							<span class="lnr lnr-envelope"></span>
-						</div>
-						<div class="contact-details">
-							<h5>support@colorlib.com</h5>
-							<p>Send us your query anytime!</p>
-						</div>
-					</div>
+			<div class="row align-items-center justify-content-center">
+				<div class="col-lg-5 col-md-6 about-left">
+					<img class="img-fluid" src="img/about.jpg" alt="">
 				</div>
-				<div class="col-lg-8">
-					<form class="form-area contact-form text-right" id="myForm" action="mail.php" method="post">
-						<div class="row">
-							<div class="col-lg-6 form-group">
-								<input name="name" placeholder="Enter your name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter your name'"
-								 class="common-input mb-20 form-control" required="" type="text">
-
-								<input name="email" placeholder="Enter email address" pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{1,63}$" onfocus="this.placeholder = ''"
-								 onblur="this.placeholder = 'Enter email address'" class="common-input mb-20 form-control" required="" type="email">
-
-								<input name="subject" placeholder="Enter subject" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter subject'"
-								 class="common-input mb-20 form-control" required="" type="text">
-							</div>
-							<div class="col-lg-6 form-group">
-								<textarea class="common-textarea form-control" name="message" placeholder="Enter Messege" onfocus="this.placeholder = ''"
-								 onblur="this.placeholder = 'Enter Messege'" required=""></textarea>
-							</div>
-							<div class="col-lg-12">
-								<div class="alert-msg" style="text-align: left;"></div>
-								<button class="primary-btn" style="float: right;">Send Message</button>
-							</div>
-						</div>
-					</form>
+				<div class="offset-lg-1 col-lg-6 offset-md-0 col-md-12 about-right">
+					<h1>
+						eIDAS Bridge <br> Set-up
+					</h1>
+					<div class="wow fadeIn" data-wow-duration="1s">
+						<p>
+                            Necessary steps to link a DID to an eIDAS Certificate.
+                        </p>
+					</div>
+					<div class="button-group-area">
+                        <a href="#" class="genric-btn primary">1. Create DID</a>
+                        <a href="#" class="genric-btn primary">2. Load eIDAS Certificate</a>
+                        <a href="#" class="genric-btn primary">3. Generate Proof Signature</a>
+                        <a href="#" class="genric-btn primary">4. Get eIDAS Link DID</a>
+                        <a href="#" class="genric-btn primary">5. Store eIDAS Link DID to the Identity Hub</a>
+                        <a href="#" class="genric-btn primary">6. Get eIDAS Service Endpoint Structure</a>
+                        <a href="#" class="genric-btn primary">7. Update DID Doc with eIDAS Service Endpoint</a>        
+                    </div>
 				</div>
 			</div>
 		</div>
 	</section>
-	<!-- End contact-page Area -->
+    <!-- End eIDAS setup Area -->
+
+    <!-- Start eIDAS Issue Credential Area -->
+	<section class="about-area section-gap">
+		<div class="container">
+			<div class="row align-items-center justify-content-center">
+				<div class="col-lg-5 col-md-6 about-left">
+					<img class="img-fluid" src="img/about.jpg" alt="">
+				</div>
+				<div class="offset-lg-1 col-lg-6 offset-md-0 col-md-12 about-right">
+					<h1>
+						eIDAS Bridge <br> Issue a Credential Diploma
+					</h1>
+					<div class="wow fadeIn" data-wow-duration="1s">
+						<p>
+                            Necessary steps to Issue a Diploma Credential to a student.
+                        </p>
+                    </div>  
+                    <div class="button-group-area">
+                        <a href="#" class="genric-btn success">1. Get Diploma</a>
+                        <a href="#" class="genric-btn success">2. Get Verifiable Credential</a>
+                    </div>              
+				</div>
+			</div>
+		</div>
+	</section>
+    <!-- End eIDAS Issue Credential Area -->
+    
+    <!-- Start eIDAS Verify Credential Area -->
+	<section class="about-area section-gap">
+		<div class="container">
+			<div class="row align-items-center justify-content-center">
+				<div class="col-lg-5 col-md-6 about-left">
+					<img class="img-fluid" src="img/about.jpg" alt="">
+				</div>
+				<div class="offset-lg-1 col-lg-6 offset-md-0 col-md-12 about-right">
+					<h1>
+						eIDAS Bridge <br> Verify a Credential Diploma
+					</h1>
+					<div class="wow fadeIn" data-wow-duration="1s">
+						<p>
+							There is a moment in the life of any aspiring astronomer that it is time to buy that first telescope. It’s exciting to think
+							about setting up your own viewing station. In the life of any aspiring astronomer that it is time to buy that first
+							telescope. It’s exciting to think about setting up your own viewing station.
+						</p>
+					</div>
+					<a href="courses.html" class="primary-btn">Explore Courses</a>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- End eIDAS Verify Credential Area -->
 
 	<!-- Start Footer Area -->
 	<footer class="footer-area section-gap">
