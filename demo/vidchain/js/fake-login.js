@@ -5,7 +5,7 @@ $(function() {
 function loginWithVIDChain () {
     $("#login-button .glyphicon").show();
 
-    var callback  = "http://0.0.0.0:8080/demo/university_backend/student_profile.html";
+    var callback  = "http://localhost/~albertsolana/Projects/08.eIDAS_Bridge/eidas-bridge/demo/university_backend/student_profile.html";
     var requester = 1; // ID from MYSQL table to identify the requester and set the callback
     var userInfo  = ["name", "email", "phone", "photo"];
 
@@ -17,7 +17,7 @@ function loginWithVIDChain () {
 
     $.ajax({
         type: "POST",
-        url: "http://0.0.0.0:8080/demo/vidchain/login1.php",
+        url: "http://localhost/~albertsolana/Projects/08.eIDAS_Bridge/eidas-bridge/demo/vidchain/login1.php",
         processData: false,
         contentType: 'application/json',
         data: JSON.stringify(data),
@@ -31,7 +31,7 @@ function onLoginSucceed (data) {
             {
                 
                 title:'ViDChain Sign in',
-                url: "http://0.0.0.0:8080/demo/vidchain/login2.php?p="+data.id,
+                url: "http://localhost/~albertsolana/Projects/08.eIDAS_Bridge/eidas-bridge/demo/vidchain/login2.php?p="+data.id,
                 size:"lg"
             }
         );

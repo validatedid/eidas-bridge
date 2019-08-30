@@ -64,7 +64,7 @@ function checkMethod($method)
 <div class="container">
     <div>
         <div class="offset-by-four four columns" style="margin-top: 5%; margin-bottom: 5%;text-align: center; color:white;">        
-                <img id="qr-code" class="qr" src="<?php echo "http://0.0.0.0:8080/demo/vidchain/qr.php?id=".$qrId; ?>"/>
+                <img id="qr-code" class="qr" src="<?php echo "http://localhost/~albertsolana/Projects/08.eIDAS_Bridge/eidas-bridge/demo/vidchain/qr.php?id=".$qrId; ?>"/>
                 <p id="qr-explanation" class="qr">Please, scan QR Code with ViDChain in order to login</p>
         </div>
     </div>

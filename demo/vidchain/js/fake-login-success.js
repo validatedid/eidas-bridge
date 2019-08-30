@@ -13,7 +13,7 @@ function validateElicence (requester, attribute, token) {
 
     $.ajax({
         type: "POST",
-        url: "http://0.0.0.0:8080/demo/vidchain/validate_attribute.php",
+        url: "http://localhost/~albertsolana/Projects/08.eIDAS_Bridge/eidas-bridge/demo/vidchain/validate_attribute.php",
         processData: false,
         contentType: 'application/json',
         data: JSON.stringify(data),
