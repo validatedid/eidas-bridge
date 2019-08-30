@@ -11,7 +11,7 @@
  *
  */
 
-include_once "../lib/orm.php";
+include_once "./lib/orm.php";
 
 run();
 

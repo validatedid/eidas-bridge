@@ -26,166 +26,122 @@ function checkMethod($method)
 
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
+<<!DOCTYPE html>
+<html lang="zxx" class="no-js">
 
 <head>
-    <!-- Basic -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">   
-   
-    <!-- Mobile Metas -->
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
- 
-     <!-- Site Metas -->
-    <title>GoodWEB Solutions - Responsive HTML5 Landing Page Template</title>  
-    <meta name="keywords" content="">
-    <meta name="description" content="">
-    <meta name="author" content="">
+	<!-- Mobile Specific Meta -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<!-- Favicon-->
+	<link rel="shortcut icon" href="img/fav.png">
+	<!-- Author Meta -->
+	<meta name="author" content="codepixer">
+	<!-- Meta Description -->
+	<meta name="description" content="">
+	<!-- Meta Keyword -->
+	<meta name="keywords" content="">
+	<!-- meta character set -->
+	<meta charset="UTF-8">
+	<!-- Site Title -->
+	<title>About</title>
 
-    <!-- Site Icons -->
-    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
-    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+	<!--
+			Google Font
+			============================================= -->
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:300,500,600" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500i" rel="stylesheet">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <!-- Site CSS -->
-    <link rel="stylesheet" href="style.css">
-    <!-- Responsive CSS -->
-    <link rel="stylesheet" href="css/responsive.css">
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/custom.css">
-    <!-- Spinner CSS -->
-    <link type="text/css" rel="stylesheet" href="../spinner/waitMe.css">
-
-    <!-- Modernizer for Portfolio -->
-    <script src="js/modernizer.js"></script>
-
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
+	<!--
+			CSS
+			============================================= -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/themify-icons/0.1.2/css/themify-icons.css">
+	<link rel="stylesheet" href="css/linearicons.css">
+	<link rel="stylesheet" href="css/font-awesome.min.css">
+	<link rel="stylesheet" href="css/bootstrap.css">
+	<link rel="stylesheet" href="css/magnific-popup.css">
+	<link rel="stylesheet" href="css/nice-select.css">
+	<link rel="stylesheet" href="css/animate.min.css">
+	<link rel="stylesheet" href="css/owl.carousel.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="../vidchain/css/vidchain.css">
+    <link rel="stylesheet" href="../vidchain/css/normalize.css">
+    <link rel="stylesheet" href="../vidchain/css/skeleton.css">
 </head>
 
 <body>
-<!-- LOADER -->
-<div id="preloader">
-        <div class="loader">
-			<div class="loader__bar"></div>
-			<div class="loader__bar"></div>
-			<div class="loader__bar"></div>
-			<div class="loader__bar"></div>
-			<div class="loader__bar"></div>
-			<div class="loader__ball"></div>
-		</div>
-    </div><!-- end loader -->
-    <!-- END LOADER -->
-    
-	<div class="top-bar">
-		<div class="container-fluid">
-			<div class="row">
-				<div class="col-md-6 col-sm-6">
-					<div class="left-top">
-						<div class="email-box">
-							<a href="#"><i class="fa fa-envelope-o" aria-hidden="true"></i> youremail@gmail.com</a>
-						</div>
-						<div class="phone-box">
-							<a href="tel:1234567890"><i class="fa fa-phone" aria-hidden="true"></i> +1 234 567 890</a>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-6 col-sm-6">
-					<div class="right-top">
-						<div class="social-box">
-							<ul>
-								<li><a href="#"><i class="fa fa-facebook-square" aria-hidden="true"></i></a></li>
-								<li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
-								<li><a href="#"><i class="fa fa-linkedin-square" aria-hidden="true"></i></a></li>
-								<li><a href="#"><i class="fa fa-twitter-square" aria-hidden="true"></i></a></li>
-								<li><a href="#"><i class="fa fa-rss-square" aria-hidden="true"></i></a></li>
-							<ul>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-    <header class="header header_style_01">
-        <nav class="megamenu navbar navbar-default">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="index.html"><img src="images/logos/logo.png" alt="image"></a>
-                </div>
-                <div id="navbar" class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="about-us.html">About us</a></li>
-                        <li><a href="services.html">Our Services</a></li>
-                        <li><a href="features.html">Features</a></li>
-                        <li><a class="active" href="applyjob.html">Apply</a></li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
 
-   	<div class="banner-area banner-bg-1">
+	<!-- Start Header Area -->
+	<header id="header">
 		<div class="container">
-			<div class="row">
-				<div class="col-md-12">
-                <div class="banner">
-						<h2>Apply for a Job</h2>
-						<ul class="page-title-link">
-							<li><a href="#">Home</a></li>
-							<li><a href="#">Apply</a></li>
-						</ul>
-					</div>
+			<div class="row align-items-center justify-content-between d-flex">
+				<div id="logo">
+					<a href="index.html"><img src="img/logo.png" alt="" title="" /></a>
+				</div>
+				<nav id="nav-menu-container">
+					<ul class="nav-menu">
+						<li><a href="index.html">Home</a></li>
+						<li><a href="about.html">About</a></li>
+                        <li><a href="courses.html">Courses</a></li>
+                        <li class="menu-active"><a href="student_profile.html">Student Profile</a></li>
+                        <li><a href="eidas_setup.html">eIDAS Set-up</a></li>
+						<li class="menu-has-children"><a href="">Blog</a>
+							<ul>
+								<li><a href="blog-home.html">Blog Home</a></li>
+								<li><a href="blog-single.html">Blog Details</a></li>
+							</ul>
+						</li>
+						<li><a href="contact.html">Contact</a></li>
+					</ul>
+				</nav><!-- #nav-menu-container -->
+			</div>
+		</div>
+	</header>
+	<!-- End Header Area -->
+
+	<!-- Start Banner Area -->
+	<section class="banner-area relative">
+		<div class="container">
+			<div class="row d-flex align-items-center justify-content-center">
+				<div class="about-content col-lg-12">
+					<h1 class="text-white">
+                        Student Profile: <br/>
+                        <h2><?php echo $data['name'];?></h2>
+					</h1>
+					<p>Welcome to your Student Profile where you can download your diploma as a Verifiable Credential compatible with eIDAS.</p>
 				</div>
 			</div>
 		</div>
-    </div>
-    
-    <div id="about" class="section wb">
-        <div class="container">
-            <div class="section-title text-center">
-                <h3>Apply for a job in our company</h3>
-                <p class="lead">You have successfully logged in via VidChain. <br>Please submit your information to apply for the job.<br>We are delighted about your interest of working with us!</p>
-            </div><!-- end title -->
-            <div class="row">
-				<div class="col-md-6">
-                    <div class="post-media wow fadeIn">
-                        <!-- USER VidChain Full Image Start -->
-                        <div class="student_full_image">
-                            <?php
-                            if (isset($data['photo'])){
-                                echo '<img src="'.$data['photo'].'" alt="user profile" class="img-responsive img-rounded">';
-                            }else{
-                                echo'<img src="uploads/about_02.jpg" alt="" class="img-responsive img-rounded">';
-                            }
-                            ?>
-                        </div>
-                    </div><!-- end media -->
-                </div><!-- end col -->
-				
-                <div class="col-md-6 col-12">
+		<div class="rocket-img">
+			<img src="img/rocket.png" alt="">
+		</div>
+	</section>
+	<!-- End Banner Area -->
+
+    <!-- Start eIDAS Issue Credential Area -->
+	<section class="about-area section-gap">
+		<div class="container">
+			<div class="row align-items-center justify-content-center">
+				<div class="col-lg-5 col-md-6 about-left">
+                    <?php
+                        if (isset($data['photo'])){
+                            echo '<img src="'.$data['photo'].'" alt="user profile" class="img-responsive img-rounded img-fluid">';
+                        }else{
+                            echo'<img class="img-fluid" src="img/about.jpg" alt="">';
+                        }
+                    ?>
+				</div>
+				<div class="offset-lg-1 col-lg-6 offset-md-0 col-md-12 about-right">
+					<h1>Issue a Credential Diploma</h1>
+					<div class="wow fadeIn" data-wow-duration="1s">
+						<p>
+                            You can now download your diploma as a Verifiable Credential to your SSI wallet.
+                        </p>
+                    </div>  
                     <!-- User Details Info Area Start -->
                     <div class="teacher_details_info">
                         <!-- User Name Designation Start -->
                         <div class="name_designation">
                             <h2><?php echo $data['name'];?></h2>
-                            <?php
-                            if (isset($data['nif'])){
-                                echo '<h5>'.$data['nif'].'</h5>';
-                            }
-                            ?>
-                            
                         </div>
                         <div class="teacher_contact_info">
                             <!-- Single Contact Info Start -->
@@ -212,108 +168,125 @@ function checkMethod($method)
                                     <i class="fa fa-graduation-cap" aria-hidden="true"></i>
                                 </div>
                                 <div class="contact_data">
-                                    <p><?php echo $data['education'];?></p>
+                                    <p>Master of Science</p>
                                 </div>
                             </div>
                         </div>  <!-- User Contact Info End -->
                     </div> <!-- Teacher Details Info Area End -->
-                </div><!-- end col -->   
-            </div><!-- end row -->
-            <div class="row">
-                <hr class="hr2"> 
-                <div class="contact_form demo-vidchain demo_form">
-                    <div class="col-md-12">
-                        <button type="button" id="demo" class="btn btn-light btn-radius btn-brd grd1 btn-block show-btn">Apply for the job</button>
-                        <div id="job" class="job-accepted"><h4>You got the job! CONGRATULATIONS!</h4></div> 
-                        <div class="contact_data job-accepted">
-                            <button class="btn btn-default sign_in_vidchain btn-sm" id="validate-elicence" onclick="validateElicence(3, 'Product Designer', '<?php echo $data['token'];?>')"><img src="./img/vidchain-ico.png" style="margin-right: 10px;" /> <strong>INCLUDE IN MY VIDCHAIN WALLET</strong><span class="glyphicon glyphicon-refresh spinning" style="margin-left: 10px;"></span></button>
-                        </div>
-                    </div> 
-                </div>  
-            </div>
-        </div><!-- end container -->
-    </div><!-- end section -->
+                    <div class="button-group-area">
+                        <!--  <button class="btn btn-default sign_in_vidchain btn-sm" id="validate-elicence" onclick="validateElicence(2, 'Master of Science', '<?php // echo $data['token'];?>')"><img src="./img/vidchain-ico.png" style="margin-right: 10px;" /> <strong>INCLUDE IN MY VIDCHAIN WALLET</strong><span class="glyphicon glyphicon-refresh spinning" style="margin-left: 10px;"></span></button> -->
+                        <a href="#" class="genric-btn success" id="validate-elicence" onclick="validateElicence(2, 'Master of Science', '<?php echo $data['token'];?>')">2. Get your diploma as a Verifiable Credential</a>
+                    </div>              
+				</div>
+			</div>
+		</div>
+	</section>
+    <!-- End eIDAS Issue Credential Area -->
+    
+    <!-- Start Footer Area -->
+	<footer class="footer-area section-gap">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-2 col-md-6 single-footer-widget">
+					<h4>Top Products</h4>
+					<ul>
+						<li><a href="#">Managed Website</a></li>
+						<li><a href="#">Manage Reputation</a></li>
+						<li><a href="#">Power Tools</a></li>
+						<li><a href="#">Marketing Service</a></li>
+					</ul>
+				</div>
+				<div class="col-lg-2 col-md-6 single-footer-widget">
+					<h4>Quick Links</h4>
+					<ul>
+						<li><a href="#">Jobs</a></li>
+						<li><a href="#">Brand Assets</a></li>
+						<li><a href="#">Investor Relations</a></li>
+						<li><a href="#">Terms of Service</a></li>
+					</ul>
+				</div>
+				<div class="col-lg-2 col-md-6 single-footer-widget">
+					<h4>Features</h4>
+					<ul>
+						<li><a href="#">Jobs</a></li>
+						<li><a href="#">Brand Assets</a></li>
+						<li><a href="#">Investor Relations</a></li>
+						<li><a href="#">Terms of Service</a></li>
+					</ul>
+				</div>
+				<div class="col-lg-2 col-md-6 single-footer-widget">
+					<h4>Resources</h4>
+					<ul>
+						<li><a href="#">Guides</a></li>
+						<li><a href="#">Research</a></li>
+						<li><a href="#">Experts</a></li>
+						<li><a href="#">Agencies</a></li>
+					</ul>
+				</div>
+				<div class="col-lg-4 col-md-6 single-footer-widget">
+					<h4>Newsletter</h4>
+					<p>You can trust us. we only send promo offers,</p>
+					<div class="form-wrap" id="mc_embed_signup">
+						<form target="_blank" action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"
+						 method="get" class="form-inline">
+							<input class="form-control" name="EMAIL" placeholder="Your Email Address" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Your Email Address '"
+							 required="" type="email">
+							<button class="click-btn btn btn-default"><span class="lnr lnr-arrow-right"></span></button>
+							<div style="position: absolute; left: -5000px;">
+								<input name="b_36c4fd991d266f23781ded980_aefe40901a" tabindex="-1" value="" type="text">
+							</div>
 
-    <footer class="footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4 col-sm-4 col-xs-12">
-                    <div class="widget clearfix">
-                        <div class="widget-title">
-                            <img src="images/logos/logo-2.png" alt="" />
-                        </div>
-                        <p> Integer rutrum ligula eu dignissim laoreet. Pellentesque venenatis nibh sed tellus faucibus bibendum. Sed fermentum est vitae rhoncus molestie. Cum sociis natoque penatibus et magnis dis montes.</p>
-                        <p>Sed fermentum est vitae rhoncus molestie. Cum sociis natoque penatibus et magnis dis montes.</p>
-                    </div><!-- end clearfix -->
-                </div><!-- end col -->
+							<div class="info"></div>
+						</form>
+					</div>
+				</div>
+			</div>
+			<div class="footer-bottom row align-items-center">
+				<p class="footer-text m-0 col-lg-8 col-md-12"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+				<div class="col-lg-4 col-md-12 footer-social">
+					<a href="#"><i class="fa fa-facebook"></i></a>
+					<a href="#"><i class="fa fa-twitter"></i></a>
+					<a href="#"><i class="fa fa-dribbble"></i></a>
+					<a href="#"><i class="fa fa-behance"></i></a>
+				</div>
+			</div>
+		</div>
+	</footer>
+	<!-- End Footer Area -->
 
-				<div class="col-md-4 col-sm-4 col-xs-12">
-                    <div class="widget clearfix">
-                        <div class="widget-title">
-                            <h3>Pages</h3>
-                        </div>
+	<!-- ####################### Start Scroll to Top Area ####################### -->
+	<div id="back-top">
+		<a title="Go to Top" href="#"></a>
+	</div>
+	<!-- ####################### End Scroll to Top Area ####################### -->
 
-                        <ul class="footer-links hov">
-                            <li><a href="#">Home <span class="icon icon-arrow-right2"></span></a></li>
-							<li><a href="#">Blog <span class="icon icon-arrow-right2"></span></a></li>
-							<li><a href="#">Pricing <span class="icon icon-arrow-right2"></span></a></li>
-							<li><a href="#">About <span class="icon icon-arrow-right2"></span></a></li>
-							<li><a href="#">Faq <span class="icon icon-arrow-right2"></span></a></li>
-							<li><a href="#">Contact <span class="icon icon-arrow-right2"></span></a></li>
-                        </ul><!-- end links -->
-                    </div><!-- end clearfix -->
-                </div><!-- end col -->
-				
-                <div class="col-md-4 col-sm-4 col-xs-12">
-                    <div class="footer-distributed widget clearfix">
-                        <div class="widget-title">
-                            <h3>Subscribe</h3>
-							<p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which one know this tricks.</p>
-                        </div>
-						
-						<div class="footer-right">
-							<form method="get" action="#">
-								<input placeholder="Subscribe our newsletter.." name="search">
-								<i class="fa fa-envelope-o"></i>
-							</form>
-						</div>                        
-                    </div><!-- end clearfix -->
-                </div><!-- end col -->
-            </div><!-- end row -->
-        </div><!-- end container -->
-    </footer><!-- end footer -->
+    <script src="js/vendor/jquery-2.2.4.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+	 crossorigin="anonymous"></script>
+	<script src="js/vendor/bootstrap.min.js"></script>
+	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhOdIF3Y9382fqJYt5I_sswSrEw5eihAA"></script>
+	<script src="js/easing.min.js"></script>
+	<script src="js/hoverIntent.js"></script>
+	<script src="js/superfish.min.js"></script>
+	<script src="js/jquery.ajaxchimp.min.js"></script>
+	<script src="js/jquery.magnific-popup.min.js"></script>
+	<script src="js/owl.carousel.min.js"></script>
+	<script src="js/owl-carousel-thumb.min.js"></script>
+	<script src="js/jquery.sticky.js"></script>
+	<script src="js/jquery.nice-select.min.js"></script>
+	<script src="js/parallax.min.js"></script>
+	<script src="js/waypoints.min.js"></script>
+	<script src="js/wow.min.js"></script>
+	<script src="js/jquery.counterup.min.js"></script>
+	<script src="js/mail-script.js"></script>
+    <script src="js/main.js"></script>
 
-    <div class="copyrights">
-        <div class="container">
-            <div class="footer-distributed">
-                <div class="footer-left">                   
-                    <p class="footer-company-name">All Rights Reserved. &copy; 2018 <a href="#">GoodWEB</a> Design By : 
-					<a href="https://html.design/">html design</a></p>
-                </div>
-
-                
-            </div>
-        </div><!-- end container -->
-    </div><!-- end copyrights -->
-
-    <a href="#" id="scroll-to-top" class="dmtop global-radius"><i class="fa fa-angle-up"></i></a>
-
-
-    <!-- ===================== All jQuery Plugins ===================== -->
-
-    <!-- ALL JS FILES -->
-    <script src="js/all.js"></script>
-    <!-- ALL PLUGINS -->
-    <script src="js/custom.js"></script>
-    <script src="js/portfolio.js"></script>
-    <script src="js/hoverdir.js"></script>    
-
-    <!-- Tether js -->
+  <!-- VidChain plugin -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <script src="//rawgit.com/saribe/eModal/master/dist/eModal.min.js"></script>
-    <script src="../assets/js/fake-login-success.js"></script>
-    <script src="../assets/js/job-offer.js"></script>
-    <script src="../spinner/waitMe.js"></script>
+    <script src="../vidchain/js/faje-login-success.js"></script>
 
     <!-- ViDChain Modal -->
     <div class="modal fade" id="validateModal" role="dialog" aria-hidden="true">
