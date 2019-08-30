@@ -34,7 +34,10 @@
 	<link rel="stylesheet" href="css/nice-select.css">
 	<link rel="stylesheet" href="css/animate.min.css">
 	<link rel="stylesheet" href="css/owl.carousel.css">
-	<link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="../vidchain/css/vidchain.css">
+    <link rel="stylesheet" href="../vidchain/css/normalize.css">
+    <link rel="stylesheet" href="../vidchain/css/skeleton.css">
 </head>
 
 <body>
@@ -100,7 +103,10 @@
                         </p>
                     </div>  
                     <div class="button-group-area">
-                        <a href="#" class="genric-btn success">1. Login</a>
+                        <!-- sign in vidchain -->
+                        <div class="sign_in_vidchain">
+                                <a href="#" class="genric-btn success" role="button" onclick="loginWithVIDChain()">1. Login</a>
+                        </div>
                         <a href="#" class="genric-btn success">2. Get your diploma as a Verifiable Credential</a>
                     </div>              
 				</div>
@@ -207,7 +213,42 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 	<script src="js/wow.min.js"></script>
 	<script src="js/jquery.counterup.min.js"></script>
 	<script src="js/mail-script.js"></script>
-	<script src="js/main.js"></script>
+    <script src="js/main.js"></script>
+    
+    <!-- VidChain plugin -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
+    <script src="//rawgit.com/saribe/eModal/master/dist/eModal.min.js"></script>
+    <script src="../vidchain/js/fake-login.js"></script>
+
+    <!-- ViDChain Modal -->
+    <div class="modal fade" id="vidchainModal" role="dialog" aria-hidden="true">
+        <div class="vertical-alignment-helper">
+            <div class="modal-dialog vertical-align-center">
+                <div class="modal-content">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <img src="../vidchain/img/vidchain-login.png"/>
+                        <h3 class="modal-title" id="myModalLabel">
+                            Sign-in with ViDChain
+                        </h3>
+                    </div>
+                    
+                    <!-- Modal Body -->
+                    <div class="modal-body">                                 
+                                                                            
+                    </div>
+                    
+                    <!-- Modal Footer -->
+                    <div class="modal-footer">
+                    
+                        <button type="button" class="btn btn-default" data-dismiss="modal" onclick="loginclose()">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /Add Service Modal -->
 </body>
 
 </html>
