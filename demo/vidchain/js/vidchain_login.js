@@ -5,7 +5,7 @@ $(function() {
 var checkLogin = function() {
     $.ajax({
         data:  {id: qrId},
-        url:   'https://vidchain-demo-acmecompany.azurewebsites.net/check_login.php',
+        url:   'http://localhost/~albertsolana/Projects/08.eIDAS_Bridge/eidas-bridge/demo/vidchain/check_login.php',
         type:  'get',
         success:  function (result) {
             if(result !== 'false'){
