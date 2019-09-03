@@ -15,12 +15,12 @@ def main(args):
     try:
         hub_server_proc = multiprocessing.Process(target=start_hub_server)
         api_server_proc = multiprocessing.Process(target=init_api_server, args=(args.host, args.apiport,))
-        web_demo_server_proc = multiprocessing.Process(target=start_backend_server, args=(args.host, args.webport,))
+        # web_demo_server_proc = multiprocessing.Process(target=start_backend_server, args=(args.host, args.webport,))
 
         # launch servers
         hub_server_proc.start()
         api_server_proc.start()
-        web_demo_server_proc.start()
+        # web_demo_server_proc.start()
 
         # Keep the main thread running, otherwise signals are ignored.
         while True:
@@ -30,7 +30,7 @@ def main(args):
         # Terminate the running processes.
         hub_server_proc.terminate()
         api_server_proc.terminate()
-        web_demo_server_proc.terminate()
+        # web_demo_server_proc.terminate()
         print('\n * Exiting eIDAS Bridge demo')
 
 if __name__ == "__main__":
