@@ -44,8 +44,7 @@ function sendValidatedAttribute($requester, $attribute, $token)
 {
 	$_message = "The Educature University wants to send you a ".$attribute." diploma, do you want to save this education?";
     $_payload = [
-        // "requester" => $requester,
-        "requester" => 2, // !!! hack to be able to send an education attribute and be received correctly by the app. Need to update the app to support multiples requesters.
+        "requester" => $requester,
         "attribute" => $attribute
     ];
 
