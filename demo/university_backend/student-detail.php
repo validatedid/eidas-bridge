@@ -43,7 +43,7 @@ function checkMethod($method)
 	<!-- meta character set -->
 	<meta charset="UTF-8">
 	<!-- Site Title -->
-	<title>About</title>
+	<title>Student Profile</title>
 
 	<!--
 			Google Font
@@ -63,6 +63,8 @@ function checkMethod($method)
 	<link rel="stylesheet" href="css/animate.min.css">
 	<link rel="stylesheet" href="css/owl.carousel.css">
     <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.1/united/bootstrap.min.css">
     <link rel="stylesheet" href="../vidchain/css/vidchain.css">
     <link rel="stylesheet" href="../vidchain/css/normalize.css">
     <link rel="stylesheet" href="../vidchain/css/skeleton.css">
@@ -286,7 +288,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
   <!-- VidChain plugin -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <script src="//rawgit.com/saribe/eModal/master/dist/eModal.min.js"></script>
-    <script src="../vidchain/js/faje-login-success.js"></script>
+    <script src="../vidchain/js/fake-login-success.js"></script>
 
     <!-- ViDChain Modal -->
     <div class="modal fade" id="validateModal" role="dialog" aria-hidden="true">
