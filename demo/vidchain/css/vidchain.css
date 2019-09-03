@@ -23,7 +23,12 @@
 }
 
 .modal-lg{
-        max-width: 500px;
+    max-width: 500px;
+}
+
+.vidmodal{
+    height: 100vh;
+    max-height: 70vh;
 }
 
 .vidchain {
