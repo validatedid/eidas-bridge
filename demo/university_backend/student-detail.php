@@ -26,7 +26,7 @@ function checkMethod($method)
 
 ?>
 
-<<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zxx" class="no-js">
 
 <head>
@@ -176,7 +176,6 @@ function checkMethod($method)
                         </div>  <!-- User Contact Info End -->
                     </div> <!-- Teacher Details Info Area End -->
                     <div class="button-group-area">
-                        <!--  <button class="btn btn-default sign_in_vidchain btn-sm" id="validate-elicence" onclick="validateElicence(2, 'Master of Science', '<?php // echo $data['token'];?>')"><img src="./img/vidchain-ico.png" style="margin-right: 10px;" /> <strong>INCLUDE IN MY VIDCHAIN WALLET</strong><span class="glyphicon glyphicon-refresh spinning" style="margin-left: 10px;"></span></button> -->
                         <a href="#" class="genric-btn success" id="validate-elicence" onclick="validateElicence(2, 'Master of Science', '<?php echo $data['token'];?>')">2. Get your diploma as a Verifiable Credential</a>
                     </div>              
 				</div>
@@ -288,6 +287,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
   <!-- VidChain plugin -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <script src="//rawgit.com/saribe/eModal/master/dist/eModal.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
     <script src="../vidchain/js/fake-login-success.js"></script>
 
     <!-- ViDChain Modal -->
@@ -297,9 +297,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
                 <div class="modal-content">
                     <!-- Modal Header -->
                     <div class="modal-header">
-                        <h3 class="modal-title" id="modal-title">
-                            Validating attributes ...
-                        </h3>
+                        <h4 class="modal-title">Validating attributes ...</h4>
                     </div>
                     
                     <!-- Modal Body -->

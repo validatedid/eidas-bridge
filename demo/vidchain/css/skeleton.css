@@ -374,7 +374,7 @@ form {
 /* Modal
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 .modal-header {
-  display:none;
+  display:flex;
 }
 
 .modal-content{
