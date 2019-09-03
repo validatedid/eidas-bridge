@@ -50,11 +50,11 @@ function checkMethod($method)
         src="https://code.jquery.com/jquery-3.2.1.min.js"
         integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
         crossorigin="anonymous"></script>
-    <script src="../js/vidchain_login.js"></script>
+    <script src="./js/vidchain_login.js"></script>
 
     <!-- Favicon
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-    <link rel="icon" type="image/png" href="../img/favicon.ico">
+    <link rel="icon" type="image/png" href="./img/favicon.ico">
 
 </head>
 <body class="vidchain">
