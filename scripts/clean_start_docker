@@ -1,5 +1,6 @@
 #!/bin/bash
 
+docker rmi eidas-bridge-web-demo --force
+# docker rm  adadc0a34050
 docker build -t eidas-bridge-web-demo -f ./docker/Dockerfile . || exit 1
-
 docker run -ti -p 5002:5002 -p 8080:80 eidas-bridge-web-demo
