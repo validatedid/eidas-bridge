@@ -430,7 +430,7 @@ there.
 /* Larger than mobile */
 @media (min-width: 400px) {
   .modal-content{
-    height: 100vh;
+    height: 67vh;
     max-height: 70vh;
   }
 }
@@ -438,7 +438,7 @@ there.
 /* Larger than phablet (also point when grid becomes active) */
 @media (min-width: 550px) {
   .modal-content{
-    height: 100vh;
+    height: 67vh;
     max-height: 70vh;
   }
 }
@@ -446,7 +446,7 @@ there.
 /* Larger than tablet */
 @media (min-width: 750px) {
   .modal-content{
-    height: 100vh;
+    height: 67vh;
     max-height: 70vh;
   }
 }
@@ -454,7 +454,7 @@ there.
 /* Larger than desktop */
 @media (min-width: 1000px) {
   .modal-content{
-    height: 100vh;
+    height: 67vh;
     max-height: 70vh;
   }
 }
@@ -462,7 +462,7 @@ there.
 /* Larger than Desktop HD */
 @media (min-width: 1200px) {
   .modal-content{
-    height: 100vh;
+    height: 67vh;
     max-height: 70vh;
   }
 }
