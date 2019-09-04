@@ -12,6 +12,10 @@
 .modal-header h4{
     font-size: 22px !important;
 }
+.modal-header button{
+    position: absolute;
+    right: 20px;
+}
 .modal-title{
     color:#888B8D;
     margin: 15px 0 15px 200px;
