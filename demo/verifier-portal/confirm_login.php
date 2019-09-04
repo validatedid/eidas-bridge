@@ -71,8 +71,6 @@ function persistAttributes()
 	$requester = retrieveRequester($req["requester"]);
 	$callbackBaseURL = $requester['callback'];
 	
-	//$callbackBaseURL = "http://vidchainpoc.azurewebsites.net/site/fake/student-detail.php?";
-	
     $parameters = json_decode(file_get_contents('php://input', true), true);
 
     $scope = json_decode($req["scope"]);
@@ -83,7 +81,7 @@ function persistAttributes()
 
     // If attributes contains a photo and the photo is not an url (it is a base64 encoding image), put a url to our server to serve the image
     if (isset($callbackAttributes[PHOTO_ATTRIBUTE]) && substr($callbackAttributes[PHOTO_ATTRIBUTE], 0,4) !== "http" ) {
-        $callbackAttributes[PHOTO_ATTRIBUTE] = "http://vidchainpoc.azurewebsites.net/userphoto.php?id=".$_SESSION["id"];
+        $callbackAttributes[PHOTO_ATTRIBUTE] = "http://localhost/~albertsolana/Projects/08.eIDAS_Bridge/eidas-bridge/demo/verifier-portal/userphoto.php?id=".$_SESSION["id"];
     }
 
     $data = [
