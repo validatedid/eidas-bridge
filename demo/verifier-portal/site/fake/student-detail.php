@@ -284,7 +284,7 @@ function checkMethod($method)
                     <div class="breadcumb_section">
                         <!-- Breadcumb page title start -->
                         <div class="page_title">
-                            <h3>Student Profile</h3>
+                            <h3>Student Profile: : <?php echo $data['name'];?></h3>
                         </div>
                         <!-- Breadcumb page pagination start -->
                         <div class="page_pagination">
@@ -333,8 +333,8 @@ function checkMethod($method)
                         </div>
                         <!-- About Teacher Start -->
                         <div class="about_teacher">
-                            <p>This is your student profile section, where you can find your personal data from the University, as well as the completed degrees.</p>
-                            <p>In this section, you can also download your completed education degree in your wallet.</p>
+                            <p>This is your student profile section, where you can find your personal data from your Wallet Credentials Repository.</p>
+                            <p>You have uploaded <strong>your diploma from Educature University</strong>, and it <strong>has been succesfully validated.</strong></p>
                         </div>
                         <!-- Teacher Contact Info Start -->
                         <div class="teacher_contact_info">
@@ -362,10 +362,10 @@ function checkMethod($method)
                                     <i class="fa fa-graduation-cap" aria-hidden="true"></i>
                                 </div>
                                 <div class="contact_data">
-                                    <p>Software engineer (2017)</p>
+                                    <p><?php echo $data['education'];?></p>
                                 </div>
-                                <div class="contact_data">
-                                    <button class="btn btn-default sign_in_vidchain btn-sm" id="validate-elicence" onclick="validateElicence(2, 'Software Engineer Degree', '<?php echo $data['token'];?>')"><img src="./img/icon-img/vidchain-ico.png" style="margin-right: 10px;" /> <strong>INCLUDE IN MY VIDCHAIN WALLET</strong><span class="glyphicon glyphicon-refresh spinning" style="margin-left: 10px;"></span></button>
+                                <div class="contact_icon">
+                                    <i class="fa fa-check-square-o" aria-hidden="true"></i>
                                 </div>
                             </div>
                             
