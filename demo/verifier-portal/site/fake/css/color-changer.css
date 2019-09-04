@@ -1,0 +1,467 @@
+.color_palate {
+    background-color: #f6f6f6;
+    left: 0;
+    padding: 10px;
+    position: fixed;
+    top: 30%;
+    z-index: 999999;
+}
+
+.color_palate .single_color {
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    border-radius: 50%;
+    margin-bottom: 5px;
+    -webkit-transition-duration: 200ms;
+    transition-duration: 200ms;
+}
+
+.color_palate .single_color:hover {
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1)
+}
+
+.color_palate #color_1 {
+    background-color: #f39c12;
+}
+
+.color_palate #color_2 {
+    background-color: #3498db;
+}
+
+.color_palate #color_3 {
+    background-color: #1abc9c;
+}
+
+.color_palate #color_4 {
+    background-color: #e74c3c;
+    margin-bottom: 0;
+}
+
+
+/* Blue Color CSS */
+
+.color_1 .section_heading h4,
+.color_1 .mainmenu ul#nav li.current_page_item a,
+.color_1 .mainmenu ul#nav li:hover a,
+.color_1 .mainmenu ul#nav li ul.sub-menu li a:hover,
+.color_1 .search_button a>i:hover,
+.color_1 .search_box_area #close_button,
+.color_1 .slider-area .nivo-caption .lft-pr h2,
+.color_1 .slider-area .nivo-caption .lft-pr a:hover,
+.color_1 .single_feature:hover .feature_img span,
+.color_1 .single_feature:hover .feature_text h5,
+.color_1 .single_courses:hover .title>a>h5,
+.color_1 .cool_facts_area .col-xs-12:nth-child(even) .cool_fact_text,
+.color_1 .testimonial_text>p:before,
+.color_1 .testimonial_text>h5,
+.color_1 .single_latest_news_area:hover .single_latest_news_text_area .news_title h4,
+.color_1 .video_play_button i,
+.color_1 .single-accordion h5 a,
+.color_1 .newsletter_area form button,
+.color_1 .footer_upcoming_event .title>h4,
+.color_1 .footer_contact_info .title>h4,
+.color_1 .footer_about_us .title>h4,
+.color_1 .important_links .title>h4,
+.color_1 .important_links .links a:hover,
+.color_1 .important_links .links>p:hover>i,
+.color_1 .event_single_post>a:hover,
+.color_1 .footer_single_contact_info>i,
+.color_1 .footer_bottom p>i,
+.color_1 .footer_bottom p>a:hover,
+.color_1 .page_pagination ul>li>a:hover,
+.color_1 .singl-blog-status-bar span i,
+.color_1 .author-name h5,
+.color_1 .commenter h5,
+.color_1 .commenter>a,
+.color_1 .replay:hover,
+.color_1 .error_page .not-found-text h2,
+.color_1 .single_option>i,
+.color_1 .about_us_text>h3 span,
+.color_1 .single_part_code_of_contact h3 span,
+.color_1 .knowledgebase_area .accordions h3 span,
+.color_1 .single_part_code_of_contact>p:before,
+.color_1 .call_to_action:hover h3,
+.color_1 .price_rating_area .timer>li,
+.color_1 .latest_post .single_latest_post>a>h5:hover,
+.color_1 .search_post h3 span,
+.color_1 .event_speakers h3 span,
+.color_1 .gallery_area.event_details h3 span,
+.color_1 .latest_post h3 span,
+.color_1 .catagory_section h3 span,
+.color_1 .tag_section h3 span,
+.color_1 .single_slide .slide_text h2,
+.color_1 .edu-pre .nivo-directionNav a.nivo-prevNav:before,
+.color_1 .edu-pre .nivo-directionNav a.nivo-nextNav:before {
+    color: #3498db;
+}
+
+.color_1 #scrollUp,
+.color_1 .top_header_area,
+.color_1 .mainmenu ul#nav li:before,
+.color_1 .slider-area .nivo-caption .lft-pr a,
+.color_1 .single_courses_thumb .links>a:hover,
+.color_1 .single_courses_thumb .links>a,
+.color_1 .teacher_social_info,
+.color_1 .owl-dot.active,
+.color_1 .published_date p.date,
+.color_1 .basic_contact_area .basic_contact_form button:hover,
+.color_1 .newsletter_area,
+.color_1 #contact-form input#submit:hover,
+.color_1 .replay:hover,
+.color_1 .not-found-text>a:hover,
+.color_1 .not-found-text>a:focus,
+.color_1 .gallery_area .single_gallery_item .links>a:hover,
+.color_1 .gallery_area .single_gallery_item .links>a,
+.color_1 .single_option:hover,
+.color_1 .single_share_link:hover,
+.color_1 .about_us_thumb,
+.color_1 .register_form button,
+.color_1 .login_manual_form button,
+.color_1 .why_choose_us_area.home2 .col-md-3:nth-child(even) .single_service_img_area:hover,
+.color_1 .call_to>a,
+.color_1 .price_plan_area .single_price_plan .price,
+.color_1 .achive_section ul li>a:hover,
+.color_1 .catagory_section ul li>a:hover,
+.color_1 .tag_section ul>li>a:hover,
+.color_1 .edu-pre .nivo-directionNav a.nivo-prevNav:hover:before,
+.color_1 .edu-pre .nivo-directionNav a.nivo-nextNav:hover:before,
+.color_1 .edu-pre .nivo-controlNav a:hover,
+.color_1 .single_slide .slide_text a,
+.color_1 .edu-pre .nivo-controlNav a.active,
+.color_1 .welcome_area .welcome_slides .owl-nav .owl-prev,
+.color_1 .welcome_area .welcome_slides .owl-nav .owl-next {
+    background-color: #3498db;
+}
+
+.color_1 .mainmenu ul li ul.sub-menu,
+.color_1 .mainmenu ul#nav li ul.sub-menu li ul.sub-menu,
+.color_1 .search_box_area,
+.color_1 .slider-area .nivo-caption .lft-pr a,
+.color_1 .price_rating_area,
+.color_1 .single_teacher_profile:hover .single_teacher_details_info,
+.color_1 .owl-dot.active:before,
+.color_1 .video_play_button,
+.color_1 .basic_contact_area .basic_contact_form .form-group>input:focus,
+.color_1 .basic_contact_area .basic_contact_form .form-group>textarea:focus,
+.color_1 .footer_area,
+.color_1 .single_courses.course-list .single_courses_desc .price_rating_area,
+.color_1 .singl-blog-details blockquote,
+.color_1 .single_course_catagory,
+.color_1 .event_overview_schildle,
+.color_1 .related_upcoming_event_title,
+.color_1 .courses_overview,
+.color_1 .courses_description,
+.color_1 .popular_coureses_area.home2 .price_rating_area,
+.color_1 .call_to>a,
+.color_1 .event_thumbnails .event_details_thumb_overlay .countdown.event_details.price_rating_area {
+    border-color: #3498db;
+}
+
+.color_1 .pagination li a:hover,
+.color_1 .pagination li a:focus,
+.color_1 .event_next_previous .previous>a:hover,
+.color_1 .event_next_previous .next>a:hover {
+    background-color: #3498db;
+    color: #fff;
+}
+
+
+/* Green Color CSS */
+
+.color_2 .section_heading h4,
+.color_2 .mainmenu ul#nav li.current_page_item a,
+.color_2 .mainmenu ul#nav li:hover a,
+.color_2 .mainmenu ul#nav li ul.sub-menu li a:hover,
+.color_2 .search_button a>i:hover,
+.color_2 .search_box_area #close_button,
+.color_2 .slider-area .nivo-caption .lft-pr h2,
+.color_2 .slider-area .nivo-caption .lft-pr a:hover,
+.color_2 .single_feature:hover .feature_img span,
+.color_2 .single_feature:hover .feature_text h5,
+.color_2 .single_courses:hover .title>a>h5,
+.color_2 .cool_facts_area .col-xs-12:nth-child(even) .cool_fact_text,
+.color_2 .testimonial_text>p:before,
+.color_2 .testimonial_text>h5,
+.color_2 .single_latest_news_area:hover .single_latest_news_text_area .news_title h4,
+.color_2 .video_play_button i,
+.color_2 .single-accordion h5 a,
+.color_2 .newsletter_area form button,
+.color_2 .footer_upcoming_event .title>h4,
+.color_2 .footer_contact_info .title>h4,
+.color_2 .footer_about_us .title>h4,
+.color_2 .important_links .title>h4,
+.color_2 .important_links .links a:hover,
+.color_2 .important_links .links>p:hover>i,
+.color_2 .event_single_post>a:hover,
+.color_2 .footer_single_contact_info>i,
+.color_2 .footer_bottom p>i,
+.color_2 .footer_bottom p>a:hover,
+.color_2 .page_pagination ul>li>a:hover,
+.color_2 .singl-blog-status-bar span i,
+.color_2 .author-name h5,
+.color_2 .commenter h5,
+.color_2 .commenter>a,
+.color_2 .replay:hover,
+.color_2 .error_page .not-found-text h2,
+.color_2 .single_option>i,
+.color_2 .about_us_text>h3 span,
+.color_2 .single_part_code_of_contact h3 span,
+.color_2 .knowledgebase_area .accordions h3 span,
+.color_2 .single_part_code_of_contact>p:before,
+.color_2 .call_to_action:hover h3,
+.color_2 .price_rating_area .timer>li,
+.color_2 .latest_post .single_latest_post>a>h5:hover,
+.color_2 .search_post h3 span,
+.color_2 .event_speakers h3 span,
+.color_2 .gallery_area.event_details h3 span,
+.color_2 .latest_post h3 span,
+.color_2 .catagory_section h3 span,
+.color_2 .tag_section h3 span,
+.color_2 .single_slide .slide_text h2,
+.color_2 .edu-pre .nivo-directionNav a.nivo-prevNav:before,
+.color_2 .edu-pre .nivo-directionNav a.nivo-nextNav:before {
+    color: #1abc9c;
+}
+
+.color_2 #scrollUp,
+.color_2 .top_header_area,
+.color_2 .mainmenu ul#nav li:before,
+.color_2 .slider-area .nivo-caption .lft-pr a,
+.color_2 .single_courses_thumb .links>a:hover,
+.color_2 .single_courses_thumb .links>a,
+.color_2 .teacher_social_info,
+.color_2 .owl-dot.active,
+.color_2 .published_date p.date,
+.color_2 .basic_contact_area .basic_contact_form button:hover,
+.color_2 .newsletter_area,
+.color_2 #contact-form input#submit:hover,
+.color_2 .replay:hover,
+.color_2 .not-found-text>a:hover,
+.color_2 .not-found-text>a:focus,
+.color_2 .gallery_area .single_gallery_item .links>a:hover,
+.color_2 .gallery_area .single_gallery_item .links>a,
+.color_2 .single_option:hover,
+.color_2 .single_share_link:hover,
+.color_2 .about_us_thumb,
+.color_2 .register_form button,
+.color_2 .login_manual_form button,
+.color_2 .why_choose_us_area.home2 .col-md-3:nth-child(even) .single_service_img_area:hover,
+.color_2 .call_to>a,
+.color_2 .price_plan_area .single_price_plan .price,
+.color_2 .achive_section ul li>a:hover,
+.color_2 .catagory_section ul li>a:hover,
+.color_2 .tag_section ul>li>a:hover,
+.color_2 .edu-pre .nivo-directionNav a.nivo-prevNav:hover:before,
+.color_2 .edu-pre .nivo-directionNav a.nivo-nextNav:hover:before,
+.color_2 .edu-pre .nivo-controlNav a:hover,
+.color_2 .single_slide .slide_text a,
+.color_2 .edu-pre .nivo-controlNav a.active,
+.color_2 .welcome_area .welcome_slides .owl-nav .owl-prev,
+.color_2 .welcome_area .welcome_slides .owl-nav .owl-next {
+    background-color: #1abc9c;
+}
+
+.color_2 .mainmenu ul li ul.sub-menu,
+.color_2 .mainmenu ul#nav li ul.sub-menu li ul.sub-menu,
+.color_2 .search_box_area,
+.color_2 .slider-area .nivo-caption .lft-pr a,
+.color_2 .price_rating_area,
+.color_2 .single_teacher_profile:hover .single_teacher_details_info,
+.color_2 .owl-dot.active:before,
+.color_2 .video_play_button,
+.color_2 .basic_contact_area .basic_contact_form .form-group>input:focus,
+.color_2 .basic_contact_area .basic_contact_form .form-group>textarea:focus,
+.color_2 .footer_area,
+.color_2 .single_courses.course-list .single_courses_desc .price_rating_area,
+.color_2 .singl-blog-details blockquote,
+.color_2 .single_course_catagory,
+.color_2 .event_overview_schildle,
+.color_2 .related_upcoming_event_title,
+.color_2 .courses_overview,
+.color_2 .courses_description,
+.color_2 .popular_coureses_area.home2 .price_rating_area,
+.color_2 .call_to>a,
+.color_2 .event_thumbnails .event_details_thumb_overlay .countdown.event_details.price_rating_area {
+    border-color: #1abc9c;
+}
+
+.color_2 .pagination li a:hover,
+.color_2 .pagination li a:focus,
+.color_2 .event_next_previous .previous>a:hover,
+.color_2 .event_next_previous .next>a:hover {
+    background-color: #1abc9c;
+    color: #fff;
+}
+
+
+/* Red Color CSS */
+
+.color_3 .section_heading h4,
+.color_3 .mainmenu ul#nav li.current_page_item a,
+.color_3 .mainmenu ul#nav li:hover a,
+.color_3 .mainmenu ul#nav li ul.sub-menu li a:hover,
+.color_3 .search_button a>i:hover,
+.color_3 .search_box_area #close_button,
+.color_3 .slider-area .nivo-caption .lft-pr h2,
+.color_3 .slider-area .nivo-caption .lft-pr a:hover,
+.color_3 .single_feature:hover .feature_img span,
+.color_3 .single_feature:hover .feature_text h5,
+.color_3 .single_courses:hover .title>a>h5,
+.color_3 .cool_facts_area .col-xs-12:nth-child(even) .cool_fact_text,
+.color_3 .testimonial_text>p:before,
+.color_3 .testimonial_text>h5,
+.color_3 .single_latest_news_area:hover .single_latest_news_text_area .news_title h4,
+.color_3 .video_play_button i,
+.color_3 .single-accordion h5 a,
+.color_3 .newsletter_area form button,
+.color_3 .footer_upcoming_event .title>h4,
+.color_3 .footer_contact_info .title>h4,
+.color_3 .footer_about_us .title>h4,
+.color_3 .important_links .title>h4,
+.color_3 .important_links .links a:hover,
+.color_3 .important_links .links>p:hover>i,
+.color_3 .event_single_post>a:hover,
+.color_3 .footer_single_contact_info>i,
+.color_3 .footer_bottom p>i,
+.color_3 .footer_bottom p>a:hover,
+.color_3 .page_pagination ul>li>a:hover,
+.color_3 .singl-blog-status-bar span i,
+.color_3 .author-name h5,
+.color_3 .commenter h5,
+.color_3 .commenter>a,
+.color_3 .replay:hover,
+.color_3 .error_page .not-found-text h2,
+.color_3 .single_option>i,
+.color_3 .about_us_text>h3 span,
+.color_3 .single_part_code_of_contact h3 span,
+.color_3 .knowledgebase_area .accordions h3 span,
+.color_3 .single_part_code_of_contact>p:before,
+.color_3 .call_to_action:hover h3,
+.color_3 .price_rating_area .timer>li,
+.color_3 .latest_post .single_latest_post>a>h5:hover,
+.color_3 .search_post h3 span,
+.color_3 .event_speakers h3 span,
+.color_3 .gallery_area.event_details h3 span,
+.color_3 .latest_post h3 span,
+.color_3 .catagory_section h3 span,
+.color_3 .tag_section h3 span,
+.color_3 .single_slide .slide_text h2,
+.color_3 .edu-pre .nivo-directionNav a.nivo-prevNav:before,
+.color_3 .edu-pre .nivo-directionNav a.nivo-nextNav:before {
+    color: #e74c3c;
+}
+
+.color_3 #scrollUp,
+.color_3 .top_header_area,
+.color_3 .mainmenu ul#nav li:before,
+.color_3 .slider-area .nivo-caption .lft-pr a,
+.color_3 .single_courses_thumb .links>a:hover,
+.color_3 .single_courses_thumb .links>a,
+.color_3 .teacher_social_info,
+.color_3 .owl-dot.active,
+.color_3 .published_date p.date,
+.color_3 .basic_contact_area .basic_contact_form button:hover,
+.color_3 .newsletter_area,
+.color_3 #contact-form input#submit:hover,
+.color_3 .replay:hover,
+.color_3 .not-found-text>a:hover,
+.color_3 .not-found-text>a:focus,
+.color_3 .gallery_area .single_gallery_item .links>a:hover,
+.color_3 .gallery_area .single_gallery_item .links>a,
+.color_3 .single_option:hover,
+.color_3 .single_share_link:hover,
+.color_3 .about_us_thumb,
+.color_3 .register_form button,
+.color_3 .login_manual_form button,
+.color_3 .why_choose_us_area.home2 .col-md-3:nth-child(even) .single_service_img_area:hover,
+.color_3 .call_to>a,
+.color_3 .price_plan_area .single_price_plan .price,
+.color_3 .achive_section ul li>a:hover,
+.color_3 .catagory_section ul li>a:hover,
+.color_3 .tag_section ul>li>a:hover,
+.color_3 .edu-pre .nivo-directionNav a.nivo-prevNav:hover:before,
+.color_3 .edu-pre .nivo-directionNav a.nivo-nextNav:hover:before,
+.color_3 .edu-pre .nivo-controlNav a:hover,
+.color_3 .single_slide .slide_text a,
+.color_3 .edu-pre .nivo-controlNav a.active,
+.color_3 .welcome_area .welcome_slides .owl-nav .owl-prev,
+.color_3 .welcome_area .welcome_slides .owl-nav .owl-next {
+    background-color: #e74c3c;
+}
+
+.color_3 .mainmenu ul li ul.sub-menu,
+.color_3 .mainmenu ul#nav li ul.sub-menu li ul.sub-menu,
+.color_3 .search_box_area,
+.color_3 .slider-area .nivo-caption .lft-pr a,
+.color_3 .price_rating_area,
+.color_3 .single_teacher_profile:hover .single_teacher_details_info,
+.color_3 .owl-dot.active:before,
+.color_3 .video_play_button,
+.color_3 .basic_contact_area .basic_contact_form .form-group>input:focus,
+.color_3 .basic_contact_area .basic_contact_form .form-group>textarea:focus,
+.color_3 .footer_area,
+.color_3 .single_courses.course-list .single_courses_desc .price_rating_area,
+.color_3 .singl-blog-details blockquote,
+.color_3 .single_course_catagory,
+.color_3 .event_overview_schildle,
+.color_3 .related_upcoming_event_title,
+.color_3 .courses_overview,
+.color_3 .courses_description,
+.color_3 .popular_coureses_area.home2 .price_rating_area,
+.color_3 .call_to>a,
+.color_3 .event_thumbnails .event_details_thumb_overlay .countdown.event_details.price_rating_area {
+    border-color: #e74c3c;
+}
+
+.color_3 .pagination li a:hover,
+.color_3 .pagination li a:focus,
+.color_3 .event_next_previous .previous>a:hover,
+.color_3 .event_next_previous .next>a:hover {
+    background-color: #e74c3e;
+    color: #fff;
+}
+
+
+/* Common CSS*/
+
+.color_1 .edu-pre .nivo-directionNav a.nivo-prevNav:hover:before,
+.color_1 .edu-pre .nivo-directionNav a.nivo-nextNav:hover:before,
+.color_2 .edu-pre .nivo-directionNav a.nivo-prevNav:hover:before,
+.color_2 .edu-pre .nivo-directionNav a.nivo-nextNav:hover:before,
+.color_3 .edu-pre .nivo-directionNav a.nivo-prevNav:hover:before,
+.color_3 .edu-pre .nivo-directionNav a.nivo-nextNav:hover:before {
+    color: #fff;
+}
+
+.color_1 .slider-area .nivo-caption .lft-pr a:hover,
+.color_2 .slider-area .nivo-caption .lft-pr a:hover,
+.color_3 .slider-area .nivo-caption .lft-pr a:hover {
+    background-color: transparent;
+}
+
+.color_1 .register_form button:hover,
+.color_1 .register_form button:focus,
+.color_1 .login_manual_form button:hover,
+.color_1 .login_manual_form button:focus,
+.color_2 .register_form button:hover,
+.color_2 .register_form button:focus,
+.color_2 .login_manual_form button:hover,
+.color_2 .login_manual_form button:focus,
+.color_3 .register_form button:hover,
+.color_3 .register_form button:focus,
+.color_3 .login_manual_form button:hover,
+.color_3 .login_manual_form button:focus {
+    background-color: #2c3e50;
+    color: #fff;
+}
+
+.color_1 .single_option:hover i,
+.color_1 .single_option:hover h5>a,
+.color_2 .single_option:hover i,
+.color_2 .single_option:hover h5>a,
+.color_3 .single_option:hover i,
+.color_3 .single_option:hover h5>a {
+    color: #fff;
+}
