@@ -7,13 +7,13 @@ An eIDAS Bridge links the european Trust and Legal Framework, named eIDAS (elect
 
 ## Table of Contents <!-- omit in toc -->
 
-1. [Run eIDAS Bridge Docker Demo](#run-eidas-bridge-docker-demo)
+1. [Run eIDAS Bridge Web Docker Demo](#run-eidas-bridge-web-docker-demo)
 2. [Other Running and Test Methods](#other-running-and-test-methods)
 3. [eIDAS Bridge Library Calls](#eidas-bridge-library-calls)
 4. [Requisites](#requisites)
 5. [Roadmap](#roadmap)
 
-## Run eIDAS Bridge Docker Demo
+## Run eIDAS Bridge Web Docker Demo
 
 Move to the base directory (example: `test-eidas-bridge`)
 ```sh
@@ -36,12 +36,16 @@ $ ./scripts/build_and_run_docker
 PS ~\eidas-bridge> bash .\scripts\build_and_run_docker
 ```
 
-This docker demo exposes a server with the eIDAS Bridge Swagger API:
-- eIDAS Bridge Swagger API on `http://0.0.0.0:5002/`
+This docker demo exposes a web server to run web demo and also another server to work directly with the eIDAS Bridge Swagger API:
+- eIDAS Bridge Web demo on `http://localhost:8080/university_backend/`
+- eIDAS Bridge Swagger API on `http://localhost:5002/`
 
-Open your browser and access to `http://0.0.0.0:5002/` to interact with the eIDAS Bridge Swagger API.
+Open your browser and access to `http://localhost:8080/university_backend/` to interact with eIDAS Bridge Web Demo.
+Or open your browser and access to `http://0.0.0.0:5002/` to interact with the eIDAS Bridge Swagger API.
 
-In case you want to use the demo again, there is no need to rebuild the docker, just execute another script:
+To stop the demo and docker container, just press `Ctrl^C` on the same terminal your executed the script.
+
+In case you want to use the demo again, there is no need to rebuild the docker, just execute another script to start the already built docker:
 ```sh
 $ ./scripts/start_docker
 ```
