@@ -25,7 +25,7 @@ RUN pip3 install --no-cache-dir \
 	-r requirements.txt \
 	-r requirements.demo.txt
 
-RUN pip3 install --no-cache-dir -e .
+# RUN pip3 install --no-cache-dir -e .
 
 # Install MYSQL
 RUN docker-php-ext-install mysqli
