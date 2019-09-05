@@ -27,6 +27,9 @@ RUN pip3 install --no-cache-dir \
 
 RUN pip3 install --no-cache-dir -e .
 
+# Install MYSQL
+RUN docker-php-ext-install mysqli
+
 # Start apache server
 ADD ./scripts/start.sh /start.sh
 RUN chmod 0755 /start.sh
