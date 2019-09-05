@@ -28,10 +28,6 @@ RUN pip3 install --no-cache-dir \
 RUN pip3 install --no-cache-dir -e .
 
 # Start apache server
-EXPOSE 80
 ADD ./scripts/start.sh /start.sh
 RUN chmod 0755 /start.sh
-CMD ["bash", "start.sh"]
-
-# Run eidas_start_demo.py when the container launches
-CMD ["python3", "./demo/eidas_start_demo.py"]
+CMD ["bash", "/start.sh"]
