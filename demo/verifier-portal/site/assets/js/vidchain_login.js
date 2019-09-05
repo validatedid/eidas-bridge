@@ -5,7 +5,7 @@ $(function() {
 var checkLogin = function() {
     $.ajax({
         data:  {id: qrId},
-        url:   'http://localhost/~albertsolana/Projects/08.eIDAS_Bridge/eidas-bridge/demo/verifier-portal/check_login.php',
+        url:   'http://localhost:8080/verifier-portal/check_login.php',
         type:  'get',
         success:  function (result) {
             if(result !== 'false'){

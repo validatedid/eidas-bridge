@@ -81,7 +81,7 @@ function persistAttributes()
 
     // If attributes contains a photo and the photo is not an url (it is a base64 encoding image), put a url to our server to serve the image
     if (isset($callbackAttributes[PHOTO_ATTRIBUTE]) && substr($callbackAttributes[PHOTO_ATTRIBUTE], 0,4) !== "http" ) {
-        $callbackAttributes[PHOTO_ATTRIBUTE] = "http://localhost/~albertsolana/Projects/08.eIDAS_Bridge/eidas-bridge/demo/verifier-portal/userphoto.php?id=".$_SESSION["id"];
+        $callbackAttributes[PHOTO_ATTRIBUTE] = "http://localhost:8080/verifier-portal/userphoto.php?id=".$_SESSION["id"];
     }
 
     $data = [

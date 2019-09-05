@@ -5,7 +5,7 @@ $(function() {
 function loginWithVIDChain () {
     $("#login-button .glyphicon").show();
 
-    var callback  = "http://localhost/~albertsolana/Projects/08.eIDAS_Bridge/eidas-bridge/demo/verifier-portal/site/fake/index.html";
+    var callback  = "http://localhost:8080/verifier-portal/site/fake/index.html";
     var requester = 6; // set the requester to the DB
     var userInfo  = ["name", "email", "phone", "photo", "education"];
 
@@ -17,7 +17,7 @@ function loginWithVIDChain () {
 
     $.ajax({
         type: "POST",
-        url: "http://localhost/~albertsolana/Projects/08.eIDAS_Bridge/eidas-bridge/demo/verifier-portal/login.php",
+        url: "http://localhost:8080/verifier-portal/login.php",
         processData: false,
         contentType: 'application/json',
         data: JSON.stringify(data),
@@ -31,7 +31,7 @@ function onLoginSucceed (data) {
             {
                 
                 title:'ViDChain Sign in',
-                url: "http://localhost/~albertsolana/Projects/08.eIDAS_Bridge/eidas-bridge/demo/verifier-portal/site/vidchain/login.php?p="+data.id,
+                url: "http://localhost:8080/verifier-portal/site/vidchain/login.php?p="+data.id,
                 size:"lg"
             }
         );
