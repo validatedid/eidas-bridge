@@ -6,7 +6,6 @@ sys.path.insert(0,parentdir)
 
 import argparse, multiprocessing, time
 from demo.util.hub_server import start_hub_server
-from demo.util.backend_server import start_backend_server
 from demo.eidas_bridge_api import init_api_server
 
 def main(args):
