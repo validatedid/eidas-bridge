@@ -5,8 +5,9 @@ import json, threading
 from flask import Flask, request
 from flask_restplus import Resource, Api
 from flask_jsonpify import jsonify
-from eidas_demo import init_server, demo_eidas_link_did, demo_eidas_get_service_endpoint, \
+from eidas_demo import demo_eidas_link_did, demo_eidas_get_service_endpoint, \
     demo_eidas_sign_credential, demo_eidas_verify_credential
+from util.hub_server import start_hub_server
 
 app = Flask(__name__)
 app.config['JSON_SORT_KEYS'] = False
@@ -64,7 +65,7 @@ class EIDASVerifyCredential(Resource):
 
         Throws EIDASProofException on signarure not valid
         """
-        server_thread = threading.Thread(target=init_server, daemon=True)
+        server_thread = threading.Thread(target=start_hub_server, daemon=True)
 
         # launch localhost server
         server_thread.start()
