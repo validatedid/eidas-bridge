@@ -13,7 +13,7 @@ if __name__ == '__main__':
 
     setup(
         name='eidas_bridge',
-        version='0.3.0',
+        version='0.4.0',
         author='Validated Id <info@validatedid.com>',
         description='Python eIDAS Bridge Library',
         long_description=long_description,
