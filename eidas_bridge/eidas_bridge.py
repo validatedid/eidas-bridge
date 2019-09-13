@@ -33,6 +33,14 @@ def eidas_link_did(did, certificate, proof, padding = PSS_PADDING) -> str:
     
     return EIDASLink(did, certificate, proof, padding).to_json()
 
+def eidas_load_qec(did, qec, password=None):
+    """
+    Imports an eIDAS Qualified Electronic Certificate (QEC) with its correspondent 
+    private key to be used in further digital signature operations.
+
+    QEC currently supported format is only Secp256k1.
+    """
+
 def eidas_get_service_endpoint(did, service_endpoint) -> str:
     """ 
     Contructs the JSON structure that needs to be added to the Issuer's 
@@ -47,59 +55,43 @@ def eidas_get_service_endpoint(did, service_endpoint) -> str:
 
     return EIDASService(did, service_endpoint).to_json()
 
-def eidas_sign_credential(json_credential) -> str:
+def eidas_get_pubkey(did) -> str:
+    """
+    From a given DID, returns the correspondent public key.
+
+    Cryptographic keys currently supported format are only Secp256k1.
+    """
+
+    return ""
+
+def eidas_sign_credential(credential) -> str:
     """ 
-    Checks the validity of the issuer's eIDAS certificate against a 
-    Trusted Service Provider and adds the corresponde response to the 
-    received credential JSON structure.
+    Adds a digital signature to the given credential, generated with an eIDAS private key.
 
-    Not Supported at this Phase 0.
+    Returns the correspondent Verifiable Credential.
+
+    Cryptographic keys currently supported format are only Secp256k1.
     """
-    raise EIDASNotSupportedException("eIDAS library call NOT supported.")
 
-def eidas_verify_credential(json_credential, json_did_document) -> str:
+    return ""
+
+def eidas_verify_credential(credential, json_did_document) -> str:
     """
-    Verifies that the credential issuer had a valid eIDAS certificate 
-    at the moment of issuing the passed credential.
+    Verifies that the credential issuer had a valid eIDAS certificate at the moment of issuing the passed credential. Throws EIDASProofException on signarure not valid.
 
-    Throws EIDASProofException on signarure not valid
-    """
-    """ 
-        ALGORITHM DESCRIPTION 
+    The current implementation does NOT support for DID resolution.
 
-        eIDAS API function eidas_verify_credential should work on two ways:
+    The algorithm executes the following procedure:
 
-        1. No support for DID resolution.
-            In an initial and simpler phase, eIDAS library will delegate the DID resolution to the Agent, making the library simpler and completely independent of the DID-method used.
-            In this scenario the API function will need the DID Document and the function will be as shown:
-
-            def eidas_verify_credential(json_credential, did_document) -> str:
-
-            The algorithm in this case would be as followed:
-
-            * Get DID from the json_credential and from did_document and check are the same
-            * Get EIDASLink service endpoint from did_document
-            * Retrieve the EIDAS Link json structure and check that the DID correspond to the one from did_document
-            * Verify signature with the public key of the EIDAS Link and the proof that contains
-            * Throw EIDASProofException on signarure not valid
-
-        2. Support for DID Resolution.
-            In this case, the DID resolution would be responsibility for the eIDAS Library and it will not be necessary to include the DID Document as a parameter.
-
-            def eidas_verify_credential(json_credential, did_document = None) -> str:
-
-            The algorithm in this case will add one additional step:
-
-            * Get DID from the json_credential
-            * Resolve the DID and obtain the DID Document (using Universal Resolver component)
-            * Get EIDASLink service endpoint from did_document
-            * Retrieve the EIDAS Link json structure and check that the DID correspond to the one from did_document
-            * Verify signature with the public key of the EIDAS Link and the proof that contains
-            * Throw EIDASProofException on signarure not valid
+    1. Get DID from the credential and from did_document and check they are the same
+    2. Get EidasService service endpoint from did_document to be able to access the Issuer's Identity Hub
+    3. Retrieve QEC from the Issuer's Identity Hub, check the certificate validity and extract its public key
+    4. Verify credential signature with the extracted eIDAS public key
+    5. Return VALID or throw EIDASProofException on signature not valid
     """
 
     # Constructs a Verifiable Credential object and gets the issuer's did
-    verifiable_credential = VerifiableCredential(json_credential)
+    verifiable_credential = VerifiableCredential(credential)
     did_from_cred = verifiable_credential.get_issuer_did()
 
     # Constructs a DID Document object ang gets the did subject

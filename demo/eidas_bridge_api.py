@@ -6,12 +6,13 @@ from flask import Flask, request
 from flask_restplus import Resource, Api, fields
 from demo.util.hub_server import start_hub_server
 from eidas_bridge.eidas_bridge import eidas_link_did, eidas_get_service_endpoint, \
-    eidas_sign_credential, eidas_verify_credential, EIDASNotSupportedException
+    eidas_sign_credential, eidas_verify_credential, EIDASNotSupportedException, \
+    eidas_load_qec, eidas_get_pubkey
 from eidas_bridge.utils.crypto import PSS_PADDING
 
 app = Flask(__name__)
 app.config['JSON_SORT_KEYS'] = False
-api = Api(app, version='1.0', title='eIDAS Bridge API', description='An eIDAS bridge API to connect to a SSI solution')
+api = Api(app, version='0.5', title='eIDAS Bridge API', description='An eIDAS bridge API to connect to a SSI solution')
 
 eidas = api.namespace('eidas', description="eIDAS bridge API calls")
 
@@ -33,6 +34,21 @@ eidas_link_input_model = api.model('EIDASLink_in', {
         default=PSS_PADDING,
         example="PSS",
         enum=['PSS', 'PKCS1-v1_5'])
+})
+
+eidas_load_qec_input_model = api.model('EIDASLoadQEC', {
+    'did': fields.String(
+        description="DID", 
+        required=True,
+        example="did:example:21tDAKCERh95uGgKbJNHYp"),
+    'certificate': fields.String(
+        description="QEC certificate with Secp256k1 keys", 
+        required=True,
+        example="-----BEGIN CERTIFICATE-----\n..."),
+    'password': fields.String(
+        description="DID-hashed signature with public key", 
+        required=False,
+        example="Pa$$w0rd")
 })
 
 proof_model = api.model('EIDAS_proof', {
@@ -97,6 +113,22 @@ class EIDASLinkDID(Resource):
             )
         )
 
+@eidas.route('/load-qec')
+class EIDASLoadQEC(Resource):
+    @eidas.expect(eidas_load_qec_input_model)
+    def post(self):
+        """ 
+        Imports an eIDAS Qualified Electronic Certificate (QEC) with its correspondent private key to be used in further digital signature operations.
+
+        QEC currently supported format is only Secp256k1.
+        """
+
+        return eidas_load_qec(
+            request.json['did'], 
+            request.json['qec'], 
+            request.json['password']
+        )
+
 eidas_service_input_model = api.model('EIDASService_in', {
     'did': fields.String(
         description="DID", 
@@ -142,6 +174,37 @@ class EIDASServiceEndpoint(Resource):
             eidas_get_service_endpoint(
                 request.json['did'], 
                 request.json['service_endpoint']
+            )
+        )
+
+eidas_get_pubkey_input_model = api.model('EIDASPubKey_in', {
+    'did': fields.String(
+        description="DID", 
+        required=True,
+        example="did:example:21tDAKCERh95uGgKbJNHYp")
+})
+
+eidas_get_pubkey_output_model = api.model('EIDASPubKey_out', {
+    'did': fields.String(
+        description="eIDAS Secp256k1 Public key", 
+        required=True,
+        example="-----BEGIN PUBLIC KEY-----\nMFYwEAYHKoZIzj0CAQYFK4EEAAoDQgAE07FtD4Qg4Dw7GKxCUCPAxHN0E5aHahkL\nyE2GCbSRohqUzpVODaIwPaEW5PPNlMtSkODTKVdviyTHP6nY/HJ6Gw==\n-----END PUBLIC KEY-----\n")
+})
+
+@eidas.route('/get-pubkey')
+class EIDASGetPubKey(Resource):
+    @eidas.marshal_with(eidas_get_pubkey_output_model)
+    @eidas.expect(eidas_get_pubkey_input_model)
+    def get(self):
+        """ 
+        From a given DID, returns the correspondent public key.
+
+        Cryptographic keys currently supported format are only Secp256k1.
+        """
+
+        return json.loads(
+            eidas_get_pubkey(
+                request.json['did']
             )
         )
 
@@ -221,19 +284,52 @@ credential_input_model = api.model('Credential_in', {
         required=True)
 })
 
+credential_output_model = api.model('Credential_out', {
+    '@context': fields.List(fields.String,
+        description="List of context attributes", 
+        required=True,
+        example='[ "https://www.w3.org/2018/credentials/v1", "https://www.w3.org/2018/credentials/examples/v1" ]'),
+    'id': fields.String(
+        description="Credential IDentifier", 
+        required=True,
+        example="http://example.edu/credentials/3732"),
+    'type': fields.List(fields.String,
+        description="List of credential types", 
+        required=True,
+        example='["VerifiableCredential", "UniversityDegreeCredential"]'),
+    'issuer': fields.String(
+        description="Issuer DID", 
+        required=True,
+        example="did:example:21tDAKCERh95uGgKbJNHY"),
+    'issuanceDate': fields.String(
+        description="Credential Issuance date timestamp", 
+        required=False,
+        example="2010-01-01T19:23:24Z"),
+    'credentialSubject': fields.Nested(
+        cred_subject_model, 
+        description="Credential Subject structure", 
+        required=True),
+    'proof': fields.Nested(
+        cred_proof_model, 
+        description="Credential proof structure", 
+        required=True)
+})
+
 @eidas.route('/sign-credential')
 class EIDASSignCredential(Resource):
+    @eidas.marshal_with(credential_output_model)
     @eidas.expect(credential_input_model)
     def post(self):
         """ 
-        Checks the validity of the issuer's eIDAS certificate against a Trusted Service Provider and adds the corresponde response to the received credential JSON structure.
+        Adds a digital signature to the given credential, generated with an eIDAS private key.
 
-        Not Supported at this Phase 0.
+        Returns the correspondent Verifiable Credential.
+
+        Cryptographic keys currently supported format are only Secp256k1.
         """
-        try:
-            return eidas_sign_credential(request.get_json())
-        except EIDASNotSupportedException:
-            return "--- EIDAS Library function NOT supported yet. ---"
+        return json.loads(
+            eidas_sign_credential(request.get_json())
+        )
 
 auth_diddoc_model = api.model('AuthenticationDIDDocModel', {
     'id': fields.String(
