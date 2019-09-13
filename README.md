@@ -41,7 +41,7 @@ This docker demo exposes a web server to run web demo and also another server to
 - eIDAS Bridge Swagger API on `http://localhost:5002/`
 
 Open your browser and access to `http://localhost:8080/university_backend/` to interact with eIDAS Bridge Web Demo.
-Or open your browser and access to `http://0.0.0.0:5002/` to interact with the eIDAS Bridge Swagger API.
+Or open your browser and access to `http://localhost:5002/` to interact with the eIDAS Bridge Swagger API.
 
 To stop the demo and docker container, just press `Ctrl^C` on the same terminal your executed the script.
 
@@ -105,7 +105,7 @@ Following previous instructions, we should have the project github repo and be p
 
 This demo launches two localhost servers:
 - eIDAS Link local data repository on `http://localhost:8000`
-- eIDAS Bridge Swagger API on `http://127.0.0.1:5002/`
+- eIDAS Bridge Swagger API on `http://localhost:5002/`
 
 #### Requirements
 - Flask
@@ -122,38 +122,21 @@ Execute `eidas_bridge_api.py`:
 $ python demo/eidas_bridge_api.py
 ```
 SWAGGER API calls will be located at `http://localhost:5002` and will expose:
-  - `/eidas/link-did`
+  - `/eidas/load-qec`
   - `/eidas/service-endpoint`
+  - `/eidas/get-pubkey`
   - `/eidas/sign-credential`
   - `/eidas/verify-credential`
 
 ## eIDAS Bridge Library calls
 
-#### eidas_link_did
+#### eidas_load_qec
 ```python
-def eidas_link_did(did, certificate, proof, padding = PSS_PADDING) -> str:
+def eidas_load_qec(did, qec, password = none):
 ```
-Link the Issuer DID with eIDAS certificate
-Receives a DID, an eIDAS certificate, its proof of possession, and 
-optionally the padding of the signature proof (accepts PKCS#1 and PSS)
+Imports an eIDAS Qualified Electronic Certificate (QEC) with its correspondent private key to be used in further digital signature operations.
 
-Returns the JSON that needs to be stored on the Agent public Storage
-(i.e: an Identity Hub)
-
-EIDAS Link DID JSON **sample** structure:
-```json
-{
-  "type": "EidasLink",
-  "created": "2019-07-11 13:53:50.672317+00:00",
-  "did": "did:sov:55GkHamhTU1ZbTbV2ab9DE",
-  "certificate": "-----BEGIN CERTIFICATE-----\n...",
-  "proof": {
-    "type": "RsaSignature2018",
-    "padding": "PKCS1-v1_5",
-    "signatureValue": "4d91263d4b92042ca110f..."
-  }
-}
-```
+QEC currently supported format is only **Secp256k1**.
 
 #### eidas_get_service_endpoint
 ```python
@@ -174,17 +157,36 @@ Returns the correspondent JSON to be added to the Service Endpoint Section of th
 }
 ```
 
-#### eidas_sign_credential (Not Supported at this Phase 0.)
+#### eidas_get_pubkey
 ```python
-def eidas_sign_credential(json_credential) -> str:
+def eidas_get_pubkey(did) -> str:
 ```
-Checks the validity of the issuer's eIDAS certificate against a Trusted Service Provider and adds the corresponde response to the received credential JSON structure.
+From a given DID, returns the correspondent public key.
 
-Raises an `EIDASNotSupportedException` with the following text:`eIDAS library call NOT supported.`
+Cryptographic keys currently supported format are only **Secp256k1**.
+
+```str
+-----BEGIN PUBLIC KEY-----
+MFYwEAYHKoZIzj0CAQYFK4EEAAoDQgAE5PRr4VGw+uut1odbdVmQ0sGUY3bSpMEd
+I3zoNG+Q3Fq+IhMfAspEmgFQ8e+izzsatAr5dr8CjloJoKkCLiiKjA==
+-----END PUBLIC KEY-----
+```
+
+#### eidas_sign_credential
+```python
+def eidas_sign_credential(credential) -> str:
+```
+Adds a digital signature to the given credential, generated with an eIDAS private key. 
+
+Returns the correspondent Verifiable Credential.
+
+Cryptographic keys currently supported format are only **Secp256k1**.
+
+
 
 #### eidas_verify_credential
 ```python
-def eidas_verify_credential(json_credential, json_did_document):
+def eidas_verify_credential(credential, json_did_document):
 ```
 Verifies that the credential issuer had a valid eIDAS certificate at the moment of issuing the passed credential.
 Throws `EIDASProofException` on signarure not valid.
@@ -193,18 +195,17 @@ The current implementation does NOT support for DID resolution.
 
 The algorithm executes the following procedure:
 
-1. Get DID from the `json_credential` and from `did_document` and check they are the same
-2. Get `EIDASLink` service endpoint from `did_document`
-3. Retrieve the EIDAS Link json structure and check that the DID correspond to the one from `did_document`
-4. Verify signature with the public key of the EIDAS Link and the proof that contains
+1. Get DID from the `credential` and from `did_document` and check they are the same
+2. Get `EidasService` service endpoint from `did_document` to be able to access the Issuer's Identity Hub
+3. Retrieve QEC from the Issuer's Identity Hub, check the certificate validity and extract its public key
+4. Verify credential signature with the extracted eIDAS public key 
 5. Return `VALID` or throw `EIDASProofException` on signature not valid
 
 ## Requisites
 
-1. DID Document needs to be updated with a new service endpoint linking to the Identity Hub web service where eIDAS key linkage info is stored.
+1. DID Document needs to be updated with a new public key and service endpoint
 2. An agent MUST have a storage repository with the capability of exposing a public web service endpoint with access control management (i.e. an Identity Hub)
-3. The issuer backoffice MUST implement a PKCS#1 from a given hash (Padding supported: PKCS#1 and PSS)
-4. The issuer backoffice MUST have an eIDAS certificate (RSA keys with 2048 or 4096 lenght).
+3. The issuer backoffice MUST have an eIDAS certificate generated with the following elliptic curve: Secp256k1.
 
 ## Roadmap
 
@@ -220,17 +221,26 @@ The algorithm executes the following procedure:
 - ~~Expose the API to an Open API / Swapper REST API~~
 
 ### Step 1
-- Add external components: Enterprise Agent (no ledger)
+- Implement new eiDAS Bridge Calls:
+  - `/eidas/load-qec`
+  - `/eidas/get-pubkey`
+  - `/eidas/sign-credential`
+  - `/eidas/verify-credential`
+- Adapt University websites to do a complete demo flow
+  - login with user and password to both universities
+  - call the correspondent eidas bridge functions
 
 ### Step 2
-- Add external components: User Agent (no ledger)
+- Adapt VidChain to eidas Bridge demo:
+  - send and receive a verifiable credential
+  - use DIDs
+  - Implement DID-auth
 
 ### Step 3
-- Create a basic web front-end to easy test each API
+- Integrate with Microsoft APIs
 
 ### Step 4
-- Build User Agent UI (to make a real demo)
-- Build an Enterprise Agent UI
+- Add external components: Aries-cloud-agent
 
 ### Step 5
 - Add external components:  Identity Hub
