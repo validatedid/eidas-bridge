@@ -20,6 +20,6 @@ class RequestHandler(BaseHTTPRequestHandler):
         return
 
 def start_hub_server():
-    server = HTTPServer(('localhost', 8000), RequestHandler)
-    print(' * Starting Hub server at http://localhost:8000')
+    server = HTTPServer(('localhost', 8001), RequestHandler)
+    print(' * Starting Hub server at http://localhost:8001')
     server.serve_forever()
