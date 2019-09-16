@@ -1,27 +1,11 @@
 # test_eidas_bridge.py
 import json, multiprocessing, pytest
-from eidas_bridge.eidas_bridge import eidas_link_did, \
-        eidas_get_service_endpoint, eidas_sign_credential, eidas_verify_credential, \
+from eidas_bridge.eidas_bridge import eidas_get_service_endpoint, eidas_sign_credential, eidas_verify_credential, \
         EIDASNotSupportedException
 from eidas_bridge.utils.util import timestamp
 from demo.data.common_data import all_type_dids, all_type_certificates, bad_type_proofs, \
-        dids, bad_type_endpoints, service_endpoints, bad_type_credentials, credentials, \
-        eidas_link_inputs, did_documents
+        dids, bad_type_endpoints, service_endpoints, bad_type_credentials, credentials, did_documents
 from demo.util.hub_server import start_hub_server
-
-@pytest.mark.parametrize("did", all_type_dids)
-@pytest.mark.parametrize("certificate", all_type_certificates)
-@pytest.mark.parametrize("proof", bad_type_proofs)
-def test_eidas_link_did_bad_types(did, certificate, proof):
-    with pytest.raises(TypeError):
-        eidas_link_did(did, certificate, proof)
-
-@pytest.mark.parametrize("did", dids)
-@pytest.mark.parametrize("eidas_link_input", eidas_link_inputs)
-def test_eidas_link_did(did, eidas_link_input):
-        eidas_link = eidas_link_did(did, eidas_link_input[0], eidas_link_input[1], eidas_link_input[2])
-        expected = _to_json_eidas_link(did, eidas_link_input[0], eidas_link_input[1], eidas_link_input[2], get_created_timestamp(eidas_link)) 
-        assert eidas_link == expected
 
 @pytest.mark.parametrize("did", all_type_dids)
 @pytest.mark.parametrize("storage_endpoint", bad_type_endpoints)
@@ -59,37 +43,7 @@ def test_eidas_verify_credential(credential, did_doc):
     hub_server_proc.start()
 
     assert eidas_verify_credential(credential, did_doc) == "VALID"
-    
-def _to_json_eidas_link(did, x509cert, proof, padding, created) -> str:
-    """
-    Create a JSON representation of the model instance.
-
-    Returns:
-        A JSON representation of this message
-
-    """
-    return json.dumps(_serialize_eidas_link(did, x509cert, proof, padding, created), indent=2)
-
-def _serialize_eidas_link(did, x509cert, proof, padding, created) -> str:
-    """
-    Dump current object to a JSON-compatible dictionary.
-
-    Returns:
-        dict representation of current EIDASLink
-
-    """
-    return {
-            "type": "EidasLink",
-            "created": created,
-            "did": did,
-            "certificate": x509cert,
-            "proof": {
-                "type": "RsaSignature2018",
-                "padding": padding,
-                "signatureValue": proof
-            }
-    }
-
+  
 def _to_json_eidas_service(did, service_endpoint) -> str:
     """
     Create a JSON representation of the model instance.

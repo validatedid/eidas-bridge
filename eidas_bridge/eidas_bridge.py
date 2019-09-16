@@ -4,7 +4,6 @@
 
 from .utils.util import check_args
 from .utils.crypto import PSS_PADDING
-from .eidaslink import EIDASLink, EIDASProofException
 from .eidas_service import EIDASService
 from .verifiable_credential import VerifiableCredential
 from .did_document import DIDDocument
@@ -19,19 +18,6 @@ class EIDASDIDMismatchException(Exception):
     """
     Error raised when the Issuer's DID differs from the DID_Document's DID subject.
     """
-
-def eidas_link_did(did, certificate, proof, padding = PSS_PADDING) -> str:
-    """ 
-    Link the Issuer DID with eIDAS certificate
-
-    Receives a DID, an eIDAS certificate, its proof of possession, and 
-    optionally the padding of the signature proof (accepts PKCS#1 and PSS)
-
-    Returns the JSON that needs to be stored on the Agent public Storage
-    (i.e: an Identity Hub)
-    """
-    
-    return EIDASLink(did, certificate, proof, padding).to_json()
 
 def eidas_load_qec(did, qec, password=None):
     """
@@ -72,8 +58,7 @@ def eidas_sign_credential(credential) -> str:
 
     Cryptographic keys currently supported format are only Secp256k1.
     """
-
-    return ""
+    raise EIDASNotSupportedException("eIDAS library call NOT supported.")
 
 def eidas_verify_credential(credential, json_did_document) -> str:
     """
@@ -105,6 +90,6 @@ def eidas_verify_credential(credential, json_did_document) -> str:
     eidas_service = did_document.get_eidas_service_endpoint()
     # checks the signature in the EIDAS Link constructor
     # Throws EIDASProofException on signarure not valid
-    EIDASLink.from_json(eidas_service.get_eidas_link_did())
+    # !!! FIX Algorithm It returned the eIDAS link did structure to check the signature, but this structure no longer exists
 
     return "VALID"

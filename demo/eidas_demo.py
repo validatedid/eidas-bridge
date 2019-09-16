@@ -6,13 +6,11 @@ parentdir = os.path.dirname(currentdir)
 sys.path.insert(0,parentdir) 
 
 import time, json, threading
-from eidas_bridge.eidas_bridge import eidas_link_did, \
-    eidas_get_service_endpoint, eidas_sign_credential, eidas_verify_credential, \
+from eidas_bridge.eidas_bridge import eidas_get_service_endpoint, eidas_sign_credential, eidas_verify_credential, \
     EIDASNotSupportedException
 from eidas_bridge.utils.crypto import InvalidSignatureException, x509_load_certificate_from_data_bytes, \
     PKCS1v15_PADDING, PSS_PADDING, rsa_verify
-from data.common_data import eidas_link_inputs, service_endpoints, credentials, paddings, \
-    did_documents
+from data.common_data import service_endpoints, credentials, paddings, did_documents
 from util.util import bcolors, print_object
 from util.crypto import create_selfsigned_x509_certificate, store_rsa_key_and_x509cert_to_disk, \
     print_rsa_pub_key, print_x509cert, eidas_crypto_hash_byte, eidas_crypto_hash_str, \
@@ -23,16 +21,6 @@ from util.hub_server import start_hub_server
 """"""""""""""""""""""""
 """ EIDAS BRIDGE TESTS """
 """"""""""""""""""""""""
-
-def demo_eidas_link_did() -> str:
-    for eidas_link_input in eidas_link_inputs:
-        print(bcolors.OKBLUE + "\n\r--- EIDAS LINK DID JSON STRUCT ---\n\r" + bcolors.ENDC)
-        return eidas_link_did(
-                eidas_link_input[3], 
-                eidas_link_input[0], 
-                eidas_link_input[1], 
-                eidas_link_input[2]
-            )
 
 def demo_eidas_get_service_endpoint() -> str:
     for service_endpoint in service_endpoints:
@@ -57,16 +45,14 @@ def demo_eidas_verify_credential() -> str:
 def basic_demo():
 
     """ Initial Demo: very basic """
-    print(bcolors.HEADER + "1.- calling eidas link did: " + bcolors.ENDC)
-    print(demo_eidas_link_did())
 
-    print(bcolors.HEADER + "\n2.- calling eidas get service endpoint struct " + bcolors.ENDC)
+    print(bcolors.HEADER + "\n1.- calling eidas get service endpoint struct " + bcolors.ENDC)
     print (demo_eidas_get_service_endpoint())
 
-    print(bcolors.HEADER + "\n3.- calling eidas sign credential " + bcolors.ENDC)
+    print(bcolors.HEADER + "\n2.- calling eidas sign credential " + bcolors.ENDC)
     print(demo_eidas_sign_credential())
 
-    print(bcolors.HEADER + "\n4.- calling eidas verify credential " + bcolors.ENDC)
+    print(bcolors.HEADER + "\n3.- calling eidas verify credential " + bcolors.ENDC)
     print(demo_eidas_verify_credential())
 
 """"""""""""""""""
@@ -174,10 +160,10 @@ def test_sign_and_verify_fron_p12file_using_cert(path_to_p12_file, p12_password,
 
 
 """ CRYPTO SUITE """
-
+# !!! Need to ve redesigned with new eidas bridge calls
+"""
 def _crypto_suite_test(tests_to_execute, path_to_dir_to_store, path_to_key_file, input_password, 
-    path_to_cert_file, path_to_p12_file, p12_password, message, x509cert, proof, proof_padding, new_padding, 
-    bprint):
+    path_to_cert_file, path_to_p12_file, p12_password, bprint):
     if tests_to_execute[0]:
         print("\nCRYPTO TEST 1: Generate x509 certificate and RSA Key and store to disk:\n")
         input("Press Enter to continue...")
@@ -214,7 +200,7 @@ from the private key to verify:\n")
 from the certificate to verify:\n")
         input("Press Enter to continue...")
         test_sign_and_verify_fron_p12file_using_cert(path_to_p12_file, p12_password, message, new_padding, bprint)
-
+"""
 """"""""""""""""""""""""
 """ AUX FUNCTIONS    """
 """"""""""""""""""""""""
@@ -291,26 +277,21 @@ def _print_pub_key(pub_key):
 
 def _print_signature(signature):
     print("Signature: \n" + signature.hex())
-
+"""
 def test_crypto_suite_loop(tests_to_execute, path_to_dir_to_store, path_to_key_file, input_password, 
-    path_to_cert_file, path_to_p12_file, p12_password, eidas_link_inputs, paddings, bprint):
-    for eidas_link_input in eidas_link_inputs:
-        for padding in paddings:
-            _crypto_suite_test(
-                tests_to_execute, 
-                path_to_dir_to_store, 
-                path_to_key_file, 
-                input_password, 
-                path_to_cert_file, 
-                path_to_p12_file,
-                p12_password, 
-                eidas_link_input[3], # dids
-                eidas_link_input[0], # certificates
-                eidas_link_input[1], # proof
-                eidas_link_input[2], # proof padding 
-                padding, # padding type on new signatures
-                bprint
-            )
+    path_to_cert_file, path_to_p12_file, p12_password, paddings, bprint):
+    for padding in paddings:
+        _crypto_suite_test(
+            tests_to_execute, 
+            path_to_dir_to_store, 
+            path_to_key_file, 
+            input_password, 
+            path_to_cert_file, 
+            path_to_p12_file,
+            p12_password, 
+            bprint
+        )
+"""
 
 def main_tests():
     start_time = time.time()
@@ -334,8 +315,6 @@ def main_tests():
         "./tests/data/x509cert.pem", 
         "./tests/data/certificate.p12",
         b"passphrase", 
-        eidas_link_inputs,
-        paddings,
         True
     )
     """

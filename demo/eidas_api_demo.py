@@ -5,7 +5,7 @@ import json, threading
 from flask import Flask, request
 from flask_restplus import Resource, Api
 from flask_jsonpify import jsonify
-from eidas_demo import demo_eidas_link_did, demo_eidas_get_service_endpoint, \
+from eidas_demo import demo_eidas_get_service_endpoint, \
     demo_eidas_sign_credential, demo_eidas_verify_credential
 from util.hub_server import start_hub_server
 
@@ -14,20 +14,6 @@ app.config['JSON_SORT_KEYS'] = False
 api = Api(app)
 
 name_space = api.namespace('eidas', description="eIDAS DEMO APIs")
-
-@name_space.route('/link-did')
-class EIDASLinkDID(Resource):
-    def get(self):
-        """ 
-        Link the Issuer DID with eIDAS certificate
-
-        Receives a DID, an eIDAS certificate, its proof of possession, and 
-        optionally the padding of the signature proof (accepts PKCS#1 and PSS)
-
-        Returns the JSON that needs to be stored on the Agent public Storage
-        (i.e: an Identity Hub)
-        """
-        return jsonify(json.loads(demo_eidas_link_did()))
 
 @name_space.route('/service-endpoint')
 class EIDASServiceEndpoint(Resource):

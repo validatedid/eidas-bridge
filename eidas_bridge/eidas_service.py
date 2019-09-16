@@ -55,15 +55,3 @@ class EIDASService():
             "type": EIDASService.EIDAS_SERVICE_TYPE,
             "serviceEndpoint": self._endpoint
             }
-    
-    def get_eidas_link_did(self) -> str:
-        """ Retrieves a json structure that represents an 
-            eIDAS Link DID using the eIDAS Service Endpoint 
-        """
-        # retrieves the json eidas structure
-        r = requests.get(self._endpoint)
-
-        if not r.status_code == 200:
-            raise EIDASGetEidasLinkException("Service Endpoint Error: EIDAS Link data cannot be retrieved.")
-        
-        return json.dumps(r.json(), indent=2)
