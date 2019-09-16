@@ -12,12 +12,12 @@ from eidas_bridge.utils.crypto import InvalidSignatureException, x509_load_certi
     PKCS1v15_PADDING, PSS_PADDING, rsa_verify
 from data.common_data import eidas_inputs, service_endpoints, credentials, paddings, did_documents
 from util.util import bcolors, print_object
-from util.crypto import create_selfsigned_x509_certificate, store_rsa_key_and_x509cert_to_disk, \
+from util.crypto import create_selfsigned_x509_certificate, store_key_and_x509cert_to_disk, \
     print_rsa_pub_key, print_x509cert, eidas_crypto_hash_byte, eidas_crypto_hash_str, \
-    eidas_crypto_hash_hex, rsa_load_private_key_from_file, x509_load_certificate_from_file, \
+    eidas_crypto_hash_hex, load_private_key_from_file, x509_load_certificate_from_file, \
     x509_get_PEM_certificate_from_obj, print_rsa_priv_key, rsa_sign, load_pkcs12_file, \
     ecdsa_verify_priv, ecdsa_verify, ecdsa_sign, _ecdsa_generate_key, _ecdsa_get_pubkey, \
-    _ecdsa_serialize_pubkey, _ecdsa_serialize_privkey
+    _ecdsa_serialize_pubkey, _ecdsa_serialize_privkey, create_selfsigned_x509_certificate_ecdsa
 from util.hub_server import start_hub_server
 
 """"""""""""""""""""""""
@@ -88,13 +88,13 @@ def test_crypto_hash_suite():
 """"""""""""""""""""""""""""""
 """ RSA CRYPTO TEST SUITE  """
 """"""""""""""""""""""""""""""
-def test_generate_x509cert_and_key_and_store_to_disk(path_to_dir, input_password, bprint):
+def test_generate_x509cert_and_rsa_key_and_store_to_disk(path_to_dir, input_password, bprint):
     # create rsa key and x509 certificate
     rsa_key, x509cert = create_selfsigned_x509_certificate(2048, u'ES', u'TEST_STATE',
     u'TEST_CITY', u'CA_ACME', u'mysite.com',365)
 
     #store key object and x509 certificate to disk in PEM files
-    store_rsa_key_and_x509cert_to_disk(rsa_key, path_to_dir + "rsakey.pem", input_password,
+    store_key_and_x509cert_to_disk(rsa_key, path_to_dir + "rsakey.pem", input_password,
         x509cert, path_to_dir + "x509cert.pem")
 
     # print rsa key and x509 certificate
@@ -172,6 +172,21 @@ def test_ecdsa_sign_and_verify(message, bprint):
     pubkey = _ecdsa_get_pubkey(privkey)
     _verify(signature, message, pubkey, bprint, True)
 
+def test_generate_x509cert_and_ecdsa_key_and_store_to_disk(path_to_dir, input_password, bprint):
+    # create ecdsa key and x509 certificate
+    ecdsa_key, x509cert = create_selfsigned_x509_certificate_ecdsa(u'ES', u'TEST_STATE',
+    u'TEST_CITY', u'CA_ACME', u'mysite.com',365)
+
+    #store key object and x509 certificate to disk in PEM files
+    store_key_and_x509cert_to_disk(ecdsa_key, path_to_dir + "ecdsakey.pem", input_password,
+        x509cert, path_to_dir + "x509ECDSA.pem")
+
+    # print rsa key and x509 certificate
+    if bprint:
+        _print_certificate(x509cert)
+        _print_priv_key(ecdsa_key, True, input_password)
+        _print_pub_key(x509cert.public_key(), True)
+
 """"""""""""""""""""""""""""""
 """ CRYPTO TEST SUITE  """
 """"""""""""""""""""""""""""""
@@ -181,7 +196,7 @@ def _crypto_suite_test(tests_to_execute, path_to_dir_to_store, path_to_key_file,
     if tests_to_execute[0]:
         print("\nCRYPTO TEST 1: Generate x509 certificate and RSA Key and store to disk:\n")
         input("Press Enter to continue...")
-        test_generate_x509cert_and_key_and_store_to_disk(path_to_dir_to_store, 
+        test_generate_x509cert_and_rsa_key_and_store_to_disk(path_to_dir_to_store, 
         input_password, bprint)
     if tests_to_execute[1]:
         print("\nCRYPTO TEST 2: Sign a message with %s padding type, with a RSA Key loaded from file and \
@@ -218,6 +233,11 @@ from the certificate to verify:\n")
         print("\nSIGN & VERIFY TEST 8: ECDSA test generating internal private key:\n")
         input("Press Enter to continue...")
         test_ecdsa_sign_and_verify(message, bprint)
+    if tests_to_execute[8]:
+        print("\nCRYPTO TEST 9: Generate x509 certificate and ECDSA Key and store to disk:\n")
+        input("Press Enter to continue...")
+        test_generate_x509cert_and_ecdsa_key_and_store_to_disk(path_to_dir_to_store, 
+        input_password, bprint)
 
 """"""""""""""""""""""""
 """ AUX FUNCTIONS    """
@@ -256,13 +276,13 @@ def _load_cert_from_file(path_to_cert_file, bprint) -> bytes:
 
 def _load_key_from_file(path_to_key_file, input_password, bprint) -> bytes:
     #load key
-    rsa_priv_key = rsa_load_private_key_from_file(path_to_key_file, input_password)
+    priv_key = load_private_key_from_file(path_to_key_file, input_password)
     
     if bprint:
-        _print_priv_key(rsa_priv_key, False, input_password)
-        _print_pub_key(rsa_priv_key.public_key(), False)
+        _print_priv_key(priv_key, False, input_password)
+        _print_pub_key(priv_key.public_key(), False)
     
-    return rsa_priv_key
+    return priv_key
 
 def _sign(message, priv_key, bprint, bECDSA, padding=None) -> bytes:
     signature = ""
@@ -347,12 +367,12 @@ def main_tests():
     print(bcolors.HEADER + "\n--- INIT CRYPTO TEST SUITE ---\n\r" + bcolors.ENDC)
     #input("Press Enter to continue...")
     test_crypto_suite_loop(
-        [False, False, False, False, False, False, False, True], 
-        "./tests/data/tmp/", 
-        "./tests/data/rsakey.pem", 
+        [False, False, False, False, False, False, False, False, True], 
+        "./demo/data/", 
+        "./demo/data/rsakey.pem", 
         b"passphrase", 
-        "./tests/data/x509cert.pem", 
-        "./tests/data/certificate.p12",
+        "./demo/data/x509cert.pem", 
+        "./demo/data/certificate.p12",
         b"passphrase", 
         eidas_inputs,
         paddings,

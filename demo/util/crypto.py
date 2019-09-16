@@ -52,7 +52,7 @@ def _rsa_generate_key(key_size) -> bytes:
         backend=default_backend()
     )
 
-def _generate_x509_certificate(rsa_key, 
+def _generate_x509_certificate(private_key, 
     cert_iss_country, cert_iss_state, cert_iss_locality, cert_iss_org, cert_iss_common, 
     cert_valid_days) -> bytes:
     """ Create a x509 certificate signed with the given private key """
@@ -71,7 +71,7 @@ def _generate_x509_certificate(rsa_key,
     ).issuer_name(
         issuer
     ).public_key(
-        rsa_key.public_key()
+        private_key.public_key()
     ).serial_number(
         x509.random_serial_number()
     ).not_valid_before(
@@ -83,7 +83,7 @@ def _generate_x509_certificate(rsa_key,
         x509.SubjectAlternativeName([x509.DNSName(u"localhost")]),
         critical=False,
     # Sign our certificate with our private key
-    ).sign(rsa_key, hashes.SHA256(), default_backend())
+    ).sign(private_key, hashes.SHA256(), default_backend())
 
 def create_selfsigned_x509_certificate(key_size,
     cert_iss_country, cert_iss_state, cert_iss_locality, cert_iss_org, cert_iss_common, 
@@ -106,30 +106,30 @@ def create_selfsigned_x509_certificate(key_size,
 
     return rsa_key, x509Cert
 
-def store_rsa_key_and_x509cert_to_disk(rsa_key, rsa_key_pem_file, input_password,
+def store_key_and_x509cert_to_disk(privkey, key_pem_file, input_password,
     x509cert, x509cert_pem_file):
-    _rsa_store_key_to_disk(rsa_key, rsa_key_pem_file, input_password)
+    _store_key_to_disk(privkey, key_pem_file, input_password)
     _x509_store_certificate_to_disk(x509cert, x509cert_pem_file)
 
-def _rsa_store_key_to_disk(rsa_key, pem_key_file, input_password):
+def _store_key_to_disk(privkey, pem_key_file, input_password):
     # Write our key to disk for safe keeping
     with open(pem_key_file, "wb") as f:
-        f.write(rsa_key.private_bytes(
+        f.write(privkey.private_bytes(
             encoding=serialization.Encoding.PEM,
             format=serialization.PrivateFormat.TraditionalOpenSSL,
             encryption_algorithm=serialization.BestAvailableEncryption(input_password),
         ))
 
-def get_private_key_from_rsakey_str(rsa_key, input_password) -> str:
-    """ returns a string containing a RSA private key in PEM format """
-    return rsa_key.private_bytes(
+def get_private_key_from_key_str(privkey, input_password) -> str:
+    """ returns a string containing a private key in PEM format """
+    return privkey.private_bytes(
         encoding=serialization.Encoding.PEM,
         format=serialization.PrivateFormat.PKCS8,
         encryption_algorithm=serialization.BestAvailableEncryption(input_password)
     )
 
-def rsa_load_private_key_from_file(path_to_key_file, input_password) -> bytes:
-    """ loads a RSA private key from the specified file """
+def load_private_key_from_file(path_to_key_file, input_password) -> bytes:
+    """ loads a private key from the specified file """
     with open(path_to_key_file, "rb") as key_file:
         return serialization.load_pem_private_key(
             key_file.read(),
@@ -137,24 +137,24 @@ def rsa_load_private_key_from_file(path_to_key_file, input_password) -> bytes:
             backend=default_backend()
         )
 
-def rsa_load_private_key_from_data(pem_data, input_password) -> bytes:
-    """ loads a RSA private key object from a PEM data bytes """
+def _load_private_key_from_data(pem_data, input_password) -> bytes:
+    """ loads a private key object from a PEM data bytes """
     return serialization.load_pem_private_key(
         data=pem_data,
         password=input_password,
         backend=default_backend()
     )
 
-def get_public_key_from_rsakey_str(rsa_key) -> str:
-    """ returns a string containing a RSA public key in PEM format """
-    public_key = rsa_key.public_key()
+def get_public_key_from_key_str(privkey) -> str:
+    """ returns a string containing a public key in PEM format """
+    public_key = privkey.public_key()
     return public_key.public_bytes(
         encoding=serialization.Encoding.PEM,
         format=serialization.PublicFormat.SubjectPublicKeyInfo
     )
 
-def rsa_load_public_key_from_data(pem_data) -> bytes:
-    """ loads a RSA public key object from a PEM public key data bytes """
+def _load_public_key_from_data(pem_data) -> bytes:
+    """ loads a public key object from a PEM public key data bytes """
     return serialization.load_pem_public_key(
         data=pem_data,
         backend=default_backend
@@ -245,6 +245,26 @@ def ecdsa_verify(public_key, signature, data):
 """"""""""""""""""""""""""""""
 """  ECDSA FUNCTIONS  """
 """"""""""""""""""""""""""""""
+
+def create_selfsigned_x509_certificate_ecdsa(cert_iss_country, cert_iss_state, 
+cert_iss_locality, cert_iss_org, cert_iss_common, cert_valid_days) -> (bytes, bytes):
+    """
+        While most of the time you want a certificate that has been signed 
+        by someone else (i.e. a certificate authority), so that trust is 
+        established, sometimes you want to create a self-signed certificate. 
+        Self-signed certificates are not issued by a certificate authority, 
+        but instead they are signed by the private key corresponding 
+        to the public key they embed.
+
+        Returns:
+        - an ECDSA key bytes object
+        - a x509 certificate bytes object
+    """
+    private_key = _ecdsa_generate_key()
+    x509Cert = _generate_x509_certificate(private_key, cert_iss_country, cert_iss_state, 
+    cert_iss_locality, cert_iss_org, cert_iss_common, cert_valid_days)
+
+    return private_key, x509Cert
 
 def _ecdsa_generate_key() -> bytes:
     """ generate a ECDSA key with Secp256k1 as the default curve """
