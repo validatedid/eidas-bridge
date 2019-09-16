@@ -103,62 +103,62 @@ def test_generate_x509cert_and_rsa_key_and_store_to_disk(path_to_dir, input_pass
         _print_priv_key(rsa_key, False, input_password)
         _print_pub_key(x509cert.public_key(), False)
 
-def test_sign_and_verify_from_key_file(path_to_key_file, input_password, message, padding, bprint):
+def test_sign_and_verify_from_key_file(path_to_key_file, input_password, message, padding, bprint, bECDSA):
     #load key
-    rsa_priv_key = _load_key_from_file(path_to_key_file, input_password, bprint)
+    priv_key = _load_key_from_file(path_to_key_file, input_password, bprint, bECDSA)
 
-    #rsa signature
-    signature = _sign(message, rsa_priv_key, padding, bprint)
+    #signature
+    signature = _sign(message, priv_key, bprint, bECDSA, padding)
 
-    #rsa validation with the public key
-    _verify(signature, message, rsa_priv_key.public_key(), padding, bprint)
+    #validation with the public key
+    _verify(signature, message, priv_key.public_key(), bprint, bECDSA, padding)
 
 def test_sign_from_file_verify_from_cert_file(path_to_key_file, input_password, 
-    path_to_cert_file, message, padding, bprint):
+    path_to_cert_file, message, padding, bprint, bECDSA):
     #load key
-    rsa_priv_key = _load_key_from_file(path_to_key_file, input_password, bprint)
+    priv_key = _load_key_from_file(path_to_key_file, input_password, bprint, bECDSA)
     #load certificate
-    x509cert = _load_cert_from_file(path_to_cert_file, bprint)
+    x509cert = _load_cert_from_file(path_to_cert_file, bprint, bECDSA)
 
-    #rsa signature
-    signature = _sign(message, rsa_priv_key, padding, bprint)
+    #signature
+    signature = _sign(message, priv_key, bprint, bECDSA, padding)
     
-    #rsa validation with the public key from the loaded certificate
-    _verify(signature, message, x509cert.public_key(), padding, bprint)
+    #validation with the public key from the loaded certificate
+    _verify(signature, message, x509cert.public_key(), bprint, bECDSA, padding)
 
-def verify_signature_from_cert_file(path_to_cert_file, message, signature, padding, bprint):
+def verify_signature_from_cert_file(path_to_cert_file, message, signature, padding, bprint, bECDSA):
     #load certificate
-    x509cert = _load_cert_from_file(path_to_cert_file, bprint)
+    x509cert = _load_cert_from_file(path_to_cert_file, bprint, bECDSA)
 
-    #rsa validation with the public key from the loaded certificate
-    _verify(bytes.fromhex(signature), message, x509cert.public_key(), padding, bprint)
+    #validation with the public key from the loaded certificate
+    _verify(bytes.fromhex(signature), message, x509cert.public_key(), bprint, bECDSA, padding)
 
-def verify_signature_from_cert_pem_data(pem_cert_data, message, signature, padding, bprint):
+def verify_signature_from_cert_pem_data(pem_cert_data, message, signature, padding, bprint, bECDSA):
     #load certificate 
-    x509cert = _load_cert_from_pem(pem_cert_data, bprint)
+    x509cert = _load_cert_from_pem(pem_cert_data, bprint, bECDSA)
 
-    #rsa validation with the public key from the loaded certificate
-    _verify(bytes.fromhex(signature), message, x509cert.public_key(), padding, bprint)
+    #validation with the public key from the loaded certificate
+    _verify(bytes.fromhex(signature), message, x509cert.public_key(), bprint, bECDSA, padding)
 
 def test_sign_and_verify_from_p12file_using_key(path_to_p12_file, p12_password, message, padding, bprint):
     # Load key and cert from p12 file
     rsa_priv_key, *_ = _load_key_and_cert_from_p12file(path_to_p12_file, p12_password, bprint)
 
     #rsa signature
-    signature = _sign(message, rsa_priv_key, padding, bprint)
+    signature = _sign(message, rsa_priv_key, bprint, False, padding)
 
     #rsa validation with the public key from private key
-    _verify(signature, message, rsa_priv_key.public_key(), padding, bprint)
+    _verify(signature, message, rsa_priv_key.public_key(), bprint, False, padding)
 
 def test_sign_and_verify_fron_p12file_using_cert(path_to_p12_file, p12_password, message, padding, bprint):
     # Load key and cert from p12 file
     rsa_priv_key, x509cert = _load_key_and_cert_from_p12file(path_to_p12_file, p12_password, bprint)
 
     #rsa signature
-    signature = _sign(message, rsa_priv_key, padding, bprint)
+    signature = _sign(message, rsa_priv_key, bprint, False, padding)
 
     #rsa validation with the public key from certificate
-    _verify(signature, message, x509cert.public_key(), padding, bprint)
+    _verify(signature, message, x509cert.public_key(), bprint, False, padding)
 
 """""""""""""""""""""""""""""""""
 """" ECDSA CRYPTO TEST SUITE """"
@@ -190,8 +190,8 @@ def test_generate_x509cert_and_ecdsa_key_and_store_to_disk(path_to_dir, input_pa
 """"""""""""""""""""""""""""""
 """ CRYPTO TEST SUITE  """
 """"""""""""""""""""""""""""""
-def _crypto_suite_test(tests_to_execute, path_to_dir_to_store, path_to_key_file, input_password, 
-    path_to_cert_file, path_to_p12_file, p12_password, message, x509cert, proof, proof_padding, new_padding, 
+def _crypto_suite_test(tests_to_execute, path_to_dir_to_store, path_to_rsakey_file, path_to_ecdsakey_file, input_password, 
+    path_to_rsacert_file, path_to_ecdsacert_file, path_to_p12_file, p12_password, message, x509cert, proof, proof_padding, new_padding, 
     bprint):
     if tests_to_execute[0]:
         print("\nCRYPTO TEST 1: Generate x509 certificate and RSA Key and store to disk:\n")
@@ -202,23 +202,23 @@ def _crypto_suite_test(tests_to_execute, path_to_dir_to_store, path_to_key_file,
         print("\nCRYPTO TEST 2: Sign a message with %s padding type, with a RSA Key loaded from file and \
 Verify the signature with the correspondent public key:\n" % new_padding)
         input("Press Enter to continue...")
-        test_sign_and_verify_from_key_file(path_to_key_file, input_password, message, new_padding, bprint)
+        test_sign_and_verify_from_key_file(path_to_rsakey_file, input_password, message, new_padding, bprint, False)
     if tests_to_execute[2]:
         print("\nCRYPTO TEST 3: Sign a message with %s padding type, with a RSA Key loaded from file and \
 Verify the signature with the certificate public key loaded from a file:\n" % new_padding)
         input("Press Enter to continue...")
-        test_sign_from_file_verify_from_cert_file(path_to_key_file, input_password, 
-        path_to_cert_file, message, new_padding, bprint)
+        test_sign_from_file_verify_from_cert_file(path_to_rsakey_file, input_password, 
+        path_to_rsacert_file, message, new_padding, bprint, False)
     if tests_to_execute[3]:
         print("\nCRYPTO TEST 4: Verifies signature with %s padding type and getting \
 the public key from a certificate stored in disk:\n" % proof_padding)
         input("Press Enter to continue...")
-        verify_signature_from_cert_file(path_to_cert_file, message, proof, proof_padding, bprint)
+        verify_signature_from_cert_file(path_to_rsacert_file, message, proof, proof_padding, bprint, False)
     if tests_to_execute[4]:
         print("\nCRYPTO TEST 5: Verifies signatures with %s padding type and getting \
 the public key from a certificate stored in a list:\n" % proof_padding)
         input("Press Enter to continue...")
-        verify_signature_from_cert_pem_data(x509cert, message, proof, proof_padding, bprint)
+        verify_signature_from_cert_pem_data(x509cert, message, proof, proof_padding, bprint, False)
     if tests_to_execute[5]:
         print("\nSIGN & VERIFY TEST 6: Using a PKCS#12 file and using the public key \
 from the private key to verify:\n")
@@ -238,6 +238,28 @@ from the certificate to verify:\n")
         input("Press Enter to continue...")
         test_generate_x509cert_and_ecdsa_key_and_store_to_disk(path_to_dir_to_store, 
         input_password, bprint)
+    if tests_to_execute[9]:
+        print("\nCRYPTO TEST 10: Sign a message with an ECDSA Key loaded from file and \
+Verify the signature with the correspondent public key:\n")
+        input("Press Enter to continue...")
+        test_sign_and_verify_from_key_file(path_to_ecdsakey_file, input_password, message, None, bprint, True)
+    if tests_to_execute[10]:
+        print("\nCRYPTO TEST 11: Sign a message with an ECDSA  Key loaded from file and \
+Verify the signature with the certificate public key loaded from a file:\n")
+        input("Press Enter to continue...")
+        test_sign_from_file_verify_from_cert_file(path_to_ecdsakey_file, input_password, 
+        path_to_ecdsacert_file, message, None, bprint, True)
+    if tests_to_execute[11]:
+        print("\nCRYPTO TEST 12: Verifies signature getting \
+the public key from a certificate stored in disk:\n")
+        input("Press Enter to continue...")
+        verify_signature_from_cert_file(path_to_ecdsacert_file, message, proof, proof_padding, bprint, True)
+    if tests_to_execute[12]:
+        print("\nCRYPTO TEST 13: Verifies signatures getting \
+the public key from a certificate stored in a list:\n")
+        input("Press Enter to continue...")
+        verify_signature_from_cert_pem_data(x509cert, message, proof, proof_padding, bprint, True)
+    
 
 """"""""""""""""""""""""
 """ AUX FUNCTIONS    """
@@ -254,33 +276,33 @@ def _load_key_and_cert_from_p12file(path_to_p12_file, p12_password, bprint) -> (
     
     return rsa_priv_key, x509cert
 
-def _load_cert_from_pem(pem_cert_data, bprint) -> bytes:
+def _load_cert_from_pem(pem_cert_data, bprint, bECDSA) -> bytes:
     #load certificate and convert it to a PEM byte data
     x509cert = x509_load_certificate_from_data_bytes(pem_cert_data)
 
     if bprint:
         _print_certificate(x509cert)
-        _print_pub_key(x509cert.public_key(), False)
+        _print_pub_key(x509cert.public_key(), bECDSA)
     
     return x509cert
 
-def _load_cert_from_file(path_to_cert_file, bprint) -> bytes:
+def _load_cert_from_file(path_to_cert_file, bprint, bECDSA) -> bytes:
     #load certificate and convert it to a PEM byte data
     x509cert = x509_load_certificate_from_file(path_to_cert_file)
    
     if bprint:
         _print_certificate(x509cert)
-        _print_pub_key(x509cert.public_key(), False)
+        _print_pub_key(x509cert.public_key(), bECDSA)
 
     return x509cert
 
-def _load_key_from_file(path_to_key_file, input_password, bprint) -> bytes:
+def _load_key_from_file(path_to_key_file, input_password, bprint, bECDSA) -> bytes:
     #load key
     priv_key = load_private_key_from_file(path_to_key_file, input_password)
     
     if bprint:
-        _print_priv_key(priv_key, False, input_password)
-        _print_pub_key(priv_key.public_key(), False)
+        _print_priv_key(priv_key, bECDSA, input_password)
+        _print_pub_key(priv_key.public_key(), bECDSA)
     
     return priv_key
 
@@ -332,16 +354,18 @@ def _print_pub_key(pub_key, bECDSA):
 def _print_signature(signature):
     print("Signature: \n" + signature.hex())
 
-def test_crypto_suite_loop(tests_to_execute, path_to_dir_to_store, path_to_key_file, input_password, 
-    path_to_cert_file, path_to_p12_file, p12_password, eidas_inputs, paddings, bprint):
+def test_crypto_suite_loop(tests_to_execute, path_to_dir_to_store, path_to_rsakey_file, path_to_ecdsakey_file, 
+input_password, path_to_rsacert_file, path_to_ecdsacert_file, path_to_p12_file, p12_password, eidas_inputs, paddings, bprint):
     for eidas_input in eidas_inputs:
         for padding in paddings:
             _crypto_suite_test(
                 tests_to_execute, 
                 path_to_dir_to_store, 
-                path_to_key_file, 
+                path_to_rsakey_file, 
+                path_to_ecdsakey_file,
                 input_password, 
-                path_to_cert_file, 
+                path_to_rsacert_file, 
+                path_to_ecdsacert_file,
                 path_to_p12_file,
                 p12_password, 
                 eidas_input[3], # dids
@@ -367,11 +391,13 @@ def main_tests():
     print(bcolors.HEADER + "\n--- INIT CRYPTO TEST SUITE ---\n\r" + bcolors.ENDC)
     #input("Press Enter to continue...")
     test_crypto_suite_loop(
-        [False, False, False, False, False, False, False, False, True], 
+        [False, False, False, False, False, False, False, False, False, True, True, True, True], 
         "./demo/data/", 
-        "./demo/data/rsakey.pem", 
+        "./demo/data/rsakey.pem",
+        "./demo/data/ecdsakey.pem",
         b"passphrase", 
         "./demo/data/x509cert.pem", 
+        "./demo/data/x509ECDSA.pem",
         "./demo/data/certificate.p12",
         b"passphrase", 
         eidas_inputs,
