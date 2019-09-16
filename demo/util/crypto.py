@@ -12,6 +12,9 @@ from cryptography.x509.oid import NameOID
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.asymmetric import padding
 from cryptography.hazmat.primitives.serialization import pkcs12
+from cryptography.hazmat.primitives.asymmetric import ec
+from cryptography.hazmat.primitives.asymmetric.ec import EllipticCurvePublicKeyWithSerialization
+from cryptography.hazmat.primitives import serialization
 from .util import print_object
 from eidas_bridge.utils.crypto import PKCS1v15_PADDING, PSS_PADDING, InvalidPaddingException
 
@@ -224,6 +227,58 @@ def rsa_sign_pkcs1(message, rsa_priv_key) -> bytes:
         padding.PKCS1v15(),
         hashes.SHA256()
     )
+
+def ecdsa_sign(data, private_key) -> bytes:
+    signature = private_key.sign(
+        data,
+        ec.ECDSA(hashes.SHA256())
+    )
+    return signature
+
+def ecdsa_verify_priv(private_key, signature, data):
+    public_key = private_key.public_key()
+    public_key.verify(signature, data, ec.ECDSA(hashes.SHA256()))
+
+def ecdsa_verify(public_key, signature, data):
+    public_key.verify(signature, data, ec.ECDSA(hashes.SHA256()))
+
+""""""""""""""""""""""""""""""
+"""  ECDSA FUNCTIONS  """
+""""""""""""""""""""""""""""""
+
+def _ecdsa_generate_key() -> bytes:
+    """ generate a ECDSA key with Secp256k1 as the default curve """
+    return ec.generate_private_key(
+        ec.SECP256K1(), default_backend()
+    )
+
+def _ecdsa_get_pubkey(private_key) -> bytes:
+    """ returns the associated public key of a given ECDSA private key """
+    return private_key.public_key()
+
+def _ecdsa_serialize_pubkey(public_key) -> str:
+    """" returns the serialized (string printable) format of a ECDSA public key """
+    serialized_public = public_key.public_bytes(
+        encoding=serialization.Encoding.PEM,
+        format=serialization.PublicFormat.SubjectPublicKeyInfo
+    )
+    return serialized_public.decode("utf-8")
+
+def _ecdsa_serialize_privkey(private_key, input_password) -> str:
+    """" returns the serialized (string printable) format of a ECDSA private key """
+    if input_password is None:
+        serialized_private = private_key.private_bytes(
+            encoding=serialization.Encoding.PEM,
+            format=serialization.PrivateFormat.PKCS8,
+            encryption_algorithm=serialization.NoEncryption()
+        )
+    else:
+        serialized_private = private_key.private_bytes(
+            encoding=serialization.Encoding.PEM,
+            format=serialization.PrivateFormat.PKCS8,
+            encryption_algorithm=serialization.BestAvailableEncryption(input_password)
+        )
+    return serialized_private.decode("utf-8")
 
 """"""""""""""""""""""""""""""""
 """   PKCS#12 CERTIFICATE    """
