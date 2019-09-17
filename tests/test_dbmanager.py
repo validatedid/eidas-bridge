@@ -2,7 +2,7 @@
 
 import pytest, os
 from eidas_bridge.utils.dbmanager import DBManager, EIDASNotDataCreated
-from demo.data.common_data import all_type_dids
+from demo.data.common_data import dids, eidas_data_list
 
 def test_DBManager_class():
     dbmanager = DBManager()
@@ -19,7 +19,7 @@ def test_DBManager_path():
 
     os.remove(new_path_file)
 
-@pytest.mark.parametrize("did", all_type_dids)
+@pytest.mark.parametrize("did", dids)
 def test_get_did_data_error(did):
     new_path_file = "./demo/data/eidas_data_error.csv"
     dbmanager = DBManager(new_path_file)
@@ -27,4 +27,51 @@ def test_get_did_data_error(did):
     with pytest.raises(EIDASNotDataCreated):
         dbmanager._get_did_data(did)
 
+    os.remove(new_path_file)
+
+@pytest.mark.parametrize("eidas_data", eidas_data_list)
+def test_get_did_data(eidas_data):
+    new_path_file = "./demo/data/eidas_data_ok.csv"
+    dbmanager = DBManager(new_path_file)
+
+    dbmanager.store_qec(eidas_data[0], eidas_data[1], eidas_data[2], eidas_data[3])
+    row = dbmanager._get_did_data(eidas_data[0])
+    assert row['did'] == eidas_data[0]
+    assert row['certificate'] == eidas_data[1]
+    assert row['private_key'] == eidas_data[2]
+    assert row['password'] == eidas_data[3]
+    os.remove(new_path_file)
+
+@pytest.mark.parametrize("eidas_data", eidas_data_list)
+def test_get_qec(eidas_data):
+    new_path_file = "./demo/data/eidas_data_ok.csv"
+    dbmanager = DBManager(new_path_file)
+
+    dbmanager.store_qec(eidas_data[0], eidas_data[1], eidas_data[2], eidas_data[3])
+    qec = dbmanager.get_qec(eidas_data[0])
+    assert qec == eidas_data[1]
+    os.remove(new_path_file)
+
+@pytest.mark.parametrize("eidas_data", eidas_data_list)
+def test_get_key(eidas_data):
+    new_path_file = "./demo/data/eidas_data_ok.csv"
+    dbmanager = DBManager(new_path_file)
+
+    dbmanager.store_qec(eidas_data[0], eidas_data[1], eidas_data[2], eidas_data[3])
+    privkey, password = dbmanager.get_key(eidas_data[0])
+    assert privkey == eidas_data[2]
+    assert password == eidas_data[3]
+    os.remove(new_path_file)
+
+@pytest.mark.parametrize("eidas_data", eidas_data_list)
+def test_store_qec(eidas_data):
+    new_path_file = "./demo/data/eidas_data_ok.csv"
+    dbmanager = DBManager(new_path_file)
+
+    dbmanager.store_qec(eidas_data[0], eidas_data[1], eidas_data[2], eidas_data[3])
+    row = dbmanager._get_did_data(eidas_data[0])
+    assert row['did'] == eidas_data[0]
+    assert row['certificate'] == eidas_data[1]
+    assert row['private_key'] == eidas_data[2]
+    assert row['password'] == eidas_data[3]
     os.remove(new_path_file)
