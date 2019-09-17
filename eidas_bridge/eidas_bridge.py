@@ -2,11 +2,11 @@
 # eidas_bridge.py
 """ EIDAS BRIDGE """
 
-from .utils.util import check_args
-from .utils.crypto import PSS_PADDING
 from .eidas_service import EIDASService
 from .verifiable_credential import VerifiableCredential
 from .did_document import DIDDocument
+from .utils.crypto import load_pkcs12_data
+from .utils.dbmanager import DBManager
 
 class EIDASNotSupportedException(Exception):
     """
@@ -19,13 +19,18 @@ class EIDASDIDMismatchException(Exception):
     Error raised when the Issuer's DID differs from the DID_Document's DID subject.
     """
 
-def eidas_load_qec(did, qec, password=None):
+def eidas_load_qec(did, p12_data, password=None):
     """
     Imports an eIDAS Qualified Electronic Certificate (QEC) with its correspondent 
     private key to be used in further digital signature operations.
 
     QEC currently supported format is only Secp256k1.
     """
+    priv_key, x509cert, *_ = load_pkcs12_data(p12_data, password)
+
+    dbmanager = DBManager()
+
+    dbmanager.store_qec(did, x509cert, priv_key, password)
 
 def eidas_get_service_endpoint(did, service_endpoint) -> str:
     """ 

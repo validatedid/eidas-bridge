@@ -5,6 +5,7 @@ from cryptography.exceptions import InvalidSignature
 from cryptography import x509
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.asymmetric import padding
+from cryptography.hazmat.primitives.serialization import pkcs12
 from .util import check_args
 
 """ PADDING CONSTANTS """
@@ -76,3 +77,13 @@ def rsa_verify_pkcs1(signature, message, rsa_pub_key):
     except InvalidSignature:
         raise InvalidSignatureException(InvalidSignature)
 
+""""""""""""""""""""""""""""""""
+"""   PKCS#12 CERTIFICATE    """
+""""""""""""""""""""""""""""""""
+
+def load_pkcs12_data(p12_data, input_password) ->(bytes, bytes, bytes):
+    """ loads a key and certificate from a p12 data.
+    Returns:	
+        - A tuple of (private_key, certificate, additional_certificates)
+    """
+    return pkcs12.load_key_and_certificates(p12_data, input_password, default_backend())
