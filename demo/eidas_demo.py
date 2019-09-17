@@ -253,12 +253,12 @@ Verify the signature with the certificate public key loaded from a file:\n")
         print("\nCRYPTO TEST 12: Verifies signature getting \
 the public key from a certificate stored in disk:\n")
         input("Press Enter to continue...")
-        verify_signature_from_cert_file(path_to_ecdsacert_file, message, proof, proof_padding, bprint, True)
+        verify_signature_from_cert_file(path_to_ecdsacert_file, message, proof, None, bprint, True)
     if tests_to_execute[12]:
         print("\nCRYPTO TEST 13: Verifies signatures getting \
 the public key from a certificate stored in a list:\n")
         input("Press Enter to continue...")
-        verify_signature_from_cert_pem_data(x509cert, message, proof, proof_padding, bprint, True)
+        verify_signature_from_cert_pem_data(str(x509cert).encode("utf-8"), message, proof, None, bprint, True)
     
 
 """"""""""""""""""""""""
@@ -391,7 +391,7 @@ def main_tests():
     print(bcolors.HEADER + "\n--- INIT CRYPTO TEST SUITE ---\n\r" + bcolors.ENDC)
     #input("Press Enter to continue...")
     test_crypto_suite_loop(
-        [False, False, False, False, False, False, False, False, False, True, True, True, True], 
+        [False, False, False, False, False, False, False, False, False, False, True, True, True], 
         "./demo/data/", 
         "./demo/data/rsakey.pem",
         "./demo/data/ecdsakey.pem",
