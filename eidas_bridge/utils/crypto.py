@@ -6,6 +6,7 @@ from cryptography import x509
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.asymmetric import padding
 from cryptography.hazmat.primitives.serialization import pkcs12
+from cryptography.hazmat.primitives import serialization
 from .util import check_args
 
 """ PADDING CONSTANTS """
@@ -30,6 +31,10 @@ def check_args_padding(padding, type_obj):
 def x509_load_certificate_from_data_bytes(pem_data) -> bytes:
     """ loads a x509 certificate object from a PEM x509 certificate data already encoded """
     return x509.load_pem_x509_certificate(pem_data, default_backend())
+
+def x509_get_PEM_certificate_from_obj(x509cert) -> bytes:
+    """ returns a PEM string with a x509 certificate """
+    return x509cert.public_bytes(serialization.Encoding.PEM)
 
 def get_public_key_from_x509cert_obj(x509cert) -> bytes:
     """ returns a RSA public key object from a x509 certificate object """
@@ -77,6 +82,26 @@ def rsa_verify_pkcs1(signature, message, rsa_pub_key):
     except InvalidSignature:
         raise InvalidSignatureException(InvalidSignature)
 
+""""""""""""""""""""""""""""""
+"""  ECDSA FUNCTIONS  """
+""""""""""""""""""""""""""""""
+
+def _ecdsa_serialize_privkey(private_key, input_password) -> str:
+    """" returns the serialized (string printable) format of a ECDSA private key """
+    if input_password is None:
+        serialized_private = private_key.private_bytes(
+            encoding=serialization.Encoding.PEM,
+            format=serialization.PrivateFormat.PKCS8,
+            encryption_algorithm=serialization.NoEncryption()
+        )
+    else:
+        serialized_private = private_key.private_bytes(
+            encoding=serialization.Encoding.PEM,
+            format=serialization.PrivateFormat.PKCS8,
+            encryption_algorithm=serialization.BestAvailableEncryption(input_password)
+        )
+    return serialized_private.decode("utf-8")
+
 """"""""""""""""""""""""""""""""
 """   PKCS#12 CERTIFICATE    """
 """"""""""""""""""""""""""""""""
@@ -87,3 +112,15 @@ def load_pkcs12_data(p12_data, input_password) ->(bytes, bytes, bytes):
         - A tuple of (private_key, certificate, additional_certificates)
     """
     return pkcs12.load_key_and_certificates(p12_data, input_password, default_backend())
+
+def eidas_load_pkcs12(p12_data, input_password) -> (str, str):
+    """ loads a key and certificate from a p12 data.
+    Returns: 
+        - A tuple of private_key, certificate in a serialized format
+    """
+    priv_key, x509cert, *_ = load_pkcs12_data(p12_data, input_password)
+
+    serialized_key = _ecdsa_serialize_privkey(priv_key, input_password)
+    serialized_cert = x509_get_PEM_certificate_from_obj(x509cert).decode()
+
+    return serialized_key, serialized_cert

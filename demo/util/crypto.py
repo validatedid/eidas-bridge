@@ -5,7 +5,6 @@ run tests but not necessary for the eidas library
 
 import datetime
 from cryptography.hazmat.backends import default_backend
-from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives.asymmetric import rsa
 from cryptography import x509
 from cryptography.x509.oid import NameOID
@@ -16,7 +15,7 @@ from cryptography.hazmat.primitives.asymmetric import ec
 from cryptography.hazmat.primitives.asymmetric.ec import EllipticCurvePublicKeyWithSerialization
 from cryptography.hazmat.primitives import serialization
 from .util import print_object
-from eidas_bridge.utils.crypto import PKCS1v15_PADDING, PSS_PADDING, InvalidPaddingException
+from eidas_bridge.utils.crypto import PKCS1v15_PADDING, PSS_PADDING, InvalidPaddingException, x509_get_PEM_certificate_from_obj
 
 
 class RSAKeySizeException(Exception):
@@ -116,7 +115,7 @@ def _store_key_to_disk(privkey, pem_key_file, input_password):
     with open(pem_key_file, "wb") as f:
         f.write(privkey.private_bytes(
             encoding=serialization.Encoding.PEM,
-            format=serialization.PrivateFormat.TraditionalOpenSSL,
+            format=serialization.PrivateFormat.PKCS8,
             encryption_algorithm=serialization.BestAvailableEncryption(input_password),
         ))
 
@@ -173,10 +172,6 @@ def x509_load_certificate_from_file(path_to_cert_file) -> bytes:
 def x509_load_certificate_from_data_str(pem_data) -> bytes:
     """ loads a x509 certificate object from a PEM x509 certificate data in string format"""
     return x509.load_pem_x509_certificate(str(pem_data).encode("utf-8"), default_backend())
-
-def x509_get_PEM_certificate_from_obj(x509cert) -> bytes:
-    """ returns a PEM string with a x509 certificate """
-    return x509cert.public_bytes(serialization.Encoding.PEM)
 
 """ Nice stdout printing RSA key and x509 certificate """
 def print_rsa_priv_key(rsa_key, input_password):
@@ -284,22 +279,6 @@ def _ecdsa_serialize_pubkey(public_key) -> str:
     )
     return serialized_public.decode("utf-8")
 
-def _ecdsa_serialize_privkey(private_key, input_password) -> str:
-    """" returns the serialized (string printable) format of a ECDSA private key """
-    if input_password is None:
-        serialized_private = private_key.private_bytes(
-            encoding=serialization.Encoding.PEM,
-            format=serialization.PrivateFormat.PKCS8,
-            encryption_algorithm=serialization.NoEncryption()
-        )
-    else:
-        serialized_private = private_key.private_bytes(
-            encoding=serialization.Encoding.PEM,
-            format=serialization.PrivateFormat.PKCS8,
-            encryption_algorithm=serialization.BestAvailableEncryption(input_password)
-        )
-    return serialized_private.decode("utf-8")
-
 """"""""""""""""""""""""""""""""
 """   PKCS#12 CERTIFICATE    """
 """"""""""""""""""""""""""""""""
@@ -308,6 +287,7 @@ def _ecdsa_serialize_privkey(private_key, input_password) -> str:
     CREATE .P12 FILE 
     command to create a .p12 file from the key and certificate created:
     $ openssl pkcs12 -export -out tests/data/certificate.p12 -inkey tests/data/rsakey.pem -in tests/data/x509cert.pem 
+    $ openssl pkcs12 -export -out demo/data/ECDSAcertificate.p12 -inkey demo/data/ecdsakey.pem -in demo/data/x509ECDSA.pem 
 """
 
 def load_pkcs12_file(path_to_p12_file, input_password) ->(bytes, bytes, bytes):

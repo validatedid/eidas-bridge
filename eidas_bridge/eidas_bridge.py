@@ -5,7 +5,7 @@
 from .eidas_service import EIDASService
 from .verifiable_credential import VerifiableCredential
 from .did_document import DIDDocument
-from .utils.crypto import load_pkcs12_data
+from .utils.crypto import eidas_load_pkcs12
 from .utils.dbmanager import DBManager
 
 class EIDASNotSupportedException(Exception):
@@ -26,10 +26,11 @@ def eidas_load_qec(did, p12_data, password=None):
 
     QEC currently supported format is only Secp256k1.
     """
-    priv_key, x509cert, *_ = load_pkcs12_data(p12_data, password)
-
+    # load eIDAS certificate and private key
+    priv_key, x509cert = eidas_load_pkcs12(p12_data, password)
+    #instantiate the DB file to store the data
     dbmanager = DBManager()
-
+    # store data to the disk
     dbmanager.store_qec(did, x509cert, priv_key, password)
 
 def eidas_get_service_endpoint(did, service_endpoint) -> str:

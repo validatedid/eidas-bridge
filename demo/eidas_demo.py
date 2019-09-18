@@ -9,15 +9,14 @@ import time, json, threading
 from eidas_bridge.eidas_bridge import eidas_get_service_endpoint, eidas_sign_credential, eidas_verify_credential, \
     EIDASNotSupportedException
 from eidas_bridge.utils.crypto import InvalidSignatureException, x509_load_certificate_from_data_bytes, \
-    PKCS1v15_PADDING, PSS_PADDING, rsa_verify
+    PKCS1v15_PADDING, PSS_PADDING, rsa_verify, _ecdsa_serialize_privkey, x509_get_PEM_certificate_from_obj
 from data.common_data import eidas_inputs, service_endpoints, credentials, paddings, did_documents
 from util.util import bcolors, print_object
 from util.crypto import create_selfsigned_x509_certificate, store_key_and_x509cert_to_disk, \
     print_rsa_pub_key, print_x509cert, eidas_crypto_hash_byte, eidas_crypto_hash_str, \
     eidas_crypto_hash_hex, load_private_key_from_file, x509_load_certificate_from_file, \
-    x509_get_PEM_certificate_from_obj, print_rsa_priv_key, rsa_sign, load_pkcs12_file, \
-    ecdsa_verify_priv, ecdsa_verify, ecdsa_sign, _ecdsa_generate_key, _ecdsa_get_pubkey, \
-    _ecdsa_serialize_pubkey, _ecdsa_serialize_privkey, create_selfsigned_x509_certificate_ecdsa
+    print_rsa_priv_key, rsa_sign, load_pkcs12_file, ecdsa_verify_priv, ecdsa_verify, ecdsa_sign, \
+    _ecdsa_generate_key, _ecdsa_get_pubkey, _ecdsa_serialize_pubkey, create_selfsigned_x509_certificate_ecdsa
 from util.hub_server import start_hub_server
 
 """"""""""""""""""""""""
@@ -404,7 +403,7 @@ def main_tests():
     print(bcolors.HEADER + "\n--- INIT CRYPTO TEST SUITE ---\n\r" + bcolors.ENDC)
     #input("Press Enter to continue...")
     test_crypto_suite_loop(
-        [False, False, False, False, False, False, False, False, False, False, False, False, False, True, True], 
+        [False, False, False, False, False, False, False, False, False, False, False, True, True, True, True], 
         "./demo/data/", 
         "./demo/data/rsakey.pem",
         "./demo/data/ecdsakey.pem",
