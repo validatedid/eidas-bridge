@@ -5,6 +5,7 @@ parentdir = os.path.dirname(currentdir)
 sys.path.insert(0,parentdir) 
 
 import argparse, multiprocessing, time
+multiprocessing.set_start_method('spawn', True)
 from demo.util.hub_server import start_hub_server
 from demo.eidas_bridge_api import init_api_server
 

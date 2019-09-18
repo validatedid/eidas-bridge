@@ -19,13 +19,18 @@ class EIDASDIDMismatchException(Exception):
     Error raised when the Issuer's DID differs from the DID_Document's DID subject.
     """
 
-def eidas_load_qec(did, p12_data, password=None):
+def eidas_load_qec(did, p12_data, password):
     """
     Imports an eIDAS Qualified Electronic Certificate (QEC) with its correspondent 
     private key to be used in further digital signature operations.
 
     QEC currently supported format is only Secp256k1.
     """
+    if isinstance(password, str):
+        password = password.encode("utf-8")
+    if isinstance(p12_data, str):
+        p12_data = bytes.fromhex(p12_data)
+
     # load eIDAS certificate and private key
     priv_key, x509cert = eidas_load_pkcs12(p12_data, password)
     #instantiate the DB file to store the data
