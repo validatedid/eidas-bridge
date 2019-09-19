@@ -3,6 +3,7 @@
 
 import json, threading
 from flask import Flask, request
+from flask_cors import CORS
 from flask_restplus import Resource, Api, fields
 from demo.util.hub_server import start_hub_server
 from eidas_bridge.eidas_bridge import eidas_get_service_endpoint, \
@@ -11,6 +12,7 @@ from eidas_bridge.eidas_bridge import eidas_get_service_endpoint, \
 from eidas_bridge.utils.crypto import PSS_PADDING
 
 app = Flask(__name__)
+CORS(app)
 app.config['JSON_SORT_KEYS'] = False
 api = Api(app, version='0.5', title='eIDAS Bridge API', description='An eIDAS bridge API to connect to a SSI solution')
 
