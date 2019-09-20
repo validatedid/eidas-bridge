@@ -7,11 +7,11 @@ from demo.data.common_data import dids, eidas_data_list
 def test_DBManager_class():
     dbmanager = DBManager()
 
-    assert dbmanager._file_path == "./demo/data/eidas_data.csv"
+    assert dbmanager._file_path == "./demo/data/storage/eidas_data.csv"
     assert os.path.exists(dbmanager._file_path)
 
 def test_DBManager_path():
-    new_path_file = "./demo/data/eidas_data_new.csv"
+    new_path_file = "./demo/data/storage/eidas_data_new.csv"
     dbmanager = DBManager(new_path_file)
 
     assert dbmanager._file_path == new_path_file
@@ -21,7 +21,7 @@ def test_DBManager_path():
 
 @pytest.mark.parametrize("did", dids)
 def test_get_did_data_error(did):
-    new_path_file = "./demo/data/eidas_data_error.csv"
+    new_path_file = "./demo/data/storage/eidas_data_error.csv"
     dbmanager = DBManager(new_path_file)
 
     with pytest.raises(EIDASNotDataCreated):
@@ -31,7 +31,7 @@ def test_get_did_data_error(did):
 
 @pytest.mark.parametrize("eidas_data", eidas_data_list)
 def test_get_did_data(eidas_data):
-    new_path_file = "./demo/data/eidas_data_test1.csv"
+    new_path_file = "./demo/data/storage/eidas_data_test1.csv"
     dbmanager = DBManager(new_path_file)
 
     dbmanager.store_qec(eidas_data[0], eidas_data[1], eidas_data[2], eidas_data[3])
@@ -44,7 +44,7 @@ def test_get_did_data(eidas_data):
 
 @pytest.mark.parametrize("eidas_data", eidas_data_list)
 def test_get_qec(eidas_data):
-    new_path_file = "./demo/data/eidas_data_test2.csv"
+    new_path_file = "./demo/data/storage/eidas_data_test2.csv"
     dbmanager = DBManager(new_path_file)
 
     dbmanager.store_qec(eidas_data[0], eidas_data[1], eidas_data[2], eidas_data[3])
@@ -54,7 +54,7 @@ def test_get_qec(eidas_data):
 
 @pytest.mark.parametrize("eidas_data", eidas_data_list)
 def test_get_key(eidas_data):
-    new_path_file = "./demo/data/eidas_data_test3.csv"
+    new_path_file = "./demo/data/storage/eidas_data_test3.csv"
     dbmanager = DBManager(new_path_file)
 
     dbmanager.store_qec(eidas_data[0], eidas_data[1], eidas_data[2], eidas_data[3])
@@ -65,7 +65,7 @@ def test_get_key(eidas_data):
 
 @pytest.mark.parametrize("eidas_data", eidas_data_list)
 def test_store_qec(eidas_data):
-    new_path_file = "./demo/data/eidas_data_test4.csv"
+    new_path_file = "./demo/data/storage/eidas_data_test4.csv"
     dbmanager = DBManager(new_path_file)
 
     dbmanager.store_qec(eidas_data[0], eidas_data[1], eidas_data[2], eidas_data[3])
@@ -78,7 +78,7 @@ def test_store_qec(eidas_data):
 
 @pytest.mark.parametrize("eidas_data", eidas_data_list)
 def test_store_qec_pass(eidas_data):
-    new_path_file = "./demo/data/eidas_data_test6.csv"
+    new_path_file = "./demo/data/storage/eidas_data_test6.csv"
     new_password = b'this is a byte password'
     decoded_new_password = 'this is a byte password'
     dbmanager = DBManager(new_path_file)
@@ -93,7 +93,7 @@ def test_store_qec_pass(eidas_data):
 
 @pytest.mark.parametrize("eidas_data", eidas_data_list)
 def test_delete_last(eidas_data):
-    new_path_file = "./demo/data/eidas_data_test5.csv"
+    new_path_file = "./demo/data/storage/eidas_data_test5.csv"
     dbmanager = DBManager(new_path_file)
     # store an entry
     dbmanager.store_qec(eidas_data[0], eidas_data[1], eidas_data[2], eidas_data[3])

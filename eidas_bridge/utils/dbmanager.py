@@ -10,7 +10,7 @@ class EIDASNotDataCreated(Exception):
 class DBManager:
     """ Data Storage Manager Class """
 
-    def __init__ (self, file_path="./demo/data/eidas_data.csv"):
+    def __init__ (self, file_path="./demo/data/storage/eidas_data.csv"):
         """
         Initialize DBManager instance.
 
