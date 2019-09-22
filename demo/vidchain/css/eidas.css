@@ -1,0 +1,31 @@
+.eidas-modal-header, h4.eidas, .close {
+    background-color: #283367;
+    color:white !important;
+    text-align: center;
+    font-size: 30px;
+    display: block;
+}
+
+h4.eidas {
+    float:left;
+}
+
+button.close.eidas-modal-header {
+    float: right;
+}
+
+button.eidas  {
+    background-color: #39CFCA;
+    color: white;
+    border: 1px solid transparent;
+}
+button.eidas:hover{
+    background-color: white;
+    color: #39CFCA;
+    border: 1px solid #39CFCA;
+}
+
+.eidas-modal-footer {
+    background-color: #f9f9f9;
+    display: block;
+}
