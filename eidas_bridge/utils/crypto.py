@@ -49,10 +49,10 @@ def x509_load_certificate_from_data_str(pem_data) -> bytes:
     """ loads a x509 certificate object from a PEM x509 certificate data in string format"""
     return x509.load_pem_x509_certificate(str(pem_data).encode("utf-8"), default_backend())
 
-def get_public_key_from_x509cert_str(x509_str:str) -> str:
+def get_public_key_from_x509cert_json(x509_str:str) -> dict:
     x509_obj = x509_load_certificate_from_data_str(x509_str)
     pubkey_obj = get_public_key_from_x509cert_obj(x509_obj)
-    return _ecdsa_serialize_pubkey(pubkey_obj)
+    return { "publicKeyPem" : _ecdsa_serialize_pubkey(pubkey_obj) }
 
 
 """"""""""""""""""""""""""""""""

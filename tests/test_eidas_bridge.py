@@ -140,10 +140,11 @@ def test_get_pubkey(eidas_data):
         p12_data = p12_file.read()
         eidas_load_qec(eidas_data[0], p12_data, p12_password) 
     
-    out_pub_key = eidas_get_pubkey(eidas_data[0])
+    out_pub_key_json = eidas_get_pubkey(eidas_data[0])
+    out_pub_key = json.loads(out_pub_key_json)
 
     #deletes last entry
     dbmanager = DBManager()
     dbmanager._delete_last()
 
-    assert out_pub_key == eidas_data[4]
+    assert out_pub_key["publicKeyPem"] == eidas_data[4]

@@ -4,11 +4,12 @@
 import json, threading
 from flask import Flask, request
 from flask_cors import CORS
-from flask_restplus import Resource, Api, fields
+from flask_restplus import Resource, Api, fields, abort
 from demo.util.hub_server import start_hub_server
 from eidas_bridge.eidas_bridge import eidas_get_service_endpoint, \
     eidas_sign_credential, eidas_verify_credential, EIDASNotSupportedException, \
     eidas_load_qec, eidas_get_pubkey
+from eidas_bridge.utils.dbmanager import EIDASNotDataCreated
 from eidas_bridge.utils.crypto import PSS_PADDING
 
 app = Flask(__name__)
@@ -107,28 +108,31 @@ eidas_get_pubkey_input_model = api.model('EIDASPubKey_in', {
 })
 
 eidas_get_pubkey_output_model = api.model('EIDASPubKey_out', {
-    'did': fields.String(
+    'publicKeyPem': fields.String(
         description="eIDAS Secp256k1 Public key", 
         required=True,
-        example="-----BEGIN PUBLIC KEY-----\nMFYwEAYHKoZIzj0CAQYFK4EEAAoDQgAE07FtD4Qg4Dw7GKxCUCPAxHN0E5aHahkL\nyE2GCbSRohqUzpVODaIwPaEW5PPNlMtSkODTKVdviyTHP6nY/HJ6Gw==\n-----END PUBLIC KEY-----\n")
+        example="-----BEGIN PUBLIC KEY-----\nMFYwEAYHKoZIzj0CAQYFK4EEAAoDQgAEswOm6PqrB3ddfKCWZPWMzSESDrd8xtcl\ndd8sCKvtW1+UC6s0g79GxkAJznPZ6Vu4DI0CJkMvbe+pF5ykUz7D+g==\n-----END PUBLIC KEY-----\n")
 })
 
 @eidas.route('/get-pubkey')
 class EIDASGetPubKey(Resource):
-    @eidas.marshal_with(eidas_get_pubkey_output_model)
+    #@eidas.marshal_with(eidas_get_pubkey_output_model)
     @eidas.expect(eidas_get_pubkey_input_model)
-    def get(self):
+    def post(self):
         """ 
         From a given DID, returns the correspondent public key.
 
         Cryptographic keys currently supported format are only Secp256k1.
         """
-
-        return json.loads(
-            eidas_get_pubkey(
-                request.json['did']
+        try: 
+            return json.loads(
+                eidas_get_pubkey(
+                    request.json['did']
+                )
             )
-        )
+        except EIDASNotDataCreated as err:
+            abort(400, str(err))
+
 
 degree_model = api.model('Degree', {
     'type' : fields.String(
