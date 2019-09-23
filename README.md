@@ -144,13 +144,12 @@ def eidas_get_service_endpoint(did, service_endpoint) -> str:
 ```
 Contructs the JSON structure that needs to be added to the Issuer's DID Document Service Endpoint Section.
 
-Receives a did and a service endpoint where it is stored the issuer's eIDAS and DID linking information.
+Receives a did and a service endpoint where it is stored the issuer's eIDAS Certificate.
 
 Returns the correspondent JSON to be added to the Service Endpoint Section of the Issuer's DID Document.
 
 ```json_
 {
-    // used to retrieve eIDAS Link data associated with the DID
     "id": "did:sov:55GkHamhTU1ZbTbV2ab9DE#eidas",
     "type": "EidasService",
     "serviceEndpoint": "http://service_endpoint.sample/did:sov:55GkHamhTU1ZbTbV2ab9DE/eidas"
@@ -161,15 +160,14 @@ Returns the correspondent JSON to be added to the Service Endpoint Section of th
 ```python
 def eidas_get_pubkey(did) -> str:
 ```
-From a given DID, returns the correspondent public key.
+From a given DID, returns the correspondent public key in a json struct.
 
 Cryptographic keys currently supported format are only **Secp256k1**.
 
-```str
------BEGIN PUBLIC KEY-----
-MFYwEAYHKoZIzj0CAQYFK4EEAAoDQgAE5PRr4VGw+uut1odbdVmQ0sGUY3bSpMEd
-I3zoNG+Q3Fq+IhMfAspEmgFQ8e+izzsatAr5dr8CjloJoKkCLiiKjA==
------END PUBLIC KEY-----
+```json_
+{
+  "publicKeyPem" : "-----BEGIN PUBLIC KEY...END PUBLIC KEY-----\n"
+}
 ```
 
 #### eidas_sign_credential
@@ -222,8 +220,8 @@ The algorithm executes the following procedure:
 
 ### Step 1
 - Implement new eiDAS Bridge Calls:
-  - `/eidas/load-qec`
-  - `/eidas/get-pubkey`
+  - ~~`/eidas/load-qec`~~
+  - ~~`/eidas/get-pubkey`~~
   - `/eidas/sign-credential`
   - `/eidas/verify-credential`
 - Adapt University websites to do a complete demo flow
