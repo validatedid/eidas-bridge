@@ -120,7 +120,9 @@ class EIDASGetPubKey(Resource):
     @eidas.expect(eidas_get_pubkey_input_model)
     def post(self):
         """ 
-        From a given DID, returns the correspondent public key.
+        From a given DID, returns the correspondent public key json struct.
+
+        Returns: { "publicKeyPem" : "-----BEGIN PUBLIC KEY...END PUBLIC KEY-----\n" }
 
         Cryptographic keys currently supported format are only Secp256k1.
         """
