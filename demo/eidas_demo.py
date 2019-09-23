@@ -15,9 +15,9 @@ from util.util import bcolors, print_object
 from util.crypto import create_selfsigned_x509_certificate, store_key_and_x509cert_to_disk, \
     print_rsa_pub_key, print_x509cert, eidas_crypto_hash_byte, eidas_crypto_hash_str, \
     eidas_crypto_hash_hex, load_private_key_from_file, x509_load_certificate_from_file, \
-    print_rsa_priv_key, rsa_sign, load_pkcs12_file, ecdsa_verify_priv, ecdsa_verify, ecdsa_sign, \
+    print_rsa_priv_key, rsa_sign, load_pkcs12_file, ecdsa_verify_priv, ecdsa_verify, \
     _ecdsa_generate_key, _ecdsa_get_pubkey, create_selfsigned_x509_certificate_ecdsa
-from eidas_bridge.utils.crypto import _ecdsa_serialize_pubkey
+from eidas_bridge.utils.crypto import _ecdsa_serialize_pubkey, _ecdsa_sign
 from util.hub_server import start_hub_server
 
 """"""""""""""""""""""""
@@ -320,7 +320,7 @@ def _sign(message, priv_key, bprint, bECDSA, padding=None) -> bytes:
     signature = ""
 
     if bECDSA:
-        signature = ecdsa_sign(message.encode('utf-8'), priv_key)
+        signature = _ecdsa_sign(message.encode('utf-8'), priv_key)
     else:
         signature = rsa_sign(message.encode('utf-8'), priv_key, padding)
     if bprint:

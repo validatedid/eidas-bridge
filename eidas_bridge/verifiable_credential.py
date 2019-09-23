@@ -36,6 +36,17 @@ class VerifiableCredential():
             self._verifiable_credential['issuer']
         except KeyError:
             raise EIDASVerifiableCredentialNoIssuerException("A Verifiable Credential MUST have an issuer property.")
+    
+    def sign_and_add_proof(self, privkey:str, input_password:bytes):
+        """
+        Generates a Linked Data Proof from a Linked Data Signature of the credential using a ES256K algorithm
+        and adds the json-ld resultant to the credential structure
+
+        Parameters:
+            - privkey: an string representation of a PEM encoded ECDSA secp256k1 private key
+            - password: an utf-8 encoded bytes from the password string to decipher private key
+
+        """
  
 
 

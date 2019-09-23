@@ -7,6 +7,7 @@ from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.asymmetric import padding
 from cryptography.hazmat.primitives.serialization import pkcs12
 from cryptography.hazmat.primitives import serialization
+from cryptography.hazmat.primitives.asymmetric import ec
 from .util import check_args
 
 """ PADDING CONSTANTS """
@@ -119,6 +120,28 @@ def _ecdsa_serialize_pubkey(public_key) -> str:
         format=serialization.PublicFormat.SubjectPublicKeyInfo
     )
     return serialized_public.decode("utf-8")
+
+def _load_private_key_from_data(pem_data, input_password) -> bytes:
+    """ loads a private key object from a PEM data bytes """
+    return serialization.load_pem_private_key(
+        data=pem_data,
+        password=input_password,
+        backend=default_backend()
+    )
+
+def _load_private_key_from_pem_str(pem_data_str:str, input_password) -> bytes:
+    return _load_private_key_from_data(str(pem_data_str).encode("utf-8"), input_password)
+
+def eidas_sign(privkey_str:str, input_password:bytes, message:bytes) -> bytes:
+    priv_key = _load_private_key_from_pem_str(privkey_str, input_password)
+    return _ecdsa_sign(message, priv_key)
+
+def _ecdsa_sign(data, private_key) -> bytes:
+    signature = private_key.sign(
+        data,
+        ec.ECDSA(hashes.SHA256())
+    )
+    return signature
 
 """"""""""""""""""""""""""""""""
 """   PKCS#12 CERTIFICATE    """

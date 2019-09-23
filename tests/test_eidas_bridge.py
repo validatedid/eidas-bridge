@@ -8,8 +8,8 @@ from demo.data.common_data import all_type_dids, all_type_certificates, bad_type
         eidas_data_list, dids
 from demo.util.hub_server import start_hub_server
 from eidas_bridge.utils.dbmanager import DBManager, EIDASNotDataCreated
-from eidas_bridge.utils.crypto import eidas_load_pkcs12
-from demo.util.crypto import ecdsa_sign, ecdsa_verify_priv, _load_private_key_from_data
+from eidas_bridge.utils.crypto import eidas_load_pkcs12, _load_private_key_from_data, _ecdsa_sign
+from demo.util.crypto import ecdsa_verify_priv
 
 @pytest.mark.parametrize("did", all_type_dids)
 @pytest.mark.parametrize("storage_endpoint", bad_type_endpoints)
@@ -92,8 +92,8 @@ def _compare_private_keys(privkey1:str, pass1:bytes, privkey2:str, pass2:bytes) 
 
     #sign some message data
     message = b"This is a sample message"
-    outsig1 = ecdsa_sign(message, private_key1)
-    outsig2 = ecdsa_sign(message, private_key2)
+    outsig1 = _ecdsa_sign(message, private_key1)
+    outsig2 = _ecdsa_sign(message, private_key2)
 
     # verify each signature with the other key
     ecdsa_verify_priv(private_key2, outsig1, message)

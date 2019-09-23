@@ -74,7 +74,16 @@ def eidas_sign_credential(credential) -> str:
 
     Cryptographic keys currently supported format are only Secp256k1.
     """
-    raise EIDASNotSupportedException("eIDAS library call NOT supported.")
+
+    # Constructs a Verifiable Credential object and gets the issuer's did
+    verifiable_credential = VerifiableCredential(credential)
+    issuer_did = verifiable_credential.get_issuer_did()
+    #instantiate the DB file to store the data
+    dbmanager = DBManager()
+    # get private key and password to sign
+    key, password = dbmanager.get_key(issuer_did)
+    # signs and adds the signature to the credential
+    return verifiable_credential.sign_and_add_proof(key, password).to_json()
 
 def eidas_verify_credential(credential, json_did_document) -> str:
     """

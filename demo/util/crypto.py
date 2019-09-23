@@ -219,13 +219,6 @@ def rsa_sign_pkcs1(message, rsa_priv_key) -> bytes:
         hashes.SHA256()
     )
 
-def ecdsa_sign(data, private_key) -> bytes:
-    signature = private_key.sign(
-        data,
-        ec.ECDSA(hashes.SHA256())
-    )
-    return signature
-
 def ecdsa_verify_priv(private_key, signature, data):
     public_key = private_key.public_key()
     public_key.verify(signature, data, ec.ECDSA(hashes.SHA256()))
