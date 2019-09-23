@@ -25,7 +25,7 @@ def check_args_padding(padding, type_obj):
         raise InvalidPaddingException("Invalid Padding format: only supported PKCS#1 and PSS")
 
 """"""""""""""""""""""""""""""
-"""  RSA & X509 FUNCTIONS  """
+"""  X509 FUNCTIONS  """
 """"""""""""""""""""""""""""""
 
 def x509_load_certificate_from_data_bytes(pem_data) -> bytes:
@@ -44,6 +44,16 @@ def get_public_key_from_x509cert_pem(x509_pem) -> bytes:
     """ returns a RSA public key object from a x509 certificate in PEM format """
     x509cert = x509_load_certificate_from_data_bytes(x509_pem)
     return get_public_key_from_x509cert_obj(x509cert)
+
+def x509_load_certificate_from_data_str(pem_data) -> bytes:
+    """ loads a x509 certificate object from a PEM x509 certificate data in string format"""
+    return x509.load_pem_x509_certificate(str(pem_data).encode("utf-8"), default_backend())
+
+def get_public_key_from_x509cert_str(x509_str:str) -> str:
+    x509_obj = x509_load_certificate_from_data_str(x509_str)
+    pubkey_obj = get_public_key_from_x509cert_obj(x509_obj)
+    return _ecdsa_serialize_pubkey(pubkey_obj)
+
 
 """"""""""""""""""""""""""""""""
 """   RSA VERIFY FUNCTIONS   """
@@ -101,6 +111,14 @@ def _ecdsa_serialize_privkey(private_key, input_password) -> str:
             encryption_algorithm=serialization.BestAvailableEncryption(input_password)
         )
     return serialized_private.decode("utf-8")
+
+def _ecdsa_serialize_pubkey(public_key) -> str:
+    """" returns the serialized (string printable) format of a ECDSA public key """
+    serialized_public = public_key.public_bytes(
+        encoding=serialization.Encoding.PEM,
+        format=serialization.PublicFormat.SubjectPublicKeyInfo
+    )
+    return serialized_public.decode("utf-8")
 
 """"""""""""""""""""""""""""""""
 """   PKCS#12 CERTIFICATE    """

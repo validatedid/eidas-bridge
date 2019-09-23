@@ -5,7 +5,7 @@
 from .eidas_service import EIDASService
 from .verifiable_credential import VerifiableCredential
 from .did_document import DIDDocument
-from .utils.crypto import eidas_load_pkcs12
+from .utils.crypto import eidas_load_pkcs12, get_public_key_from_x509cert_str
 from .utils.dbmanager import DBManager
 
 class EIDASNotSupportedException(Exception):
@@ -52,14 +52,16 @@ def eidas_get_service_endpoint(did, service_endpoint) -> str:
 
     return EIDASService(did, service_endpoint).to_json()
 
-def eidas_get_pubkey(did) -> str:
+def eidas_get_pubkey(did:str) -> str:
     """
     From a given DID, returns the correspondent public key.
 
     Cryptographic keys currently supported format are only Secp256k1.
     """
-
-    return ""
+    # instantiate the DB file to store the data
+    dbmanager = DBManager()
+    # get certificate stored in DB and retrieve public key's serialized format
+    return get_public_key_from_x509cert_str(dbmanager.get_qec(did))
 
 def eidas_sign_credential(credential) -> str:
     """ 

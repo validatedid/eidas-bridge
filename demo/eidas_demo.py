@@ -16,7 +16,8 @@ from util.crypto import create_selfsigned_x509_certificate, store_key_and_x509ce
     print_rsa_pub_key, print_x509cert, eidas_crypto_hash_byte, eidas_crypto_hash_str, \
     eidas_crypto_hash_hex, load_private_key_from_file, x509_load_certificate_from_file, \
     print_rsa_priv_key, rsa_sign, load_pkcs12_file, ecdsa_verify_priv, ecdsa_verify, ecdsa_sign, \
-    _ecdsa_generate_key, _ecdsa_get_pubkey, _ecdsa_serialize_pubkey, create_selfsigned_x509_certificate_ecdsa
+    _ecdsa_generate_key, _ecdsa_get_pubkey, create_selfsigned_x509_certificate_ecdsa
+from eidas_bridge.utils.crypto import _ecdsa_serialize_pubkey
 from util.hub_server import start_hub_server
 
 """"""""""""""""""""""""

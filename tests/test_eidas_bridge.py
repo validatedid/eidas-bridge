@@ -1,13 +1,13 @@
 # test_eidas_bridge.py
 import json, multiprocessing, pytest
 from eidas_bridge.eidas_bridge import eidas_get_service_endpoint, eidas_sign_credential, eidas_verify_credential, \
-        EIDASNotSupportedException, eidas_load_qec
+        EIDASNotSupportedException, eidas_load_qec, eidas_get_pubkey
 from eidas_bridge.utils.util import timestamp
 from demo.data.common_data import all_type_dids, all_type_certificates, bad_type_proofs, \
         dids, bad_type_endpoints, service_endpoints, bad_type_credentials, credentials, did_documents, \
-        eidas_data_list
+        eidas_data_list, dids
 from demo.util.hub_server import start_hub_server
-from eidas_bridge.utils.dbmanager import DBManager
+from eidas_bridge.utils.dbmanager import DBManager, EIDASNotDataCreated
 from eidas_bridge.utils.crypto import eidas_load_pkcs12
 from demo.util.crypto import ecdsa_sign, ecdsa_verify_priv, _load_private_key_from_data
 
@@ -124,3 +124,26 @@ def test_input_parameters_eidas_load_qec(eidas_data):
     p12_password = 'passphrase'
     eidas_load_qec(eidas_data[0], p12_data_hex_str, p12_password) 
     _check_data_stored(bytes.fromhex(p12_data_hex_str), p12_password.encode("utf-8"), eidas_data[0])
+
+@pytest.mark.parametrize("did", dids)
+def test_get_pubkey_bad_did(did):
+    dbmanager = DBManager()
+
+    with pytest.raises(EIDASNotDataCreated):
+        dbmanager._get_did_data(did)
+
+@pytest.mark.parametrize("eidas_data", eidas_data_list)
+def test_get_pubkey(eidas_data):
+    path_to_p12_file = "./demo/data/ECDSAcertificate.p12"
+    p12_password = b"passphrase"
+    with open(path_to_p12_file, "rb") as p12_file:
+        p12_data = p12_file.read()
+        eidas_load_qec(eidas_data[0], p12_data, p12_password) 
+    
+    out_pub_key = eidas_get_pubkey(eidas_data[0])
+
+    #deletes last entry
+    dbmanager = DBManager()
+    dbmanager._delete_last()
+
+    assert out_pub_key == eidas_data[4]

@@ -169,10 +169,6 @@ def x509_load_certificate_from_file(path_to_cert_file) -> bytes:
     with open(path_to_cert_file, "rb") as key_file:
         return x509.load_pem_x509_certificate(key_file.read(), default_backend())
 
-def x509_load_certificate_from_data_str(pem_data) -> bytes:
-    """ loads a x509 certificate object from a PEM x509 certificate data in string format"""
-    return x509.load_pem_x509_certificate(str(pem_data).encode("utf-8"), default_backend())
-
 """ Nice stdout printing RSA key and x509 certificate """
 def print_rsa_priv_key(rsa_key, input_password):
     priv_key = rsa_key.private_bytes(
@@ -270,14 +266,6 @@ def _ecdsa_generate_key() -> bytes:
 def _ecdsa_get_pubkey(private_key) -> bytes:
     """ returns the associated public key of a given ECDSA private key """
     return private_key.public_key()
-
-def _ecdsa_serialize_pubkey(public_key) -> str:
-    """" returns the serialized (string printable) format of a ECDSA public key """
-    serialized_public = public_key.public_bytes(
-        encoding=serialization.Encoding.PEM,
-        format=serialization.PublicFormat.SubjectPublicKeyInfo
-    )
-    return serialized_public.decode("utf-8")
 
 """"""""""""""""""""""""""""""""
 """   PKCS#12 CERTIFICATE    """
