@@ -35,10 +35,16 @@ def test_add_proof_element(credential):
 @pytest.mark.parametrize("eidas_data", eidas_data_list)
 @pytest.mark.parametrize("credential", basic_credentials)
 def test_sign_and_add_proof(eidas_data, credential):
-    vc = VerifiableCredential(credential)
+    vc = VerifiableCredential(credential[0])
     vc.sign_and_add_proof(eidas_data[2], eidas_data[3].encode("utf-8"))
+    # removes created key because it is dynamically created every time
+    del vc._verifiable_credential['proof']['created']
+    del vc._verifiable_credential['proof']['jws'] # !!! To be deleted
     vc_json = vc.to_json() 
-    print(vc_json)
 
-    assert True
+    del credential[1]['proof']['created']
+    del credential[1]['proof']['jws'] # !!! To be deleted
+    expected_vc_json = json.dumps(credential[1], indent=4)
+
+    assert vc_json == expected_vc_json
 

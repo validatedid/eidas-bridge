@@ -82,8 +82,13 @@ def eidas_sign_credential(credential) -> str:
     dbmanager = DBManager()
     # get private key and password to sign
     key, password = dbmanager.get_key(issuer_did)
+    # assure password is in bytes format
+    if isinstance(password, str):
+        password = password.encode("utf-8")
     # signs and adds the signature to the credential
-    return verifiable_credential.sign_and_add_proof(key, password).to_json()
+    verifiable_credential.sign_and_add_proof(key, password)
+    # return in json string format
+    return verifiable_credential.to_json()
 
 def eidas_verify_credential(credential, json_did_document) -> str:
     """

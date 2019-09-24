@@ -5,7 +5,7 @@ from eidas_bridge.eidas_bridge import eidas_get_service_endpoint, eidas_sign_cre
 from eidas_bridge.utils.util import timestamp
 from demo.data.common_data import all_type_dids, all_type_certificates, bad_type_proofs, \
         dids, bad_type_endpoints, service_endpoints, bad_type_credentials, credentials, did_documents, \
-        eidas_data_list, dids
+        eidas_data_list, dids, basic_credentials
 from demo.util.hub_server import start_hub_server
 from eidas_bridge.utils.dbmanager import DBManager, EIDASNotDataCreated
 from eidas_bridge.utils.crypto import eidas_load_pkcs12, _load_private_key_from_data, ecdsa_sign
@@ -144,3 +144,32 @@ def test_get_pubkey(eidas_data):
     dbmanager._delete_last()
 
     assert out_pub_key["publicKeyPem"] == eidas_data[4]
+
+@pytest.mark.parametrize("credential", basic_credentials)
+def test_eidas_sign_credential(credential):
+    # to keep sure that exists a key loaded in the issuer DB
+    path_to_p12_file = "./demo/data/ECDSAcertificate.p12"
+    p12_password = b"passphrase"
+    did = "did:example:21tDAKCERh95uGgKbJNHYp"
+
+    with open(path_to_p12_file, "rb") as p12_file:
+        p12_data = p12_file.read()
+        eidas_load_qec(did, p12_data, p12_password) 
+    
+    out_vc_json = eidas_sign_credential(credential[0])
+    out_vc_dict = json.loads(out_vc_json)
+    # removes created key because it is dynamically created every time
+    del out_vc_dict['proof']['created']
+    del out_vc_dict['proof']['jws'] # !!! To be deleted
+    out_vc_json = json.dumps(out_vc_dict, indent=4)
+
+    del credential[1]['proof']['created']
+    del credential[1]['proof']['jws'] # !!! To be deleted
+    expected_vc_json = json.dumps(credential[1], indent=4)
+
+    #deletes last entry
+    dbmanager = DBManager()
+    dbmanager._delete_last()
+
+    # besides comparing the output value, it is needed to perform a verify signature
+    assert out_vc_json == expected_vc_json
