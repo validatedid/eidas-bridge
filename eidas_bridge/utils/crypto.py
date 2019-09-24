@@ -25,6 +25,15 @@ def check_args_padding(padding, type_obj):
     if padding != PKCS1v15_PADDING and padding != PSS_PADDING:
         raise InvalidPaddingException("Invalid Padding format: only supported PKCS#1 and PSS")
 
+""""""""""""""""""""""""
+""" HASH FUNCTIONS """
+""""""""""""""""""""""""
+def eidas_crypto_hash_byte(b_data: bytes) -> bytes:
+    """ Generates a 256-hash from bytes (using cryptography module) """
+    digest = hashes.Hash(hashes.SHA256(), backend=default_backend())
+    digest.update(b_data)
+    return digest.finalize()
+
 """"""""""""""""""""""""""""""
 """  X509 FUNCTIONS  """
 """"""""""""""""""""""""""""""
@@ -134,9 +143,9 @@ def load_private_key_from_pem_str(pem_data_str:str, input_password) -> bytes:
 
 def eidas_sign(privkey_str:str, input_password:bytes, message:bytes) -> bytes:
     priv_key = load_private_key_from_pem_str(privkey_str, input_password)
-    return _ecdsa_sign(message, priv_key)
+    return ecdsa_sign(message, priv_key)
 
-def _ecdsa_sign(data, private_key) -> bytes:
+def ecdsa_sign(data, private_key) -> bytes:
     signature = private_key.sign(
         data,
         ec.ECDSA(hashes.SHA256())
