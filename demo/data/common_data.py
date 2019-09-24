@@ -79,6 +79,42 @@ bad_type_endpoints = [
     0
 ]
 
+basic_credentials = [
+    {
+        '@context': {
+            'homepage': 'schema:url',
+            'image': 'schema:image',
+            'name': 'schema:name',
+            'schema': 'http://schema.org/'
+        },
+        'homepage': 'https://manu.sporny.org/',
+        'image': 'https://manu.sporny.org/images/manu.png',
+        'name': 'Manu Sporny',
+        'issuer': 'did:example:21tDAKCERh95uGgKbJNHYp'
+    }
+] 
+
+check_basic_credential = {
+    "@context": {
+        "homepage": "schema:url",
+        "image": "schema:image",
+        "name": "schema:name",
+        "schema": "http://schema.org/"
+    },
+    "homepage": "https://manu.sporny.org/",
+    "image": "https://manu.sporny.org/images/manu.png",
+    "name": "Manu Sporny",
+    "issuer": "did:example:21tDAKCERh95uGgKbJNHYp",
+    "proof": {
+        "type": "EcdsaSecp256k1Signature2019",
+        "created": "2019-09-24T12:32:28Z",
+        "domain": "example.com",
+        "proofPurpose": "authentication",
+        "verificationMethod": "did:example:21tDAKCERh95uGgKbJNHYp#eidas-keys-1",
+        "jws": "eyJhbGciOiJFUzI1NksiLCJiNjQiOmZhbHNlLCJjcml0IjpbImI2NCJdfQ..MEQCIG6U__hcNfsETFg_V8lXJ2edzXc2l4yotN8eBmrEX9TBAiBd8ULwdakRnxdPDWPj4uWJTinpwcCLzxyCbNUrsEX-lw"
+    }
+}
+
 credentials = [
     {
         "@context": [

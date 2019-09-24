@@ -55,11 +55,13 @@ class VerifiableCredential():
         proof = sign(self._verifiable_credential, self.get_issuer_did()+'#eidas-keys-1', private_key)
         # add proof to the existing credential
         self._add_element('proof', proof)
+        """
         # add new context value to accept lds-ecdsa-secp256k1-2019 jws signatures
         context = {
             "@context" : "https://w3id.org/security/v2"
         }
         self._add_element('@context', context)
+        """
     
     def _add_element(self, key, value):
         # checking if key exists in credential and key is not empty {}
