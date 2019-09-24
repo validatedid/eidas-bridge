@@ -116,13 +116,11 @@ eidas_get_pubkey_output_model = api.model('EIDASPubKey_out', {
 
 @eidas.route('/get-pubkey')
 class EIDASGetPubKey(Resource):
-    #@eidas.marshal_with(eidas_get_pubkey_output_model)
+    @eidas.marshal_with(eidas_get_pubkey_output_model)
     @eidas.expect(eidas_get_pubkey_input_model)
     def post(self):
         """ 
         From a given DID, returns the correspondent public key json struct.
-
-        Returns: { "publicKeyPem" : "-----BEGIN PUBLIC KEY...END PUBLIC KEY-----\n" }
 
         Cryptographic keys currently supported format are only Secp256k1.
         """
@@ -135,6 +133,17 @@ class EIDASGetPubKey(Resource):
         except EIDASNotDataCreated as err:
             abort(400, str(err))
 
+
+context_model = api.model('Context', {
+    'schema' : fields.String(
+        description="Schema model", 
+        required=True,
+        example="http://schema.org/"),
+    'homepage' : fields.String(
+        description="Schema model", 
+        required=True,
+        example="schema:url")
+})
 
 degree_model = api.model('Degree', {
     'type' : fields.String(
@@ -162,32 +171,36 @@ cred_proof_model = api.model('Credential_proof', {
     'type' : fields.String(
         description="Signature type", 
         required=True,
-        example="RsaSignature2018"),
+        example="EcdsaSecp256k1Signature2019"),
     'created': fields.String(
         description="Credential Issuance date timestamp", 
+        required=True,
+        example="2019-09-24T12:32:28Z"),
+    'domain': fields.String(
+        description="Issuer's domain", 
         required=False,
-        example="2018-06-18T21:19:10Z"),
+        example="example.com"),
     'proofPurpose': fields.String(
         description="Proof of Purpose", 
-        required=False,
-        example="assertionMethod"),
+        required=True,
+        example="authentication"),
     'verificationMethod': fields.String(
         description="Verification Method", 
-        required=False,
-        example="https://example.com/jdoe/keys/1"),
+        required=True,
+        example="did:example:21tDAKCERh95uGgKbJNHYp#eidas-keys-1"),
     'jws' : fields.String(
         description="Proof Value", 
         required=True,
-        example="eyJhbGciOiJQUzI1NiIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19DJBMvvFAIC00nSGB6Tn0XKbbF9XrsaJZREWvR2aONYTQQxnyXirtXnlewJMBBn2h9hfcGZrvnC1b6PgWmukzFJ1IiH1dWgnDIS81BH-IxXnPkbuYDeySorc4QU9MJxdVkY5EL4HYbcIfwKj6X4LBQ2_ZHZIu1jdqLcRZqHcsDF5KKylKc1THn5VRWy5WhYg_gBnyWny8E6Qkrze53MR7OuAmmNJ1m1nN8SxDrG6a08L78J0-Fbas5OjAQz3c17GY8mVuDPOBIOVjMEghBlgl3nOi1ysxbRGhHLEK4s0KKbeRogZdgt1DkQxDFxxn41QWDw_mmMCjs9qxg0zcZzqEJw")
+        example="eyJhbGciOiJFUzI1NksiLCJiNjQiOmZhbHNlLCJjcml0IjpbImI2NCJdfQ..MEQCIG6U__hcNfsETFg_V8lXJ2edzXc2l4yotN8eBmrEX9TBAiBd8ULwdakRnxdPDWPj4uWJTinpwcCLzxyCbNUrsEX-lw")
 })
 
 credential_input_model = api.model('Credential_in', {
-    '@context': fields.List(fields.String,
+    '@context': fields.Nested(
+        context_model,
         description="List of context attributes", 
-        required=True,
-        example='[ "https://www.w3.org/2018/credentials/v1", "https://www.w3.org/2018/credentials/examples/v1" ]'),
+        required=True),
     'id': fields.String(
-        description="Credential IDentifier", 
+        description="Credential Identifier", 
         required=True,
         example="http://example.edu/credentials/3732"),
     'type': fields.List(fields.String,
@@ -197,7 +210,7 @@ credential_input_model = api.model('Credential_in', {
     'issuer': fields.String(
         description="Issuer DID", 
         required=True,
-        example="did:example:21tDAKCERh95uGgKbJNHY"),
+        example="did:example:21tDAKCERh95uGgKbJNHYp"),
     'issuanceDate': fields.String(
         description="Credential Issuance date timestamp", 
         required=False,
@@ -205,18 +218,14 @@ credential_input_model = api.model('Credential_in', {
     'credentialSubject': fields.Nested(
         cred_subject_model, 
         description="Credential Subject structure", 
-        required=True),
-    'proof': fields.Nested(
-        cred_proof_model, 
-        description="Credential proof structure", 
         required=True)
 })
 
 credential_output_model = api.model('Credential_out', {
-    '@context': fields.List(fields.String,
+    '@context': fields.Nested(
+        context_model,
         description="List of context attributes", 
-        required=True,
-        example='[ "https://www.w3.org/2018/credentials/v1", "https://www.w3.org/2018/credentials/examples/v1" ]'),
+        required=True),
     'id': fields.String(
         description="Credential IDentifier", 
         required=True,
@@ -245,7 +254,7 @@ credential_output_model = api.model('Credential_out', {
 
 @eidas.route('/sign-credential')
 class EIDASSignCredential(Resource):
-    @eidas.marshal_with(credential_output_model)
+    #@eidas.marshal_with(credential_output_model)
     @eidas.expect(credential_input_model)
     def post(self):
         """ 
@@ -255,8 +264,11 @@ class EIDASSignCredential(Resource):
 
         Cryptographic keys currently supported format are only Secp256k1.
         """
+
+        vc_json = eidas_sign_credential(request.get_json())
+        print(vc_json)
         return json.loads(
-            eidas_sign_credential(request.get_json())
+            vc_json
         )
 
 auth_diddoc_model = api.model('AuthenticationDIDDocModel', {
