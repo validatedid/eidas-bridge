@@ -129,11 +129,11 @@ def _load_private_key_from_data(pem_data, input_password) -> bytes:
         backend=default_backend()
     )
 
-def _load_private_key_from_pem_str(pem_data_str:str, input_password) -> bytes:
+def load_private_key_from_pem_str(pem_data_str:str, input_password) -> bytes:
     return _load_private_key_from_data(str(pem_data_str).encode("utf-8"), input_password)
 
 def eidas_sign(privkey_str:str, input_password:bytes, message:bytes) -> bytes:
-    priv_key = _load_private_key_from_pem_str(privkey_str, input_password)
+    priv_key = load_private_key_from_pem_str(privkey_str, input_password)
     return _ecdsa_sign(message, priv_key)
 
 def _ecdsa_sign(data, private_key) -> bytes:

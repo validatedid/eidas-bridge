@@ -2,6 +2,8 @@
 """ Implementation of a Verifiable Credential defined in https://w3c.github.io/vc-data-model/ """
 
 from .utils.util import check_args
+from eidas_bridge.utils.lds_ecdsa_secp256k1_2019 import sign
+from eidas_bridge.utils.crypto import load_private_key_from_pem_str
 import json
 
 class EIDASVerifiableCredentialNoIssuerException(Exception):
@@ -47,6 +49,30 @@ class VerifiableCredential():
             - password: an utf-8 encoded bytes from the password string to decipher private key
 
         """
+        # decipher private key and convert it to an object
+        private_key = load_private_key_from_pem_str(privkey, input_password)
+        # generate a LD-Proof from a LD Signature
+        proof = sign(self._verifiable_credential, private_key)
+        # add proof to the existing credential
+        self._add_element('proof', proof)
+    
+    def _add_element(self, key, value):
+        # checking if key exists in credential and key is not empty {}
+        if key in self._verifiable_credential and self._verifiable_credential[key]:
+            # check if it is a dict instance and create a list to insert new element
+            if isinstance(self._verifiable_credential[key], dict):
+                tmp_value = self._verifiable_credential[key]
+                # create new empty list
+                self._verifiable_credential[key] = []
+                # add the existant value
+                self._verifiable_credential[key].append(tmp_value)
+            # add proof to the existing credential proof list
+            self._verifiable_credential[key].append(value)
+        else:
+            self._verifiable_credential.update( { key : value } )
+
+
+
  
 
 
