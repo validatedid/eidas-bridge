@@ -254,7 +254,6 @@ credential_output_model = api.model('Credential_out', {
 
 @eidas.route('/sign-credential')
 class EIDASSignCredential(Resource):
-    #@eidas.marshal_with(credential_output_model)
     @eidas.expect(credential_input_model)
     def post(self):
         """ 
@@ -267,9 +266,7 @@ class EIDASSignCredential(Resource):
 
         vc_json = eidas_sign_credential(request.get_json())
         print(vc_json)
-        return json.loads(
-            vc_json
-        )
+        return json.loads(vc_json)
 
 auth_diddoc_model = api.model('AuthenticationDIDDocModel', {
     'id': fields.String(
