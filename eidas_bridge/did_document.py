@@ -9,6 +9,9 @@ from .utils.util import check_args, get_did_in_service, get_fragment_in_service
 from .service import Service
 from .eidas_service import EIDASService
 
+class EIDASPublicKeyException(Exception):
+    """ Error raised when no eIDAS Public Key is found in the DID Document """
+
 class EIDASServiceEndpointException(Exception):
     """
     Error raised when no eIDAS Service Type is found in the DID Document.
@@ -40,10 +43,10 @@ class DIDDocument():
         """ Returns an EIDAS Service to retrieve an EIDAS Link structure """
         return self._eidas_service
     
-    def get_pubkey(self, kid:str) -> str:
+    def get_eidas_pubkey(self, kid:str) -> str:
         """ Returns a public key in PEM string format identified by kid """
-        # !!! TBD
-        return ""
+        # sets all services checking if eidas_service exists, throwing an exception otherwise
+        return _get_key(self._did_document['authentication'], kid)
 
     def _check_id_property_exist(self) -> str:
         """ checks for the id property and throws an exception otherwise """
@@ -92,6 +95,19 @@ def _get_services(services: list) -> (List[Service], EIDASService):
         raise EIDASServiceEndpointException("No eIDAS Service Type is found in the DID Document.")
    
     return list_services, eidas_service
+
+def _get_key(keys: list, kid: str) -> str:
+    """ Get a public key PEM string from the publicKey property of a DID Document """
+    eidas_pub_key = None
+    
+    for a_key in keys:
+        if a_key['id'] == kid:
+            eidas_pub_key = a_key['publicKeyPem']
+    
+    if eidas_pub_key == None:
+        raise EIDASPublicKeyException("No eIDAS Public Key is found in the DID Document.")
+   
+    return eidas_pub_key
 
 def _set_eidas_service(a_service: dict) -> EIDASService:
     """ checks if the given service endpoint is an EIDAS type and returns the correspondent object """

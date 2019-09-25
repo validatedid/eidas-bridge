@@ -6,8 +6,8 @@ from eidas_bridge.utils.lds_ecdsa_secp256k1_2019 import sign
 from eidas_bridge.utils.crypto import load_private_key_from_pem_str
 import json
 
-class EIDASVerifiableCredentialNoIssuerException(Exception):
-    """Error raised when a Verifiable Credential does not contain a Issuer DID."""
+class EIDASVerifiableCredentialNoKeyException(Exception):
+    """ Error raised when a Verifiable Credential does not contain a key property."""
 
 class VerifiableCredential():
     """ Represents a Verifiable Credential instance according to W3C spec """
@@ -16,7 +16,8 @@ class VerifiableCredential():
         check_args(json_credential, dict)
         self._verifiable_credential = json_credential
         #checks for issuer property
-        self._check_issuer_did_exist()
+        self._check_key_exist('issuer')
+        self._check_key_exist('proof', 'verificationMethod')
     
     def get_issuer_did(self) -> str:
         """ Returns the Issuer's DID from the Verifiable Credential """
@@ -24,8 +25,7 @@ class VerifiableCredential():
     
     def get_proof_kid(self) -> str:
         """ Returns the Key Identifier from the Proof Section """
-        # !!! TBD
-        return ""
+        return self._verifiable_credential['proof']['verificationMethod']
         
     def to_json(self) -> str:
         """
@@ -37,12 +37,18 @@ class VerifiableCredential():
         """
         return json.dumps(self._verifiable_credential, indent=4)
     
-    def _check_issuer_did_exist(self):
-        """ checks for the issuer property and throw an exception otherwise """
+    def _check_key_exist(self, key, subkey=None):
+        """ checks for the key property and throw an exception otherwise """
         try:
-            self._verifiable_credential['issuer']
+            self._verifiable_credential[key]
         except KeyError:
-            raise EIDASVerifiableCredentialNoIssuerException("A Verifiable Credential MUST have an issuer property.")
+            raise EIDASVerifiableCredentialNoKeyException("A Verifiable Credential MUST have a [" + key + "] property.")
+        if subkey:
+            try:
+                self._verifiable_credential[key][subkey]
+            except KeyError:
+                raise EIDASVerifiableCredentialNoKeyException("A Verifiable Credential MUST have a [" + key + "][" + subkey + "] property.")
+
     
     def sign_and_add_proof(self, privkey:str, input_password:bytes):
         """

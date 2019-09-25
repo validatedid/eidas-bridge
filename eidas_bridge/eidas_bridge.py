@@ -134,7 +134,7 @@ def eidas_verify_credential(credential, json_did_document) -> str:
     if not eidas_qec.OCSP_valid():
         raise EIDASOCSPCertificateException("Error on OCSP certificate validation.")
     # Throws EIDASPublicKeyException in case public keys differs
-    if not did_document.get_pubkey(proof_kid) == eidas_qec.get_pubkey():
+    if not did_document.get_eidas_pubkey(proof_kid) == eidas_qec.get_pubkey():
         raise EIDASPublicKeyException("Public keys from eiDAS QEC and Did Document mismatch.")
     # Returns "VALID" or throws EIDASProofException on signarure not valid
     return vc.verify(eidas_qec.get_pubkey())

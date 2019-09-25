@@ -2,6 +2,7 @@
 """ Represents an eIDAS Qualified Electronic Certificate """
 
 import requests
+from .utils.crypto import get_public_key_from_x509cert_json
 
 class EIDASOCSPCertificateException(Exception):
     """ Error raised when the OCSP validation returned error or not QEC stored """
@@ -23,10 +24,7 @@ class EIDASQEC():
     
     def get_pubkey(self) -> str:
         """ Returns certificate's public key in PEM string """
-        # !!! TBD
-        return ""
-
-
+        return get_public_key_from_x509cert_json(self._qec)['publicKeyPem']
 
 def _get_eidas_qec(uri:str) -> str:
     """ Retrieves a Qualified Electronic Certificate object using the eIDAS Service Endpoint """
@@ -36,4 +34,6 @@ def _get_eidas_qec(uri:str) -> str:
     if not r.status_code == 200:
         raise EIDASGetQECException("Service Endpoint Error: EIDAS QEC data cannot be retrieved.")
     
-    return r.json()
+    qec_dict = r.json()
+
+    return qec_dict['certificate']

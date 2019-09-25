@@ -480,6 +480,11 @@ did_documents = [
             "type": "RsaVerificationKey2018",
             "controller": "did:example:21tDAKCERh95uGgKbJNHYp",
             "publicKeyPem": "-----BEGIN PUBLIC KEY...END PUBLIC KEY-----\r\n"
+        }, {
+            "id": "did:example:21tDAKCERh95uGgKbJNHYp#eidas-keys-1",
+            "type": "Secp256k1VerificationKey2018 ",
+            "controller": "did:example:21tDAKCERh95uGgKbJNHYp",
+            "publicKeyPem": "-----BEGIN PUBLIC KEY-----\nMFYwEAYHKoZIzj0CAQYFK4EEAAoDQgAEswOm6PqrB3ddfKCWZPWMzSESDrd8xtcl\ndd8sCKvtW1+UC6s0g79GxkAJznPZ6Vu4DI0CJkMvbe+pF5ykUz7D+g==\n-----END PUBLIC KEY-----\n"
         }],
         "service": [{
             "id": "did:example:21tDAKCERh95uGgKbJNHYp#vc",
@@ -488,7 +493,7 @@ did_documents = [
         }, {
             "id": "did:example:21tDAKCERh95uGgKbJNHYp#eidas",
             "type": "EidasService",
-            "serviceEndpoint": "http://localhost:8000/did:example:21tDAKCERh95uGgKbJNHYp/eidas"
+            "serviceEndpoint": "http://localhost:8002/did:example:21tDAKCERh95uGgKbJNHYp/eidas"
         }]
     }
 ]
