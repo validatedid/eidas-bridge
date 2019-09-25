@@ -3,7 +3,6 @@
 
 from .utils.util import check_args, clean_did
 import json
-import requests
 
 class EIDASGetEidasLinkException(Exception):
      """Error raised when the server endpoint returned an error on an eidas link request """

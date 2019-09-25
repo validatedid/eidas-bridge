@@ -21,6 +21,11 @@ class VerifiableCredential():
     def get_issuer_did(self) -> str:
         """ Returns the Issuer's DID from the Verifiable Credential """
         return self._verifiable_credential['issuer']
+    
+    def get_proof_kid(self) -> str:
+        """ Returns the Key Identifier from the Proof Section """
+        # !!! TBD
+        return ""
         
     def to_json(self) -> str:
         """
@@ -77,6 +82,14 @@ class VerifiableCredential():
             self._verifiable_credential[key].append(value)
         else:
             self._verifiable_credential.update( { key : value } )
+    
+    def verify(self, public_key:str) -> str:
+        """
+        Verifies the credential proof signature using the given public key.
+        Returns "VALID" or throws EIDASProofException on signarure not valid
+        """
+        # !!! TBD
+        return "VALID"
 
 
 

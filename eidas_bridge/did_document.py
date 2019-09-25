@@ -39,6 +39,11 @@ class DIDDocument():
     def get_eidas_service_endpoint(self) -> EIDASService:
         """ Returns an EIDAS Service to retrieve an EIDAS Link structure """
         return self._eidas_service
+    
+    def get_pubkey(self, kid:str) -> str:
+        """ Returns a public key in PEM string format identified by kid """
+        # !!! TBD
+        return ""
 
     def _check_id_property_exist(self) -> str:
         """ checks for the id property and throws an exception otherwise """
