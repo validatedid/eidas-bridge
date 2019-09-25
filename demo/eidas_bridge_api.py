@@ -75,7 +75,7 @@ service_output_model = api.model('ServiceEndpoint', {
     'serviceEndpoint': fields.String(
         description="Service Endpoint URL", 
         required=True,
-        example="http://localhost:8000/did:example:21tDAKCERh95uGgKbJNHYp/eidas"),
+        example="http://localhost:8002/did:example:21tDAKCERh95uGgKbJNHYp/eidas"),
 })
 
 @eidas.route('/service-endpoint')
@@ -272,19 +272,19 @@ auth_diddoc_model = api.model('AuthenticationDIDDocModel', {
     'id': fields.String(
         description="Authentication Identifier Key", 
         required=True,
-        example="did:example:21tDAKCERh95uGgKbJNHY#keys-1"),
+        example="did:example:21tDAKCERh95uGgKbJNHYp#eidas-keys-1"),
     'type': fields.String(
         description="Authentication Identifier Key type", 
         required=True,
-        example="RsaVerificationKey2018"),
+        example="Secp256k1VerificationKey2018"),
     'controller': fields.String(
         description="Owner of Identifier Key", 
         required=True,
-        example="did:example:21tDAKCERh95uGgKbJNHY"),
+        example="did:example:21tDAKCERh95uGgKbJNHYp"),
     'publicKeyPem': fields.String(
         description="Public Key", 
         required=True,
-        example="-----BEGIN PUBLIC KEY...END PUBLIC KEY-----\r\n"),
+        example="-----BEGIN PUBLIC KEY-----\nMFYwEAYHKoZIzj0CAQYFK4EEAAoDQgAEswOm6PqrB3ddfKCWZPWMzSESDrd8xtcl\ndd8sCKvtW1+UC6s0g79GxkAJznPZ6Vu4DI0CJkMvbe+pF5ykUz7D+g==\n-----END PUBLIC KEY-----\n"),
 })
 
 did_document_input_model = api.model('DIDDocument', {
@@ -306,7 +306,7 @@ did_document_input_model = api.model('DIDDocument', {
 
 eidas_verify_credential_model = api.model('EIDASVerifyCredential', {
     'credential': fields.Nested(
-        credential_input_model,
+        credential_output_model,
         description="Verifiable Credential to verify", 
         required=True),
     'did_document': fields.Nested(
@@ -320,11 +320,9 @@ class EIDASVerifyCredential(Resource):
     @eidas.expect(eidas_verify_credential_model)
     def post(self):
         """
-        Verifies that the credential issuer had a valid eIDAS certificate at the moment of issuing the passed credential.
-
-        Return "VALID" or Throws EIDASProofException on signature not valid
+        Verifies that the credential issuer had a valid eIDAS certificate at the moment of issuing the passed credential. Throws EIDASProofException on signarure not valid.
         """
-        
+
         return eidas_verify_credential(
             request.json['credential'], 
             request.json['did_document']
