@@ -1,12 +1,13 @@
 $(function() {
 
-    let modalBtn = document.getElementById("select_qec")
-    let eidasSubmit = document.getElementById("eidasModal")
+    let eidasBtn = document.getElementById("setup_eidas");
+    let eidasSubmit = document.getElementById("eidasModal");
+    let did = "";
 
-    modalBtn.onclick = function(){
+    eidasBtn.onclick = function(){
+        did = createDID();
         $("#eidasModal").modal();
-        // modal.style.display = "block"
-    }
+    };
 
     eidasSubmit.onsubmit = function(e){
         var password = document.getElementById("psw").value;
@@ -17,22 +18,26 @@ $(function() {
 
         reader.onload = function () {
             var resultHexString = buf2hex(reader.result);
-            loadQEC(resultHexString, password);
+            loadQEC(resultHexString, password, did);
         };
 
         reader.readAsArrayBuffer(file);
-    }
+    };
 
 });
+
+function createDID() {
+    return "did:example:21tDAKCERh95uGgKbJNHYp";
+}
 
 function buf2hex(buffer) { // buffer is an ArrayBuffer
     return Array.prototype.map.call(new Uint8Array(buffer), x => ('00' + x.toString(16)).slice(-2)).join('');
 }
 
-function loadQEC (p12data, input_password) {
+function loadQEC (p12data, input_password, input_did) {
 
     var data = {
-        "did": "did:example:21tDAKCERh95uGgKbJNHYp",
+        "did": input_did,
         "p12data": p12data,
         "password": input_password
     };
@@ -50,7 +55,12 @@ function loadQEC (p12data, input_password) {
 function onValidationSuccess(data) {
     if (data.result) {
         console.log("eIDAS Certificate and keys imported successfully!");
+        updateDIDDoc(did);
     } else {
         console.error('Error');
     }
+}
+
+function updateDIDDoc(did) {
+    console.log("DID Document successfully updated.");
 }
