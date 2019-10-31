@@ -1,7 +1,7 @@
 # test_verifiable_credential.py
 
 import pytest
-from eidas_bridge.verifiable_credential import VerifiableCredential, EIDASVerifiableCredentialNoIssuerException
+from eidas_bridge.verifiable_credential import VerifiableCredential, EIDASVerifiableCredentialNoKeyException
 from demo.data.common_data import credentials, bad_credentials, test_proof, test_credentials, eidas_data_list, basic_credentials
 import json
 
@@ -19,8 +19,8 @@ def test_get_issuer_did(credential):
     assert VerifiableCredential(credential).get_issuer_did() == credential['issuer']
 
 @pytest.mark.parametrize("credential", bad_credentials)
-def test_verifiable_credential_no_issuer(credential):
-    with pytest.raises(EIDASVerifiableCredentialNoIssuerException):
+def test_verifiable_credential_no_attribute(credential):
+    with pytest.raises(EIDASVerifiableCredentialNoKeyException):
         VerifiableCredential(credential)
 
 @pytest.mark.parametrize("credential", test_credentials)
