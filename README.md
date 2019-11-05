@@ -11,7 +11,6 @@ An eIDAS Bridge links the european Trust and Legal Framework, named eIDAS (elect
 2. [Other Running and Test Methods](#other-running-and-test-methods)
 3. [eIDAS Bridge Library Calls](#eidas-bridge-library-calls)
 4. [Requisites](#requisites)
-5. [Roadmap](#roadmap)
 
 ## Run eIDAS Bridge Web Docker Demo
 
