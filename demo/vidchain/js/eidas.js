@@ -48,11 +48,11 @@ function loadQEC (p12data, input_password, input_did) {
         processData: false,
         contentType: 'application/json',
         data: JSON.stringify(data),
-        success: onValidationSuccess
+        success: updateDIDDocSuccess
     });
 }
 
-function onValidationSuccess(data) {
+function updateDIDDocSuccess(data) {
     if (data.result) {
         console.log("eIDAS Certificate and keys imported successfully!");
         updateDIDDoc(did);
@@ -61,6 +61,44 @@ function onValidationSuccess(data) {
     }
 }
 
-function updateDIDDoc(did) {
+function updateDIDDoc(input_did) {
+    // TODO: connect to Enterprise Agent to update the DID Doc
+    // and for doing that it needs to get the public key from the loaded 
+    // eIDAS certificate and get the ID Hub endpoint.
+    // In the following code we will just test the eIDAS Bridge API calls
+    // to test that the library is working.
+
+    var pubkey_data = {
+        "did": input_did
+    };
+
+    // GET PUBLIC KEY
+    $.ajax({
+        type: "POST",
+        url: "http://localhost:5002/eidas/get-pubkey",
+        processData: false,
+        contentType: 'application/json',
+        data: JSON.stringify(pubkey_data),
+        success: onValidationSuccess
+    });
+
+    // GET ID HUB ENDPOINT
+    $.ajax({
+        type: "POST",
+        url: "http://localhost:5002/eidas/load-qec",
+        processData: false,
+        contentType: 'application/json',
+        data: JSON.stringify(data),
+        success: onValidationSuccess
+    });
+
     console.log("DID Document successfully updated.");
+}
+
+function onValidationSuccess(data) {
+    if (data.result) {
+        console.log("eIDAS call went successfully!");
+    } else {
+        console.error('Error');
+    }
 }
