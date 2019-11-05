@@ -2,14 +2,13 @@ $(function() {
 
     let eidasBtn = document.getElementById("setup_eidas");
     let eidasSubmit = document.getElementById("eidasModal");
-    let did = "";
+    let diddocBtn = document.getElementById("updated_diddoc");
 
     eidasBtn.onclick = function(){
-        did = createDID();
         $("#eidasModal").modal();
     };
 
-    eidasSubmit.onsubmit = function(e){
+    eidasSubmit.onsubmit = function(){
         var password = document.getElementById("psw").value;
         var file = document.getElementById("p12file").files[0];
 
@@ -18,15 +17,21 @@ $(function() {
 
         reader.onload = function () {
             var resultHexString = buf2hex(reader.result);
+            var did = getDID();
             loadQEC(resultHexString, password, did);
         };
 
         reader.readAsArrayBuffer(file);
     };
 
+    diddocBtn.onclick = function(){
+        did = getDID();
+        updateDIDDoc (did);
+    };
+
 });
 
-function createDID() {
+function getDID() {
     return "did:example:21tDAKCERh95uGgKbJNHYp";
 }
 
@@ -34,9 +39,29 @@ function buf2hex(buffer) { // buffer is an ArrayBuffer
     return Array.prototype.map.call(new Uint8Array(buffer), x => ('00' + x.toString(16)).slice(-2)).join('');
 }
 
+async function loadQECPOST (p12data, input_password, input_did) {
+
+    var data_in = {
+        "did": input_did,
+        "p12data": p12data,
+        "password": input_password
+    };
+
+    const response = await fetch('http://localhost:5002/eidas/load-qec', {
+        method: 'POST',
+        body: JSON.stringify(data_in),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+    let result = await response.json();
+    alert("eIDAS call went successfully!");
+    return result;
+}
+
 function loadQEC (p12data, input_password, input_did) {
 
-    var data = {
+    var data_in = {
         "did": input_did,
         "p12data": p12data,
         "password": input_password
@@ -47,18 +72,9 @@ function loadQEC (p12data, input_password, input_did) {
         url: "http://localhost:5002/eidas/load-qec",
         processData: false,
         contentType: 'application/json',
-        data: JSON.stringify(data),
-        success: updateDIDDocSuccess
+        data: JSON.stringify(data_in),
+        success: onValidationSuccess
     });
-}
-
-function updateDIDDocSuccess(data) {
-    if (data.result) {
-        console.log("eIDAS Certificate and keys imported successfully!");
-        updateDIDDoc(did);
-    } else {
-        console.error('Error');
-    }
 }
 
 function updateDIDDoc(input_did) {
@@ -79,25 +95,33 @@ function updateDIDDoc(input_did) {
         processData: false,
         contentType: 'application/json',
         data: JSON.stringify(pubkey_data),
-        success: onValidationSuccess
+        success: function(data){
+        }
     });
+
+    var hub_data = {
+        "did": input_did,
+        "service_endpoint": "http://service_endpoint.sample/" + input_did + "/eidas"
+    };
 
     // GET ID HUB ENDPOINT
     $.ajax({
         type: "POST",
-        url: "http://localhost:5002/eidas/load-qec",
+        url: "http://localhost:5002/eidas/service-endpoint",
         processData: false,
         contentType: 'application/json',
-        data: JSON.stringify(data),
-        success: onValidationSuccess
+        data: JSON.stringify(hub_data),
+        success:  function(data, textStatus, jqXHR){ 
+            $('#register').html('<h1>Login successfull</h1>');
+        }
     });
-
-    console.log("DID Document successfully updated.");
 }
 
 function onValidationSuccess(data) {
+    alert("OUT: eIDAS call went successfully!");
     if (data.result) {
         console.log("eIDAS call went successfully!");
+        alert("eIDAS call went successfully!");
     } else {
         console.error('Error');
     }
