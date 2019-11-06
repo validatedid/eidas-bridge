@@ -50,6 +50,9 @@ function loadQEC (p12data, input_password, input_did) {
         success: function(data, textStatus){
             updateDIDDoc(getDID());
             console.log("Certificate Loaded Sucessfully!");
+            $('.genric-btn.primary').css('display','none');
+            $('.eidas-text').css('display','none');
+            $('.eidas-success').show();
         }
     });
 }

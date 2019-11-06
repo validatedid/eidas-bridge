@@ -29,3 +29,11 @@ button.eidas:hover{
     background-color: #f9f9f9;
     display: block;
 }
+
+.eidas-success {
+    display: none;
+}
+
+h4.eidas-success {
+    color: #39CFCA;
+}
