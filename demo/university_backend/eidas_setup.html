@@ -104,8 +104,6 @@
 					</div>
 					<div class="button-group-area">
                         <a href="#eidas-setup" class="genric-btn primary"role="button" id="setup_eidas">Set-up eIDAS</a>
-                        <a href="#eidas-setup" class="genric-btn primary"role="button" id="updated_diddoc">Update DID Document</a>
-                        <div class="register"></div>
                     </div>
                     <div class="wow fadeIn" data-wow-duration="1s">
                             <p>
@@ -229,7 +227,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
                 <h4 class="eidas"><span class="ti-lock"></span> eIDAS Load QEC</h4>
                 </div>
                 <div class="modal-body" style="padding:40px 50px;">
-                <form role="form">
+                <form action="#">
                     <div class="form-group">
                     <label for="p12file"><span class="ti-id-badge"></span> eIDAS P12 file</label>
                     <input type="file" name="p12file" id="p12file" class="form-control" placeholder="Select an eIDAS p12 file">
@@ -238,11 +236,11 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
                     <label for="psw"><span class="ti-key"></span> Password</label>
                     <input type="password" class="form-control" id="psw" placeholder="Enter P12 file password">
                     </div>
-                    <button type="submit" class="btn btn-success btn-block eidas"><span class="ti-power-off"></span> Load eIDAS QEC</button>
+                    <button type="button" class="btn btn-success btn-block eidas" id="submiteidas"><span class="ti-power-off"></span> Load eIDAS QEC</button>
                 </form>
                 </div>
                 <div class="modal-footer eidas-modal-footer">
-                <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+                <button type="button" class="btn btn-danger btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
                 </div>
             </div>
         </div>
