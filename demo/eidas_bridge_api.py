@@ -295,7 +295,7 @@ did_document_input_model = api.model('DIDDocument', {
     'id': fields.String(
         description="Decentralized IDentifier", 
         required=True,
-        example="did:example:21tDAKCERh95uGgKbJNHY"),
+        example="did:example:21tDAKCERh95uGgKbJNHYp"),
     'authentication': fields.List(fields.Nested(auth_diddoc_model), 
         description="List of Authentication Mechanisms", 
         required=True),
