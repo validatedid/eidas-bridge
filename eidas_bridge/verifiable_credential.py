@@ -12,12 +12,14 @@ class EIDASVerifiableCredentialNoKeyException(Exception):
 class VerifiableCredential():
     """ Represents a Verifiable Credential instance according to W3C spec """
 
-    def __init__(self, json_credential):
+    def __init__(self, json_credential, to_verify=False):
         check_args(json_credential, dict)
         self._verifiable_credential = json_credential
         #checks for issuer property
         self._check_key_exist('issuer')
-        self._check_key_exist('proof', 'verificationMethod')
+        #checks for proof and verificationMethod property only when a VC needs to be verified
+        if (to_verify):
+            self._check_key_exist('proof', 'verificationMethod')
     
     def get_issuer_did(self) -> str:
         """ Returns the Issuer's DID from the Verifiable Credential """

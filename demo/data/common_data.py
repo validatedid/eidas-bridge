@@ -79,7 +79,7 @@ bad_type_endpoints = [
     0
 ]
 
-basic_credentials = [
+unique_credentials = [
     [{
         '@context': {
             'homepage': 'schema:url',
@@ -110,7 +110,7 @@ basic_credentials = [
             "verificationMethod": "did:example:21tDAKCERh95uGgKbJNHYp#eidas-keys-1",
             "jws": "eyJhbGciOiJFUzI1NksiLCJiNjQiOmZhbHNlLCJjcml0IjpbImI2NCJdfQ..MEUCICoxruGlAq_J-rjDNstxmboqN81gLqeuT3dHqDPrRnmcAiEAihBlit4godBBc5FYKtsA1TxxL6TXfkjXyxfjiwaHeL8"
         }
-    }], 
+    }],
     [{
         "@context": {
             'schema': 'http://schema.org/'
@@ -129,6 +129,79 @@ basic_credentials = [
     }, {
         "@context": {
             'schema': 'http://schema.org/'
+        },
+        "id": "http://example.edu/credentials/3732",
+        "type": ["VerifiableCredential", "UniversityDegreeCredential"],
+        "issuer": "did:example:21tDAKCERh95uGgKbJNHYp",
+        "issuanceDate": "2010-01-01T19:23:24Z",
+        "credentialSubject": {
+            "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+            "degree": {
+                "type": "BachelorDegree",
+                "name": "Bachelor of Science and Arts"
+                }  
+        },
+        "proof": {
+            "type": "EcdsaSecp256k1Signature2019",
+            "created": "2019-09-24T12:32:28Z",
+            "domain": "example.com",
+            "proofPurpose": "authentication",
+            "verificationMethod": "did:example:21tDAKCERh95uGgKbJNHYp#eidas-keys-1",
+            "jws": "eyJhbGciOiJFUzI1NksiLCJiNjQiOmZhbHNlLCJjcml0IjpbImI2NCJdfQ..MEQCIG6U__hcNfsETFg_V8lXJ2edzXc2l4yotN8eBmrEX9TBAiBd8ULwdakRnxdPDWPj4uWJTinpwcCLzxyCbNUrsEX-lw"
+        }
+    }]
+]
+
+basic_credentials = [
+    [{
+        '@context': {
+            'homepage': 'aschema:url',
+            'image': 'schema:image',
+            'name': 'schema:name',
+            'schema': 'http://schema.org/'
+        },
+        'homepage': 'https://manu.sporny.org/',
+        'image': 'https://manu.sporny.org/images/manu.png',
+        'name': 'Manu Sporny',
+        'issuer': 'did:example:21tDAKCERh95uGgKbJNHYp'
+    }, {
+        "@context": {
+            "homepage": "aschema:url",
+            "image": "schema:image",
+            "name": "schema:name",
+            "schema": "http://schema.org/"
+        },
+        "homepage": "https://manu.sporny.org/",
+        "image": "https://manu.sporny.org/images/manu.png",
+        "name": "Manu Sporny",
+        "issuer": "did:example:21tDAKCERh95uGgKbJNHYp",
+        "proof": {
+            "type": "EcdsaSecp256k1Signature2019",
+            "created": "2019-09-24T12:32:28Z",
+            "domain": "example.com",
+            "proofPurpose": "authentication",
+            "verificationMethod": "did:example:21tDAKCERh95uGgKbJNHYp#eidas-keys-1",
+            "jws": "eyJhbGciOiJFUzI1NksiLCJiNjQiOmZhbHNlLCJjcml0IjpbImI2NCJdfQ..MEUCICoxruGlAq_J-rjDNstxmboqN81gLqeuT3dHqDPrRnmcAiEAihBlit4godBBc5FYKtsA1TxxL6TXfkjXyxfjiwaHeL8"
+        }
+    }], 
+    [{
+        "@context": {
+            'schema': 'bhttp://schema.org/'
+        },
+        "id": "http://example.edu/credentials/3732",
+        "type": ["VerifiableCredential", "UniversityDegreeCredential"],
+        "issuer": "did:example:21tDAKCERh95uGgKbJNHYp",
+        "issuanceDate": "2010-01-01T19:23:24Z",
+        "credentialSubject": {
+            "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+            "degree": {
+                "type": "BachelorDegree",
+                "name": "Bachelor of Science and Arts"
+                }  
+            }
+    }, {
+        "@context": {
+            'schema': 'bhttp://schema.org/'
         },
         "id": "http://example.edu/credentials/3732",
         "type": ["VerifiableCredential", "UniversityDegreeCredential"],
@@ -216,11 +289,12 @@ credentials = [
                 }  
             },
         "proof": {
-            "type": "RsaSignature2018",
-            "created": "2018-06-18T21:19:10Z",
-            "proofPurpose": "assertionMethod",
-            "verificationMethod": "https://example.com/jdoe/keys/1",
-            "jws": "eyJhbGciOiJQUzI1NiIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19DJBMvvFAIC00nSGB6Tn0XKbbF9XrsaJZREWvR2aONYTQQxnyXirtXnlewJMBBn2h9hfcGZrvnC1b6PgWmukzFJ1IiH1dWgnDIS81BH-IxXnPkbuYDeySorc4QU9MJxdVkY5EL4HYbcIfwKj6X4LBQ2_ZHZIu1jdqLcRZqHcsDF5KKylKc1THn5VRWy5WhYg_gBnyWny8E6Qkrze53MR7OuAmmNJ1m1nN8SxDrG6a08L78J0-Fbas5OjAQz3c17GY8mVuDPOBIOVjMEghBlgl3nOi1ysxbRGhHLEK4s0KKbeRogZdgt1DkQxDFxxn41QWDw_mmMCjs9qxg0zcZzqEJw"
+            "type": "EcdsaSecp256k1Signature2019",
+            "created": "2019-09-24T12:32:28Z",
+            "domain": "example.com",
+            "proofPurpose": "authentication",
+            "verificationMethod": "did:example:21tDAKCERh95uGgKbJNHYp#eidas-keys-1",
+            "jws": "eyJhbGciOiJFUzI1NksiLCJiNjQiOmZhbHNlLCJjcml0IjpbImI2NCJdfQ..MEQCIG6U__hcNfsETFg_V8lXJ2edzXc2l4yotN8eBmrEX9TBAiBd8ULwdakRnxdPDWPj4uWJTinpwcCLzxyCbNUrsEX-lw"
         }
     }
 ] 

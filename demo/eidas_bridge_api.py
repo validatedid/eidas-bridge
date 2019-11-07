@@ -237,7 +237,7 @@ credential_output_model = api.model('Credential_out', {
     'issuer': fields.String(
         description="Issuer DID", 
         required=True,
-        example="did:example:21tDAKCERh95uGgKbJNHY"),
+        example="did:example:21tDAKCERh95uGgKbJNHYp"),
     'issuanceDate': fields.String(
         description="Credential Issuance date timestamp", 
         required=False,

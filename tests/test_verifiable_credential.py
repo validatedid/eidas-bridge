@@ -2,7 +2,7 @@
 
 import pytest
 from eidas_bridge.verifiable_credential import VerifiableCredential, EIDASVerifiableCredentialNoKeyException
-from demo.data.common_data import credentials, bad_credentials, test_proof, test_credentials, eidas_data_list, basic_credentials
+from demo.data.common_data import credentials, bad_credentials, test_proof, test_credentials, eidas_data_list, unique_credentials
 import json
 
 def test_verifiable_credential_class_bad_types():
@@ -33,7 +33,7 @@ def test_add_proof_element(credential):
     assert str_out_credential == str_expected_credential
 
 @pytest.mark.parametrize("eidas_data", eidas_data_list)
-@pytest.mark.parametrize("credential", basic_credentials)
+@pytest.mark.parametrize("credential", unique_credentials)
 def test_sign_and_add_proof(eidas_data, credential):
     vc = VerifiableCredential(credential[0])
     vc.sign_and_add_proof(eidas_data[2], eidas_data[3].encode("utf-8"))
@@ -48,3 +48,4 @@ def test_sign_and_add_proof(eidas_data, credential):
 
     assert vc_json == expected_vc_json
 
+                    

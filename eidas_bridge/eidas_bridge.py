@@ -115,7 +115,7 @@ def eidas_verify_credential(credential, json_did_document) -> str:
     """
 
     # Constructs a Verifiable Credential object and gets the issuer's did
-    vc = VerifiableCredential(credential)
+    vc = VerifiableCredential(credential, True)
     did_from_cred = vc.get_issuer_did()
     proof_kid = vc.get_proof_kid()
 
