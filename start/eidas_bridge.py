@@ -7,7 +7,7 @@ sys.path.insert(0,parentdir)
 import argparse, multiprocessing, time
 multiprocessing.set_start_method('spawn', True)
 from demo.util.hub_server import start_hub_server
-from demo.eidas_bridge_api import init_api_server
+from start.eidas_bridge_api import init_api_server
 
 def main(args):
 
@@ -28,7 +28,7 @@ def main(args):
         # Terminate the running processes.
         hub_server_proc.terminate()
         api_server_proc.terminate()
-        print('\n * Exiting eIDAS Bridge demo')
+        print('\n * Exiting eIDAS Bridge server')
 
 if __name__ == "__main__":
     

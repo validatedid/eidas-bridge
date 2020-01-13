@@ -1,18 +1,30 @@
-eIDAS Bridge Library
-====================
+![EBSI Logo](https://ec.europa.eu/cefdigital/wiki/images/logo/default-space-logo.svg)
 
-This repo contains an implementation of an eIDAS Bridge Library in Python with a demo and unit tests.
+# eIDAS Bridge Library
+> The library linking SSI with eIDAS
 
 An eIDAS Bridge links the european Trust and Legal Framework, named eIDAS (electronic IDentification, Authentication and trust Services), with the Self-Sovereign Identification (SSI) global trust framework, based on Decentralized IDentifers, or DIDs.
 
-## Table of Contents <!-- omit in toc -->
+## Table of Contents
 
-1. [Run eIDAS Bridge Web Docker Demo](#run-eidas-bridge-web-docker-demo)
-2. [Other Running and Test Methods](#other-running-and-test-methods)
-3. [eIDAS Bridge Library Calls](#eidas-bridge-library-calls)
-4. [Requisites](#requisites)
+1. [Getting started](#Getting)
+2. [Building](#Building)
+3. [Testing](#Testing)
+4. [Running](#Running)
+5. [Features](#Features)
+6. [Requisites](#Requisites)
+6. [Licensing](#Licensing)
 
-## Run eIDAS Bridge Web Docker Demo
+
+## Getting started
+
+### Prerequisites
+Required libraries:
+
+- typescript
+
+
+### Installing
 
 Move to the base directory (example: `test-eidas-bridge`)
 ```sh
@@ -21,18 +33,14 @@ $ cd test-eidas-bridge
 
 Clone the repository and move to the project directory
 ```sh
-$ git clone https://github.com/validatedid/eidas-bridge
-$ cd eidas-bridge
+$ git clone https://<your_user>@ec.europa.eu/cefdigital/code/scm/ebsi/4-eidas-bridge.git
+$ cd 4-eidas-bridge
 ```
-
+### Docker
 Execute a script to build and run the dockerized eIDAS Bridge library:
-* In \*nix style computers:
+
 ```sh
-$ ./scripts/build_and_run_docker
-```
-* In Windows style computers, from a Powershell:
-```sh
-PS ~\eidas-bridge> bash .\scripts\build_and_run_docker
+$ docker-compose up --build  
 ```
 
 This docker demo exposes a server to work directly with the eIDAS Bridge Swagger API:
@@ -44,12 +52,11 @@ To stop the demo and docker container, just press `Ctrl^C` on the same terminal 
 
 In case you want to use the demo again, there is no need to rebuild the docker, just execute another script to start the already built docker:
 ```sh
-$ ./scripts/start_docker
+$ docker-compose up
 ```
-## Other Running and Test Methods
 
-### Install eIDAS Bridge Library
 
+## Building
 Move to the base directory (example: `test-eidas-bridge`)
 ```sh
 $ cd test-eidas-bridge
@@ -57,8 +64,8 @@ $ cd test-eidas-bridge
 
 Clone the repository and move to the project directory
 ```sh
-$ git clone https://github.com/validatedid/eidas-bridge
-$ cd eidas-bridge
+$ git clone https://<your_user>@ec.europa.eu/cefdigital/code/scm/ebsi/4-eidas-bridge.git
+$ cd 4-eidas-bridge
 ```
 
 Create and activate python virtual environment:
@@ -76,12 +83,10 @@ If you want to test the demo, install required `requests` library and execute `e
 $ pip install requests
 $ python demo/eidas_demo.py
 ```
+## Testing
+Following [previous instructions](#Building), we should have the project github repo and be placed on `eidas-bridge` directory.
 
-### Run Pytest suite tests
-
-Following previous instructions, we should have the project github repo and be placed on `eidas-bridge` directory.
-
-#### Requeriments
+### Prerequisites
 - Pytest
 - Requests
 
@@ -89,22 +94,22 @@ Following previous instructions, we should have the project github repo and be p
 $ pip install pytest requests
 ```
 
-#### Test execution
+### Test execution
 
 ```sh
 $ pytest
 ```
 
-### Run eIDAS Bridge Library API Demo
+## Running
+Run eIDAS Bridge Library API Demo
 
 Implementation of a demo that exposes a RESTFUL Open API / Swagger style to call eIDAS Bridge Library in Python.
 Following previous instructions, we should have the project github repo and be placed on `eidas-bridge` directory.
 
-This demo launches two localhost servers:
-- eIDAS Link local data repository on `http://localhost:8000`
+This demo launches:
 - eIDAS Bridge Swagger API on `http://localhost:5002/`
 
-#### Requirements
+### Requirements
 - Flask
 - Flask_RestPLus
 
@@ -112,7 +117,7 @@ This demo launches two localhost servers:
 $ pip install install flask flask-restplus
 ```
 
-#### Running the demo 
+### Running the demo 
 
 Execute `eidas_bridge_api.py`:
 ```sh
@@ -124,8 +129,9 @@ SWAGGER API calls will be located at `http://localhost:5002` and will expose:
   - `/eidas/get-pubkey`
   - `/eidas/sign-credential`
   - `/eidas/verify-credential`
-
-## eIDAS Bridge Library calls
+  
+## Features
+eIDAS Bridge Library calls
 
 #### eidas_load_qec
 ```python
@@ -203,3 +209,12 @@ The algorithm executes the following procedure:
 3. The issuer backoffice MUST have an eIDAS certificate generated with the following elliptic curve: Secp256k1.
 
 
+## Licensing
+
+Copyright (c) 2019 European Commission
+Licensed under the EUPL, Version 1.2 or - as soon they will be approved by the European Commission - subsequent versions of the EUPL (the "Licence"); 
+You may not use this work except in compliance with the Licence. 
+You may obtain a copy of the Licence at: 
+* https://joinup.ec.europa.eu/page/eupl-text-11-12  
+
+Unless required by applicable law or agreed to in writing, software distributed under the Licence is distributed on an "AS IS" basis, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the Licence for the specific language governing permissions and limitations under the Licence.
