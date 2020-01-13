@@ -158,9 +158,9 @@ Returns the correspondent JSON to be added to the Service Endpoint Section of th
 
 ```json_
 {
-    "id": "did:sov:55GkHamhTU1ZbTbV2ab9DE#eidas",
+    "id": "did:ebsi:55GkHamhTU1ZbTbV2ab9DE#eidas",
     "type": "EidasService",
-    "serviceEndpoint": "http://service_endpoint.sample/did:sov:55GkHamhTU1ZbTbV2ab9DE/eidas"
+    "serviceEndpoint": "http://service_endpoint.sample/did:ebsi:55GkHamhTU1ZbTbV2ab9DE/eidas"
 }
 ```
 

@@ -150,7 +150,7 @@ def test_eidas_sign_credential(credential):
     # to keep sure that exists a key loaded in the issuer DB
     path_to_p12_file = "./demo/data/ECDSAcertificate.p12"
     p12_password = b"passphrase"
-    did = "did:example:21tDAKCERh95uGgKbJNHYp"
+    did = "did:ebsi:21tDAKCERh95uGgKbJNHYp"
 
     with open(path_to_p12_file, "rb") as p12_file:
         p12_data = p12_file.read()

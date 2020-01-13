@@ -4,12 +4,12 @@
 from eidas_bridge.utils.crypto import PKCS1v15_PADDING, PSS_PADDING
 
 dids = [
-    "did:sov:55GkHamhTU1ZbTbV2ab9DE"
+    "did:ebsi:55GkHamhTU1ZbTbV2ab9DE"
 ]
 
 eidas_data_list = [
     (
-        "did:example:21tDAKCERh95uGgKbJNHYp",
+        "did:ebsi:21tDAKCERh95uGgKbJNHYp",
         '-----BEGIN CERTIFICATE-----\nMIIB0TCCAXegAwIBAgIUXTNSGEXafktBgerR3Slax47ahvgwCgYIKoZIzj0EAwIw\nXTELMAkGA1UEBhMCRVMxEzARBgNVBAgMClRFU1RfU1RBVEUxEjAQBgNVBAcMCVRF\nU1RfQ0lUWTEQMA4GA1UECgwHQ0FfQUNNRTETMBEGA1UEAwwKbXlzaXRlLmNvbTAe\nFw0xOTA5MTgxMTIwMzRaFw0yMDA5MTcxMTIwMzRaMF0xCzAJBgNVBAYTAkVTMRMw\nEQYDVQQIDApURVNUX1NUQVRFMRIwEAYDVQQHDAlURVNUX0NJVFkxEDAOBgNVBAoM\nB0NBX0FDTUUxEzARBgNVBAMMCm15c2l0ZS5jb20wVjAQBgcqhkjOPQIBBgUrgQQA\nCgNCAASzA6bo+qsHd118oJZk9YzNIRIOt3zG1yV13ywIq+1bX5QLqzSDv0bGQAnO\nc9npW7gMjQImQy9t76kXnKRTPsP6oxgwFjAUBgNVHREEDTALgglsb2NhbGhvc3Qw\nCgYIKoZIzj0EAwIDSAAwRQIhAOUye0vLloIkc/Gy4s2SkjGN6Y0U3J6getXpa4mS\nqypFAiAbYef98RGda/TTuYhHT3ub5DORmqX5iVeyUisPZ5ggig==\n-----END CERTIFICATE-----\n',
         '-----BEGIN ENCRYPTED PRIVATE KEY-----\nMIHsMFcGCSqGSIb3DQEFDTBKMCkGCSqGSIb3DQEFDDAcBAhFAvyFk9tWYQICCAAw\nDAYIKoZIhvcNAgkFADAdBglghkgBZQMEASoEED0QbispsnLf/+L6osuQ7hAEgZC9\nUsBVqEorIIu32wfWHJp2MG53uy2XAo242YujSydIhn46ssN3siW/cAN9AubsDKhZ\nFtXAnBWMVkfeGryVuNY6YlCi/41ILp5UbRF1DS/2dyWdRr++hQewTlEwS+xy4EQe\njAaeHa9BFn36FKGtCRKdxiWqlr9jPTBRSHvVYH5uTSvbd8kPJh56b1H3gkduC24=\n-----END ENCRYPTED PRIVATE KEY-----\n',
         'passphrase',
@@ -22,7 +22,7 @@ eidas_inputs = [
         '-----BEGIN CERTIFICATE-----\nMIIB0TCCAXegAwIBAgIUXTNSGEXafktBgerR3Slax47ahvgwCgYIKoZIzj0EAwIw\nXTELMAkGA1UEBhMCRVMxEzARBgNVBAgMClRFU1RfU1RBVEUxEjAQBgNVBAcMCVRF\nU1RfQ0lUWTEQMA4GA1UECgwHQ0FfQUNNRTETMBEGA1UEAwwKbXlzaXRlLmNvbTAe\nFw0xOTA5MTgxMTIwMzRaFw0yMDA5MTcxMTIwMzRaMF0xCzAJBgNVBAYTAkVTMRMw\nEQYDVQQIDApURVNUX1NUQVRFMRIwEAYDVQQHDAlURVNUX0NJVFkxEDAOBgNVBAoM\nB0NBX0FDTUUxEzARBgNVBAMMCm15c2l0ZS5jb20wVjAQBgcqhkjOPQIBBgUrgQQA\nCgNCAASzA6bo+qsHd118oJZk9YzNIRIOt3zG1yV13ywIq+1bX5QLqzSDv0bGQAnO\nc9npW7gMjQImQy9t76kXnKRTPsP6oxgwFjAUBgNVHREEDTALgglsb2NhbGhvc3Qw\nCgYIKoZIzj0EAwIDSAAwRQIhAOUye0vLloIkc/Gy4s2SkjGN6Y0U3J6getXpa4mS\nqypFAiAbYef98RGda/TTuYhHT3ub5DORmqX5iVeyUisPZ5ggig==\n-----END CERTIFICATE-----\n',
         '304402206f71ce3839b1a74e98624cf7914f42740ca8f802292d2e72bb68f25ead8ae997022018ab38039432758ba047527157042aa57ab355b1ff884574517cbdf91d549e93',
         "",
-        "did:sov:55GkHamhTU1ZbTbV2ab9DE" 
+        "did:ebsi:55GkHamhTU1ZbTbV2ab9DE" 
     )
 ]
 """
@@ -31,13 +31,13 @@ eidas_inputs = [
         '-----BEGIN CERTIFICATE-----\nMIIDYDCCAkigAwIBAgIUI63ffVceaNc1kN9O0q/4jSjbkU0wDQYJKoZIhvcNAQEL\nBQAwXTELMAkGA1UEBhMCRVMxEzARBgNVBAgMClRFU1RfU1RBVEUxEjAQBgNVBAcM\nCVRFU1RfQ0lUWTEQMA4GA1UECgwHQ0FfQUNNRTETMBEGA1UEAwwKbXlzaXRlLmNv\nbTAeFw0xOTA3MDkxNDA3MjBaFw0yMDA3MDgxNDA3MjBaMF0xCzAJBgNVBAYTAkVT\nMRMwEQYDVQQIDApURVNUX1NUQVRFMRIwEAYDVQQHDAlURVNUX0NJVFkxEDAOBgNV\nBAoMB0NBX0FDTUUxEzARBgNVBAMMCm15c2l0ZS5jb20wggEiMA0GCSqGSIb3DQEB\nAQUAA4IBDwAwggEKAoIBAQDm6RhyIeFZHn4bGQ/2UQ+aflczCo3Ej04LJXfiIU1Q\nt7xRq3e+uh7nTLffnS7fj/ZZBBREmR/D/SJBTlxv7WQEbscV/pf2LoZLjoC4M4ye\n43lUHRmWsm4J50tu9zcSheqXCRyAK/Ai6RUBy86NKXMFTUp/ONxS0BxJg8GU03Xd\nXGnYzdmZZXGDnublGYq03gD/cZYguS7/HS8v/MckdmjYPTy2syGL9unYkjWn7vig\niaDc2leAM4agKB6PODJSFla15HLoqskKX1SgtLJUHxu/FOo6hYdCt+GxpV1xhl/r\nEf3/SFeTZrJgL11m5ABDli2zAmCn4bjBNnNcXWy5QV0pAgMBAAGjGDAWMBQGA1Ud\nEQQNMAuCCWxvY2FsaG9zdDANBgkqhkiG9w0BAQsFAAOCAQEAYPUn0TzGyn438++1\nV2jMHC653C8tn3vVF5nTT7Td+ihc+KaaNDYsgyY2JpBIMRwlNgoNU0Da3P/9ZDn3\nlFJElUg8WpWPvpXtbS4udqn6UcfT9mFJtkzKg3CK5i50GRCabV9FPbY1bzYtUbY+\nEntXtI2h0dxcgzgOw6pkXFB3O7ZbbshpqWTlHtTtbxxrOFq0zcpyS92G+NTF6ASS\nhXcIf90du/mBWd2dinF/w2nkRAWfGBy8bGnUSJ93rPVwLjI0PDeHh7+PSQ+3X6mG\n5DI9EmzEC7esW6wJbhgiOYXLavAOmLfI0yq/z8SZMvFYwBE69VuGfPSj/u4nIhA5\nK0Qgnw==\n-----END CERTIFICATE-----\n',
         '4f1bb7069e1508901e83d9dd71043e35fbc8ecf3077625206dd00cf8f12365096cc1cf07822479e571689bc67c50a7d9ca66c43865e490044729af3356e853073073c11e9fa517f7b35748146c1c1101406f66866969ad5915054e3633ab3c247d6b09be909ece6d018ad309b1b34c45b223227d74928278640e0e6a62de0309309e609e8927eb7abd098dfb8a30e8c91fde3ea4fbe804b2967db2c994d303de1e6ac837cfd2a11414ace2bd75148e917b3505f17fabc4805484164a69fdc1d28122e977c1fa4f62b39a601915d8fe0b1bd6e2932db6c8ca3b2bca3ab04f3aebf83d081122d42248dc2a2f292f2c2bfc42244c3118109ab9f001a85cbdd52f71',
         PSS_PADDING,
-        "did:sov:55GkHamhTU1ZbTbV2ab9DE"
+        "did:ebsi:55GkHamhTU1ZbTbV2ab9DE"
     ),
     (
         '-----BEGIN CERTIFICATE-----\nMIIDYDCCAkigAwIBAgIUI63ffVceaNc1kN9O0q/4jSjbkU0wDQYJKoZIhvcNAQEL\nBQAwXTELMAkGA1UEBhMCRVMxEzARBgNVBAgMClRFU1RfU1RBVEUxEjAQBgNVBAcM\nCVRFU1RfQ0lUWTEQMA4GA1UECgwHQ0FfQUNNRTETMBEGA1UEAwwKbXlzaXRlLmNv\nbTAeFw0xOTA3MDkxNDA3MjBaFw0yMDA3MDgxNDA3MjBaMF0xCzAJBgNVBAYTAkVT\nMRMwEQYDVQQIDApURVNUX1NUQVRFMRIwEAYDVQQHDAlURVNUX0NJVFkxEDAOBgNV\nBAoMB0NBX0FDTUUxEzARBgNVBAMMCm15c2l0ZS5jb20wggEiMA0GCSqGSIb3DQEB\nAQUAA4IBDwAwggEKAoIBAQDm6RhyIeFZHn4bGQ/2UQ+aflczCo3Ej04LJXfiIU1Q\nt7xRq3e+uh7nTLffnS7fj/ZZBBREmR/D/SJBTlxv7WQEbscV/pf2LoZLjoC4M4ye\n43lUHRmWsm4J50tu9zcSheqXCRyAK/Ai6RUBy86NKXMFTUp/ONxS0BxJg8GU03Xd\nXGnYzdmZZXGDnublGYq03gD/cZYguS7/HS8v/MckdmjYPTy2syGL9unYkjWn7vig\niaDc2leAM4agKB6PODJSFla15HLoqskKX1SgtLJUHxu/FOo6hYdCt+GxpV1xhl/r\nEf3/SFeTZrJgL11m5ABDli2zAmCn4bjBNnNcXWy5QV0pAgMBAAGjGDAWMBQGA1Ud\nEQQNMAuCCWxvY2FsaG9zdDANBgkqhkiG9w0BAQsFAAOCAQEAYPUn0TzGyn438++1\nV2jMHC653C8tn3vVF5nTT7Td+ihc+KaaNDYsgyY2JpBIMRwlNgoNU0Da3P/9ZDn3\nlFJElUg8WpWPvpXtbS4udqn6UcfT9mFJtkzKg3CK5i50GRCabV9FPbY1bzYtUbY+\nEntXtI2h0dxcgzgOw6pkXFB3O7ZbbshpqWTlHtTtbxxrOFq0zcpyS92G+NTF6ASS\nhXcIf90du/mBWd2dinF/w2nkRAWfGBy8bGnUSJ93rPVwLjI0PDeHh7+PSQ+3X6mG\n5DI9EmzEC7esW6wJbhgiOYXLavAOmLfI0yq/z8SZMvFYwBE69VuGfPSj/u4nIhA5\nK0Qgnw==\n-----END CERTIFICATE-----\n',
         'b0c86e06345f1b1b8b50696b5b42458699359e7dde13f535d7598db06891ccd7f4558f8262e23d8825cb65d0f16c72e53f93db7aa51b0831365db2dc8bbefc17d2c535646122ee1e448853044eeb83ffa944fac27e461ed41aa0f9d2079f49b60c88413fcedb287886094a831c79979b9323eac8fdabc1447facdd629d5533d6bc3f1a6a4ba4e420b7733b8617fe15f4f7a9ec81c0ae5b312dab6634082b29450bb77c19cda733719ecc8d758ec7988e39ff1f23dc5cf023156a82f1a73aaf2860d19dc64b452b4b15aa651d8845dbef97f07e3021babd5bdab3b353de271f0c3f95c29087f332d912a684560cad91e097a8978f42e8587b6c034e58ebbe1175',
         PKCS1v15_PADDING,
-        "did:sov:55GkHamhTU1ZbTbV2ab9DE"
+        "did:ebsi:55GkHamhTU1ZbTbV2ab9DE"
     )
 ]"""
 
@@ -48,7 +48,7 @@ paddings = [
 
 all_type_dids = [
     b"\xd6\x98\x04\x88\xd2-\xc1D\x02\x15\xc9Z\x9bK \x8f\xe0\x8b5\xd0Z$",
-    "did:sov:55GkHamhTU1ZbTbV2ab9DE",
+    "did:ebsi:55GkHamhTU1ZbTbV2ab9DE",
     0
 ]
 
@@ -65,12 +65,12 @@ bad_type_proofs = [
 
 service_endpoints = [
     (
-        "did:sov:55GkHamhTU1ZbTbV2ab9DE", 
-        "http://service_endpoint.sample/did:sov:55GkHamhTU1ZbTbV2ab9DE/eidas"
+        "did:ebsi:55GkHamhTU1ZbTbV2ab9DE", 
+        "http://service_endpoint.sample/did:ebsi:55GkHamhTU1ZbTbV2ab9DE/eidas"
     ),
     (
-        "did:example:21tDAKCERh95uGgKbJNHYp",
-        "http://service_endpoint.sample/did:example:21tDAKCERh95uGgKbJNHYp/eidas"
+        "did:ebsi:21tDAKCERh95uGgKbJNHYp",
+        "http://service_endpoint.sample/did:ebsi:21tDAKCERh95uGgKbJNHYp/eidas"
     )
 ]
 
@@ -90,7 +90,7 @@ unique_credentials = [
         'homepage': 'https://manu.sporny.org/',
         'image': 'https://manu.sporny.org/images/manu.png',
         'name': 'Manu Sporny',
-        'issuer': 'did:example:21tDAKCERh95uGgKbJNHYp'
+        'issuer': 'did:ebsi:21tDAKCERh95uGgKbJNHYp'
     }, {
         "@context": {
             "homepage": "schema:url",
@@ -101,13 +101,13 @@ unique_credentials = [
         "homepage": "https://manu.sporny.org/",
         "image": "https://manu.sporny.org/images/manu.png",
         "name": "Manu Sporny",
-        "issuer": "did:example:21tDAKCERh95uGgKbJNHYp",
+        "issuer": "did:ebsi:21tDAKCERh95uGgKbJNHYp",
         "proof": {
             "type": "EcdsaSecp256k1Signature2019",
             "created": "2019-09-24T12:32:28Z",
             "domain": "example.com",
             "proofPurpose": "authentication",
-            "verificationMethod": "did:example:21tDAKCERh95uGgKbJNHYp#eidas-keys-1",
+            "verificationMethod": "did:ebsi:21tDAKCERh95uGgKbJNHYp#eidas-keys-1",
             "jws": "eyJhbGciOiJFUzI1NksiLCJiNjQiOmZhbHNlLCJjcml0IjpbImI2NCJdfQ..MEUCICoxruGlAq_J-rjDNstxmboqN81gLqeuT3dHqDPrRnmcAiEAihBlit4godBBc5FYKtsA1TxxL6TXfkjXyxfjiwaHeL8"
         }
     }],
@@ -117,10 +117,10 @@ unique_credentials = [
         },
         "id": "http://example.edu/credentials/3732",
         "type": ["VerifiableCredential", "UniversityDegreeCredential"],
-        "issuer": "did:example:21tDAKCERh95uGgKbJNHYp",
+        "issuer": "did:ebsi:21tDAKCERh95uGgKbJNHYp",
         "issuanceDate": "2010-01-01T19:23:24Z",
         "credentialSubject": {
-            "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+            "id": "did:ebsi:ebfeb1f712ebc6f1c276e12ec21",
             "degree": {
                 "type": "BachelorDegree",
                 "name": "Bachelor of Science and Arts"
@@ -132,10 +132,10 @@ unique_credentials = [
         },
         "id": "http://example.edu/credentials/3732",
         "type": ["VerifiableCredential", "UniversityDegreeCredential"],
-        "issuer": "did:example:21tDAKCERh95uGgKbJNHYp",
+        "issuer": "did:ebsi:21tDAKCERh95uGgKbJNHYp",
         "issuanceDate": "2010-01-01T19:23:24Z",
         "credentialSubject": {
-            "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+            "id": "did:ebsi:ebfeb1f712ebc6f1c276e12ec21",
             "degree": {
                 "type": "BachelorDegree",
                 "name": "Bachelor of Science and Arts"
@@ -146,7 +146,7 @@ unique_credentials = [
             "created": "2019-09-24T12:32:28Z",
             "domain": "example.com",
             "proofPurpose": "authentication",
-            "verificationMethod": "did:example:21tDAKCERh95uGgKbJNHYp#eidas-keys-1",
+            "verificationMethod": "did:ebsi:21tDAKCERh95uGgKbJNHYp#eidas-keys-1",
             "jws": "eyJhbGciOiJFUzI1NksiLCJiNjQiOmZhbHNlLCJjcml0IjpbImI2NCJdfQ..MEQCIG6U__hcNfsETFg_V8lXJ2edzXc2l4yotN8eBmrEX9TBAiBd8ULwdakRnxdPDWPj4uWJTinpwcCLzxyCbNUrsEX-lw"
         }
     }]
@@ -163,7 +163,7 @@ basic_credentials = [
         'homepage': 'https://manu.sporny.org/',
         'image': 'https://manu.sporny.org/images/manu.png',
         'name': 'Manu Sporny',
-        'issuer': 'did:example:21tDAKCERh95uGgKbJNHYp'
+        'issuer': 'did:ebsi:21tDAKCERh95uGgKbJNHYp'
     }, {
         "@context": {
             "homepage": "aschema:url",
@@ -174,13 +174,13 @@ basic_credentials = [
         "homepage": "https://manu.sporny.org/",
         "image": "https://manu.sporny.org/images/manu.png",
         "name": "Manu Sporny",
-        "issuer": "did:example:21tDAKCERh95uGgKbJNHYp",
+        "issuer": "did:ebsi:21tDAKCERh95uGgKbJNHYp",
         "proof": {
             "type": "EcdsaSecp256k1Signature2019",
             "created": "2019-09-24T12:32:28Z",
             "domain": "example.com",
             "proofPurpose": "authentication",
-            "verificationMethod": "did:example:21tDAKCERh95uGgKbJNHYp#eidas-keys-1",
+            "verificationMethod": "did:ebsi:21tDAKCERh95uGgKbJNHYp#eidas-keys-1",
             "jws": "eyJhbGciOiJFUzI1NksiLCJiNjQiOmZhbHNlLCJjcml0IjpbImI2NCJdfQ..MEUCICoxruGlAq_J-rjDNstxmboqN81gLqeuT3dHqDPrRnmcAiEAihBlit4godBBc5FYKtsA1TxxL6TXfkjXyxfjiwaHeL8"
         }
     }], 
@@ -190,10 +190,10 @@ basic_credentials = [
         },
         "id": "http://example.edu/credentials/3732",
         "type": ["VerifiableCredential", "UniversityDegreeCredential"],
-        "issuer": "did:example:21tDAKCERh95uGgKbJNHYp",
+        "issuer": "did:ebsi:21tDAKCERh95uGgKbJNHYp",
         "issuanceDate": "2010-01-01T19:23:24Z",
         "credentialSubject": {
-            "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+            "id": "did:ebsi:ebfeb1f712ebc6f1c276e12ec21",
             "degree": {
                 "type": "BachelorDegree",
                 "name": "Bachelor of Science and Arts"
@@ -205,10 +205,10 @@ basic_credentials = [
         },
         "id": "http://example.edu/credentials/3732",
         "type": ["VerifiableCredential", "UniversityDegreeCredential"],
-        "issuer": "did:example:21tDAKCERh95uGgKbJNHYp",
+        "issuer": "did:ebsi:21tDAKCERh95uGgKbJNHYp",
         "issuanceDate": "2010-01-01T19:23:24Z",
         "credentialSubject": {
-            "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+            "id": "did:ebsi:ebfeb1f712ebc6f1c276e12ec21",
             "degree": {
                 "type": "BachelorDegree",
                 "name": "Bachelor of Science and Arts"
@@ -219,7 +219,7 @@ basic_credentials = [
             "created": "2019-09-24T12:32:28Z",
             "domain": "example.com",
             "proofPurpose": "authentication",
-            "verificationMethod": "did:example:21tDAKCERh95uGgKbJNHYp#eidas-keys-1",
+            "verificationMethod": "did:ebsi:21tDAKCERh95uGgKbJNHYp#eidas-keys-1",
             "jws": "eyJhbGciOiJFUzI1NksiLCJiNjQiOmZhbHNlLCJjcml0IjpbImI2NCJdfQ..MEQCIG6U__hcNfsETFg_V8lXJ2edzXc2l4yotN8eBmrEX9TBAiBd8ULwdakRnxdPDWPj4uWJTinpwcCLzxyCbNUrsEX-lw"
         }
     }]
@@ -236,13 +236,13 @@ check_basic_credentials = [
         "homepage": "https://manu.sporny.org/",
         "image": "https://manu.sporny.org/images/manu.png",
         "name": "Manu Sporny",
-        "issuer": "did:example:21tDAKCERh95uGgKbJNHYp",
+        "issuer": "did:ebsi:21tDAKCERh95uGgKbJNHYp",
         "proof": {
             "type": "EcdsaSecp256k1Signature2019",
             "created": "2019-09-24T12:32:28Z",
             "domain": "example.com",
             "proofPurpose": "authentication",
-            "verificationMethod": "did:example:21tDAKCERh95uGgKbJNHYp#eidas-keys-1",
+            "verificationMethod": "did:ebsi:21tDAKCERh95uGgKbJNHYp#eidas-keys-1",
             "jws": "eyJhbGciOiJFUzI1NksiLCJiNjQiOmZhbHNlLCJjcml0IjpbImI2NCJdfQ..MEQCIG6U__hcNfsETFg_V8lXJ2edzXc2l4yotN8eBmrEX9TBAiBd8ULwdakRnxdPDWPj4uWJTinpwcCLzxyCbNUrsEX-lw"
         }
     }, {
@@ -251,10 +251,10 @@ check_basic_credentials = [
         },
         "id": "http://example.edu/credentials/3732",
         "type": ["VerifiableCredential", "UniversityDegreeCredential"],
-        "issuer": "did:example:21tDAKCERh95uGgKbJNHYp",
+        "issuer": "did:ebsi:21tDAKCERh95uGgKbJNHYp",
         "issuanceDate": "2010-01-01T19:23:24Z",
         "credentialSubject": {
-            "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+            "id": "did:ebsi:ebfeb1f712ebc6f1c276e12ec21",
             "degree": {
                 "type": "BachelorDegree",
                 "name": "Bachelor of Science and Arts"
@@ -265,7 +265,7 @@ check_basic_credentials = [
             "created": "2019-09-24T12:32:28Z",
             "domain": "example.com",
             "proofPurpose": "authentication",
-            "verificationMethod": "did:example:21tDAKCERh95uGgKbJNHYp#eidas-keys-1",
+            "verificationMethod": "did:ebsi:21tDAKCERh95uGgKbJNHYp#eidas-keys-1",
             "jws": "eyJhbGciOiJFUzI1NksiLCJiNjQiOmZhbHNlLCJjcml0IjpbImI2NCJdfQ..MEQCIG6U__hcNfsETFg_V8lXJ2edzXc2l4yotN8eBmrEX9TBAiBd8ULwdakRnxdPDWPj4uWJTinpwcCLzxyCbNUrsEX-lw"
         }
     }
@@ -279,10 +279,10 @@ credentials = [
         ],
         "id": "http://example.edu/credentials/3732",
         "type": ["VerifiableCredential", "UniversityDegreeCredential"],
-        "issuer": "did:example:21tDAKCERh95uGgKbJNHYp",
+        "issuer": "did:ebsi:21tDAKCERh95uGgKbJNHYp",
         "issuanceDate": "2010-01-01T19:23:24Z",
         "credentialSubject": {
-            "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+            "id": "did:ebsi:ebfeb1f712ebc6f1c276e12ec21",
             "degree": {
                 "type": "BachelorDegree",
                 "name": "Bachelor of Science and Arts"
@@ -293,7 +293,7 @@ credentials = [
             "created": "2019-09-24T12:32:28Z",
             "domain": "example.com",
             "proofPurpose": "authentication",
-            "verificationMethod": "did:example:21tDAKCERh95uGgKbJNHYp#eidas-keys-1",
+            "verificationMethod": "did:ebsi:21tDAKCERh95uGgKbJNHYp#eidas-keys-1",
             "jws": "eyJhbGciOiJFUzI1NksiLCJiNjQiOmZhbHNlLCJjcml0IjpbImI2NCJdfQ..MEQCIG6U__hcNfsETFg_V8lXJ2edzXc2l4yotN8eBmrEX9TBAiBd8ULwdakRnxdPDWPj4uWJTinpwcCLzxyCbNUrsEX-lw"
         }
     }
@@ -317,10 +317,10 @@ test_credentials = [
         ],
         "id": "http://example.edu/credentials/3732",
         "type": ["VerifiableCredential", "UniversityDegreeCredential"],
-        "issuer": "did:example:21tDAKCERh95uGgKbJNHYp",
+        "issuer": "did:ebsi:21tDAKCERh95uGgKbJNHYp",
         "issuanceDate": "2010-01-01T19:23:24Z",
         "credentialSubject": {
-            "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+            "id": "did:ebsi:ebfeb1f712ebc6f1c276e12ec21",
             "degree": {
                 "type": "BachelorDegree",
                 "name": "Bachelor of Science and Arts"
@@ -340,10 +340,10 @@ test_credentials = [
         ],
         "id": "http://example.edu/credentials/3732",
         "type": ["VerifiableCredential", "UniversityDegreeCredential"],
-        "issuer": "did:example:21tDAKCERh95uGgKbJNHYp",
+        "issuer": "did:ebsi:21tDAKCERh95uGgKbJNHYp",
         "issuanceDate": "2010-01-01T19:23:24Z",
         "credentialSubject": {
-            "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+            "id": "did:ebsi:ebfeb1f712ebc6f1c276e12ec21",
             "degree": {
                 "type": "BachelorDegree",
                 "name": "Bachelor of Science and Arts"
@@ -372,10 +372,10 @@ test_credentials = [
         ],
         "id": "http://example.edu/credentials/3732",
         "type": ["VerifiableCredential", "UniversityDegreeCredential"],
-        "issuer": "did:example:21tDAKCERh95uGgKbJNHYp",
+        "issuer": "did:ebsi:21tDAKCERh95uGgKbJNHYp",
         "issuanceDate": "2010-01-01T19:23:24Z",
         "credentialSubject": {
-            "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+            "id": "did:ebsi:ebfeb1f712ebc6f1c276e12ec21",
             "degree": {
                 "type": "BachelorDegree",
                 "name": "Bachelor of Science and Arts"
@@ -402,10 +402,10 @@ test_credentials = [
         ],
         "id": "http://example.edu/credentials/3732",
         "type": ["VerifiableCredential", "UniversityDegreeCredential"],
-        "issuer": "did:example:21tDAKCERh95uGgKbJNHYp",
+        "issuer": "did:ebsi:21tDAKCERh95uGgKbJNHYp",
         "issuanceDate": "2010-01-01T19:23:24Z",
         "credentialSubject": {
-            "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+            "id": "did:ebsi:ebfeb1f712ebc6f1c276e12ec21",
             "degree": {
                 "type": "BachelorDegree",
                 "name": "Bachelor of Science and Arts"
@@ -440,10 +440,10 @@ test_credentials = [
         ],
         "id": "http://example.edu/credentials/3732",
         "type": ["VerifiableCredential", "UniversityDegreeCredential"],
-        "issuer": "did:example:21tDAKCERh95uGgKbJNHYp",
+        "issuer": "did:ebsi:21tDAKCERh95uGgKbJNHYp",
         "issuanceDate": "2010-01-01T19:23:24Z",
         "credentialSubject": {
-            "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+            "id": "did:ebsi:ebfeb1f712ebc6f1c276e12ec21",
             "degree": {
                 "type": "BachelorDegree",
                 "name": "Bachelor of Science and Arts"
@@ -458,10 +458,10 @@ test_credentials = [
         ],
         "id": "http://example.edu/credentials/3732",
         "type": ["VerifiableCredential", "UniversityDegreeCredential"],
-        "issuer": "did:example:21tDAKCERh95uGgKbJNHYp",
+        "issuer": "did:ebsi:21tDAKCERh95uGgKbJNHYp",
         "issuanceDate": "2010-01-01T19:23:24Z",
         "credentialSubject": {
-            "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+            "id": "did:ebsi:ebfeb1f712ebc6f1c276e12ec21",
             "degree": {
                 "type": "BachelorDegree",
                 "name": "Bachelor of Science and Arts"
@@ -484,10 +484,10 @@ test_credentials = [
         ],
         "id": "http://example.edu/credentials/3732",
         "type": ["VerifiableCredential", "UniversityDegreeCredential"],
-        "issuer": "did:example:21tDAKCERh95uGgKbJNHYp",
+        "issuer": "did:ebsi:21tDAKCERh95uGgKbJNHYp",
         "issuanceDate": "2010-01-01T19:23:24Z",
         "credentialSubject": {
-            "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+            "id": "did:ebsi:ebfeb1f712ebc6f1c276e12ec21",
             "degree": {
                 "type": "BachelorDegree",
                 "name": "Bachelor of Science and Arts"
@@ -500,10 +500,10 @@ test_credentials = [
         ],
         "id": "http://example.edu/credentials/3732",
         "type": ["VerifiableCredential", "UniversityDegreeCredential"],
-        "issuer": "did:example:21tDAKCERh95uGgKbJNHYp",
+        "issuer": "did:ebsi:21tDAKCERh95uGgKbJNHYp",
         "issuanceDate": "2010-01-01T19:23:24Z",
         "credentialSubject": {
-            "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+            "id": "did:ebsi:ebfeb1f712ebc6f1c276e12ec21",
             "degree": {
                 "type": "BachelorDegree",
                 "name": "Bachelor of Science and Arts"
@@ -530,7 +530,7 @@ bad_credentials = [
         "id": "http://example.edu/credentials/3732",
         "type": ["VerifiableCredential", "UniversityDegreeCredential"],
         "credentialSubject": {
-            "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+            "id": "did:ebsi:ebfeb1f712ebc6f1c276e12ec21",
             "degree": {
                 "type": "BachelorDegree",
                 "name": "Bachelor of Science and Arts"
@@ -548,26 +548,26 @@ bad_type_credentials = [
 did_documents = [
     {
         "@context": "https://w3id.org/did/v1",
-        "id": "did:example:21tDAKCERh95uGgKbJNHYp",
+        "id": "did:ebsi:21tDAKCERh95uGgKbJNHYp",
         "authentication": [{
-            "id": "did:example:21tDAKCERh95uGgKbJNHYp#keys-1",
+            "id": "did:ebsi:21tDAKCERh95uGgKbJNHYp#keys-1",
             "type": "RsaVerificationKey2018",
-            "controller": "did:example:21tDAKCERh95uGgKbJNHYp",
+            "controller": "did:ebsi:21tDAKCERh95uGgKbJNHYp",
             "publicKeyPem": "-----BEGIN PUBLIC KEY...END PUBLIC KEY-----\r\n"
         }, {
-            "id": "did:example:21tDAKCERh95uGgKbJNHYp#eidas-keys-1",
+            "id": "did:ebsi:21tDAKCERh95uGgKbJNHYp#eidas-keys-1",
             "type": "Secp256k1VerificationKey2018 ",
-            "controller": "did:example:21tDAKCERh95uGgKbJNHYp",
+            "controller": "did:ebsi:21tDAKCERh95uGgKbJNHYp",
             "publicKeyPem": "-----BEGIN PUBLIC KEY-----\nMFYwEAYHKoZIzj0CAQYFK4EEAAoDQgAEswOm6PqrB3ddfKCWZPWMzSESDrd8xtcl\ndd8sCKvtW1+UC6s0g79GxkAJznPZ6Vu4DI0CJkMvbe+pF5ykUz7D+g==\n-----END PUBLIC KEY-----\n"
         }],
         "service": [{
-            "id": "did:example:21tDAKCERh95uGgKbJNHYp#vc",
+            "id": "did:ebsi:21tDAKCERh95uGgKbJNHYp#vc",
             "type": "VerifiableCredentialService",
             "serviceEndpoint": "https://example.com/vc/"
         }, {
-            "id": "did:example:21tDAKCERh95uGgKbJNHYp#eidas",
+            "id": "did:ebsi:21tDAKCERh95uGgKbJNHYp#eidas",
             "type": "EidasService",
-            "serviceEndpoint": "http://localhost:8002/did:example:21tDAKCERh95uGgKbJNHYp/eidas"
+            "serviceEndpoint": "http://localhost:8002/did:ebsi:21tDAKCERh95uGgKbJNHYp/eidas"
         }]
     }
 ]
@@ -576,28 +576,28 @@ bad_did_documents = [
     {
         "@context": "https://w3id.org/did/v1",
         "authentication": [{
-            "id": "did:example:123456789abcdefghi#keys-1",
+            "id": "did:ebsi:123456789abcdefghi#keys-1",
             "type": "RsaVerificationKey2018",
-            "controller": "did:example:123456789abcdefghi",
+            "controller": "did:ebsi:123456789abcdefghi",
             "publicKeyPem": "-----BEGIN PUBLIC KEY...END PUBLIC KEY-----\r\n"
         }],
         "service": [{
-            "id": "did:example:123456789abcdefghi#vc",
+            "id": "did:ebsi:123456789abcdefghi#vc",
             "type": "VerifiableCredentialService",
             "serviceEndpoint": "https://example.com/vc/"
         }]
     },
     {
         "@context": "https://w3id.org/did/v1",
-        "id": "did:example:123456789abcdefghi",
+        "id": "did:ebsi:123456789abcdefghi",
         "authentication": [{
-            "id": "did:example:123456789abcdefghi#keys-1",
+            "id": "did:ebsi:123456789abcdefghi#keys-1",
             "type": "RsaVerificationKey2018",
-            "controller": "did:example:123456789abcdefghi",
+            "controller": "did:ebsi:123456789abcdefghi",
             "publicKeyPem": "-----BEGIN PUBLIC KEY...END PUBLIC KEY-----\r\n"
         }],
         "service": [{
-            "id": "did:example:123456789abcdefghi#vc",
+            "id": "did:ebsi:123456789abcdefghi#vc",
             "type": "VerifiableCredentialService",
             "serviceEndpoint": "https://example.com/vc/"
         }]
@@ -626,50 +626,50 @@ crypto_testdata = [
 
 eidas_services = [
     {
-        "id": "did:sov:55GkHamhTU1ZbTbV2ab9DE#eidas",
+        "id": "did:ebsi:55GkHamhTU1ZbTbV2ab9DE#eidas",
         "type": "EidasService",
-        "serviceEndpoint": "http://service_endpoint.sample/did:sov:55GkHamhTU1ZbTbV2ab9DE/eidas"
+        "serviceEndpoint": "http://service_endpoint.sample/did:ebsi:55GkHamhTU1ZbTbV2ab9DE/eidas"
     },
     {
-        "id": "did:example:21tDAKCERh95uGgKbJNHYp#eidas",
+        "id": "did:ebsi:21tDAKCERh95uGgKbJNHYp#eidas",
         "type": "EidasService",
-        "serviceEndpoint": "http://service_endpoint.sample/did:example:21tDAKCERh95uGgKbJNHYp/eidas"
+        "serviceEndpoint": "http://service_endpoint.sample/did:ebsi:21tDAKCERh95uGgKbJNHYp/eidas"
     }
 ]
 
 did_doc_services = [
     {
-        "id": "did:example:123456789abcdefghi#openid",
+        "id": "did:ebsi:123456789abcdefghi#openid",
         "type": "OpenIdConnectVersion1.0Service",
         "serviceEndpoint": "https://openid.example.com/"
     }, 
     {
-        "id": "did:example:123456789abcdefghi#vcr",
+        "id": "did:ebsi:123456789abcdefghi#vcr",
         "type": "CredentialRepositoryService",
         "serviceEndpoint": "https://repository.example.com/service/8377464"
     }, 
     {
-        "id": "did:example:123456789abcdefghi#xdi",
+        "id": "did:ebsi:123456789abcdefghi#xdi",
         "type": "XdiService",
         "serviceEndpoint": "https://xdi.example.com/8377464"
     }, 
     {
-        "id": "did:example:123456789abcdefghi#agent",
+        "id": "did:ebsi:123456789abcdefghi#agent",
         "type": "AgentService",
         "serviceEndpoint": "https://agent.example.com/8377464"
     }, 
     {
-        "id": "did:example:123456789abcdefghi#hub",
+        "id": "did:ebsi:123456789abcdefghi#hub",
         "type": "HubService",
-        "serviceEndpoint": "https://hub.example.com/.identity/did:example:0123456789abcdef/"
+        "serviceEndpoint": "https://hub.example.com/.identity/did:ebsi:0123456789abcdef/"
     }, 
     {
-        "id": "did:example:123456789abcdefghi#messages",
+        "id": "did:ebsi:123456789abcdefghi#messages",
         "type": "MessagingService",
         "serviceEndpoint": "https://example.com/messages/8377464"
     }, 
     {
-        "id": "did:example:123456789abcdefghi#inbox",
+        "id": "did:ebsi:123456789abcdefghi#inbox",
         "type": "SocialWebInboxService",
         "serviceEndpoint": "https://social.example.com/83hfh37dj",
         "description": "My public social inbox",
@@ -679,25 +679,25 @@ did_doc_services = [
         }
     }, 
     {
-        "id": "did:example:123456789abcdefghi#authpush",
+        "id": "did:ebsi:123456789abcdefghi#authpush",
         "type": "DidAuthPushModeVersion1",
-        "serviceEndpoint": "http://auth.example.com/did:example:123456789abcdefg"
+        "serviceEndpoint": "http://auth.example.com/did:ebsi:123456789abcdefg"
     },
     {
-        "id": "did:sov:55GkHamhTU1ZbTbV2ab9DE#eidas",
+        "id": "did:ebsi:55GkHamhTU1ZbTbV2ab9DE#eidas",
         "type": "EidasService",
-        "serviceEndpoint": "http://service_endpoint.sample/did:sov:55GkHamhTU1ZbTbV2ab9DE/eidas"
+        "serviceEndpoint": "http://service_endpoint.sample/did:ebsi:55GkHamhTU1ZbTbV2ab9DE/eidas"
     }
 ]
 
 did_doc_services_no_eidas = [
     {
-        "id": "did:example:123456789abcdefghi#openid",
+        "id": "did:ebsi:123456789abcdefghi#openid",
         "type": "OpenIdConnectVersion1.0Service",
         "serviceEndpoint": "https://openid.example.com/"
     }, 
     {
-        "id": "did:example:123456789abcdefghi#vcr",
+        "id": "did:ebsi:123456789abcdefghi#vcr",
         "type": "CredentialRepositoryService",
         "serviceEndpoint": "https://repository.example.com/service/8377464"
     }

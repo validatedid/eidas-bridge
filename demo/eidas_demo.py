@@ -79,9 +79,9 @@ def test_crypto_hash_suite():
     crypto_hash_str(" ")
     crypto_hash_str("a")
     crypto_hash_str("0")
-    crypto_hash_str("did:sov:")
+    crypto_hash_str("did:ebsi:")
     crypto_hash_str("55GkHamhTU1ZbTbV2ab9DE")
-    crypto_hash_str("did:sov:55GkHamhTU1ZbTbV2ab9DE")
+    crypto_hash_str("did:ebsi:55GkHamhTU1ZbTbV2ab9DE")
     crypto_hash_str("did:test:abcdefghijkl")
     crypto_hash_hex('fffe00005000000049000000')
 
