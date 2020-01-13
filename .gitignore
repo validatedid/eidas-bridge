@@ -47,7 +47,7 @@ nosetests.xml
 coverage.xml
 *,cover
 tests/data/tmp
-demo/data/storage/*
+demo/data/storage/*.csv
 
 # Translations
 *.mo
