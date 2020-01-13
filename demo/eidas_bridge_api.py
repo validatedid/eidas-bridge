@@ -23,7 +23,7 @@ eidas_load_qec_input_model = api.model('EIDASLoadQEC', {
     'did': fields.String(
         description="DID", 
         required=True,
-        example="did:example:21tDAKCERh95uGgKbJNHYp"),
+        example="did:ebsi:21tDAKCERh95uGgKbJNHYp"),
     'p12data': fields.Raw(
         description="QEC certificate with Secp256k1 keys in a P12 format", 
         required=True,
@@ -56,18 +56,18 @@ eidas_service_input_model = api.model('EIDASService_in', {
     'did': fields.String(
         description="DID", 
         required=True,
-        example="did:example:21tDAKCERh95uGgKbJNHYp"),
+        example="did:ebsi:21tDAKCERh95uGgKbJNHYp"),
     'service_endpoint': fields.String(
         description="Service Endpoint", 
         required=True,
-        example="http://service_endpoint.sample/did:example:21tDAKCERh95uGgKbJNHYp/eidas")
+        example="http://service_endpoint.sample/did:ebsi:21tDAKCERh95uGgKbJNHYp/eidas")
 })
 
 service_output_model = api.model('ServiceEndpoint', {
     'id': fields.String(
         description="Service Endpoint Identifier", 
         required=True,
-        example="did:example:21tDAKCERh95uGgKbJNHYp#eidas"),
+        example="did:ebsi:21tDAKCERh95uGgKbJNHYp#eidas"),
     'type': fields.String(
         description="Service Endpoint type", 
         required=True,
@@ -75,7 +75,7 @@ service_output_model = api.model('ServiceEndpoint', {
     'serviceEndpoint': fields.String(
         description="Service Endpoint URL", 
         required=True,
-        example="http://localhost:8002/did:example:21tDAKCERh95uGgKbJNHYp/eidas"),
+        example="http://localhost:8002/did:ebsi:21tDAKCERh95uGgKbJNHYp/eidas"),
 })
 
 @eidas.route('/service-endpoint')
@@ -104,7 +104,7 @@ eidas_get_pubkey_input_model = api.model('EIDASPubKey_in', {
     'did': fields.String(
         description="DID", 
         required=True,
-        example="did:example:21tDAKCERh95uGgKbJNHYp")
+        example="did:ebsi:21tDAKCERh95uGgKbJNHYp")
 })
 
 eidas_get_pubkey_output_model = api.model('EIDASPubKey_out', {
@@ -160,7 +160,7 @@ cred_subject_model = api.model('Credential_subject', {
     'did': fields.String(
         description="DID", 
         required=True,
-        example="did:example:21tDAKCERh95uGgKbJNHYp"),
+        example="did:ebsi:21tDAKCERh95uGgKbJNHYp"),
     'degree': fields.Nested(
         degree_model, 
         description="Degree Credential structure", 
@@ -187,7 +187,7 @@ cred_proof_model = api.model('Credential_proof', {
     'verificationMethod': fields.String(
         description="Verification Method", 
         required=True,
-        example="did:example:21tDAKCERh95uGgKbJNHYp#eidas-keys-1"),
+        example="did:ebsi:21tDAKCERh95uGgKbJNHYp#eidas-keys-1"),
     'jws' : fields.String(
         description="Proof Value", 
         required=True,
@@ -210,7 +210,7 @@ credential_input_model = api.model('Credential_in', {
     'issuer': fields.String(
         description="Issuer DID", 
         required=True,
-        example="did:example:21tDAKCERh95uGgKbJNHYp"),
+        example="did:ebsi:21tDAKCERh95uGgKbJNHYp"),
     'issuanceDate': fields.String(
         description="Credential Issuance date timestamp", 
         required=False,
@@ -237,7 +237,7 @@ credential_output_model = api.model('Credential_out', {
     'issuer': fields.String(
         description="Issuer DID", 
         required=True,
-        example="did:example:21tDAKCERh95uGgKbJNHYp"),
+        example="did:ebsi:21tDAKCERh95uGgKbJNHYp"),
     'issuanceDate': fields.String(
         description="Credential Issuance date timestamp", 
         required=False,
@@ -272,7 +272,7 @@ auth_diddoc_model = api.model('AuthenticationDIDDocModel', {
     'id': fields.String(
         description="Authentication Identifier Key", 
         required=True,
-        example="did:example:21tDAKCERh95uGgKbJNHYp#eidas-keys-1"),
+        example="did:ebsi:21tDAKCERh95uGgKbJNHYp#eidas-keys-1"),
     'type': fields.String(
         description="Authentication Identifier Key type", 
         required=True,
@@ -280,7 +280,7 @@ auth_diddoc_model = api.model('AuthenticationDIDDocModel', {
     'controller': fields.String(
         description="Owner of Identifier Key", 
         required=True,
-        example="did:example:21tDAKCERh95uGgKbJNHYp"),
+        example="did:ebsi:21tDAKCERh95uGgKbJNHYp"),
     'publicKeyPem': fields.String(
         description="Public Key", 
         required=True,
@@ -295,7 +295,7 @@ did_document_input_model = api.model('DIDDocument', {
     'id': fields.String(
         description="Decentralized IDentifier", 
         required=True,
-        example="did:example:21tDAKCERh95uGgKbJNHYp"),
+        example="did:ebsi:21tDAKCERh95uGgKbJNHYp"),
     'authentication': fields.List(fields.Nested(auth_diddoc_model), 
         description="List of Authentication Mechanisms", 
         required=True),
