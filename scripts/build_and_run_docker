@@ -2,4 +2,4 @@
 
 docker build -t ebsi-eidas-bridge -f ./docker/Dockerfile . || exit 1
 
-docker run -ti -p 5002:5002 -p 8080:80 -v "$PWD"/demo:/var/www/html -v "$PWD":/code eidas-bridge-web-demo
+docker run -ti -p 5002:5002 -v "$PWD":/code eidas-bridge-web-demo
