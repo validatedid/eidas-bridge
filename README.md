@@ -38,13 +38,9 @@ $ cd 4-eidas-bridge
 ```
 ### Docker
 Execute a script to build and run the dockerized eIDAS Bridge library:
-* In \*nix style computers:
+
 ```sh
-$ ./scripts/build_and_run_docker
-```
-* In Windows style computers, from a Powershell:
-```sh
-PS ~\eidas-bridge> bash .\scripts\build_and_run_docker
+$ docker-compose up --build  
 ```
 
 ### Usage
@@ -57,7 +53,7 @@ To stop the demo and docker container, just press `Ctrl^C` on the same terminal 
 
 In case you want to use the demo again, there is no need to rebuild the docker, just execute another script to start the already built docker:
 ```sh
-$ ./scripts/start_docker
+$ docker-compose up
 ```
 
 

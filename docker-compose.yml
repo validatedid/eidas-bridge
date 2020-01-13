@@ -1,0 +1,11 @@
+
+version: '3.2'
+
+services:
+  eidas-bridge:
+    build: .
+    image: eidasbridge-dev.ebsi.zyz
+    ports:
+      - '5002:5002'
+    environment:
+      - FLASK_ENV=development

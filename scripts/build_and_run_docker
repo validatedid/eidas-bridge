@@ -1,5 +1,0 @@
-#!/bin/bash
-
-docker build -t eidasbridge-dev.ebsi.xyz -f ./docker/Dockerfile . || exit 1
-
-docker run -ti -p 5002:5002 -v "$PWD":/code eidas-bridge-web-demo

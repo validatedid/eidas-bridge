@@ -1,0 +1,4 @@
+eidas_bridge.egg-info
+env
+.pytest_cache
+.vscode
