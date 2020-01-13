@@ -35,12 +35,10 @@ $ ./scripts/build_and_run_docker
 PS ~\eidas-bridge> bash .\scripts\build_and_run_docker
 ```
 
-This docker demo exposes a web server to run web demo and also another server to work directly with the eIDAS Bridge Swagger API:
-- eIDAS Bridge Web demo on `http://localhost:8080/university_backend/`
+This docker demo exposes a server to work directly with the eIDAS Bridge Swagger API:
 - eIDAS Bridge Swagger API on `http://localhost:5002/`
 
-Open your browser and access to `http://localhost:8080/university_backend/` to interact with eIDAS Bridge Web Demo.
-Or open your browser and access to `http://localhost:5002/` to interact with the eIDAS Bridge Swagger API.
+Open your browser and access to `http://localhost:5002/` to interact with the eIDAS Bridge Swagger API.
 
 To stop the demo and docker container, just press `Ctrl^C` on the same terminal your executed the script.
 
