@@ -35,6 +35,14 @@ if __name__ == "__main__":
     print (" * Starting eIDAS Bridge demo")
     parser = argparse.ArgumentParser(description="Runs an eIDAS Bridge server")
     parser.add_argument(
+        "-host",
+        "--host",
+        type=str,
+        default='0.0.0.0',
+        metavar=("<ip host>"),
+        help="Choose the starting ip host to point to your server",
+    )
+    parser.add_argument(
         "-p",
         "--apiport",
         type=int,
