@@ -5,7 +5,6 @@ import json, threading
 from flask import Flask, request
 from flask_cors import CORS
 from flask_restplus import Resource, Api, fields, abort
-from demo.util.hub_server import start_hub_server
 from eidas_bridge.eidas_bridge import eidas_get_service_endpoint, \
     eidas_sign_credential, eidas_verify_credential, EIDASNotSupportedException, \
     eidas_load_qec, eidas_get_pubkey
@@ -75,7 +74,7 @@ service_output_model = api.model('ServiceEndpoint', {
     'serviceEndpoint': fields.String(
         description="Service Endpoint URL", 
         required=True,
-        example="http://localhost:8002/did:ebsi:21tDAKCERh95uGgKbJNHYp/eidas"),
+        example="http://localhost:9092/did:ebsi:21tDAKCERh95uGgKbJNHYp/eidas"),
 })
 
 @eidas.route('/service-endpoint')
@@ -333,13 +332,5 @@ def init_api_server(host='0.0.0.0', port='5002'):
     print(' * Starting API server at http://'+host+':'+ str(port))
     app.run(host, port)
     
-if __name__ == '__main__':
-    server_thread = threading.Thread(target=start_hub_server, daemon=True)
-
-    # launch localhost server
-    server_thread.start()
-    # check if server started
-    if server_thread.is_alive():
-        # run demo
-        app.run(host='0.0.0.0', port='5002', debug=True)
-     
+if __name__ == "__main__":  
+  init_api_server()

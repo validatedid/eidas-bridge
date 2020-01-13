@@ -6,7 +6,7 @@ from eidas_bridge.utils.util import timestamp
 from demo.data.common_data import all_type_dids, all_type_certificates, bad_type_proofs, \
         dids, bad_type_endpoints, service_endpoints, bad_type_credentials, credentials, did_documents, \
         eidas_data_list, dids, basic_credentials
-from demo.util.hub_server import start_hub_server
+from demo.hub_server import start_hub_server
 from eidas_bridge.utils.dbmanager import DBManager, EIDASNotDataCreated
 from eidas_bridge.utils.crypto import eidas_load_pkcs12, _load_private_key_from_data, ecdsa_sign
 from demo.util.crypto import ecdsa_verify_priv
@@ -43,6 +43,8 @@ def test_eidas_verify_credential(credential, did_doc):
     hub_server_proc.start()
 
     assert eidas_verify_credential(credential, did_doc) == "VALID"
+
+    hub_server_proc.terminate()
   
 def _to_json_eidas_service(did, service_endpoint) -> str:
     """

@@ -2,8 +2,10 @@
 version: '3.2'
 
 services:
-  eidas-bridge:
-    build: .
+  eidasbridge:
+    build: 
+      context: .
+      dockerfile: ./Dockerfile
     image: eidasbridge-dev.ebsi.zyz
     ports:
       - '5002:5002'
@@ -11,3 +13,15 @@ services:
       - FLASK_ENV=development
     volumes:
       - ./:/code
+    depends_on: 
+      - hubserver
+
+  hubserver:
+    build: 
+        context: ./demo
+        dockerfile: ./Dockerfile
+    image: hubserver-dev.ebsi.zyz
+    ports:
+      - '9092:9092'
+    environment:
+      - FLASK_ENV=development

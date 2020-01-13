@@ -6,7 +6,6 @@ from eidas_bridge.did_document import DIDDocument
 from demo.data.common_data import all_type_dids, bad_type_endpoints, service_endpoints, \
     eidas_services
 from eidas_bridge.utils.util import clean_did
-from demo.util.hub_server import start_hub_server
 
 @pytest.mark.parametrize("did", all_type_dids)
 @pytest.mark.parametrize("service_endpoint", bad_type_endpoints)

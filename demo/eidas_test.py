@@ -18,7 +18,6 @@ from util.crypto import create_selfsigned_x509_certificate, store_key_and_x509ce
     print_rsa_priv_key, rsa_sign, load_pkcs12_file, ecdsa_verify_priv, ecdsa_verify, \
     _ecdsa_generate_key, _ecdsa_get_pubkey, create_selfsigned_x509_certificate_ecdsa
 from eidas_bridge.utils.crypto import _ecdsa_serialize_pubkey, ecdsa_sign
-from util.hub_server import start_hub_server
 
 """"""""""""""""""""""""
 """ EIDAS BRIDGE TESTS """
