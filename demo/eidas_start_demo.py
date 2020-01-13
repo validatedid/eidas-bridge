@@ -28,12 +28,12 @@ def main(args):
         # Terminate the running processes.
         hub_server_proc.terminate()
         api_server_proc.terminate()
-        print('\n * Exiting eIDAS Bridge demo')
+        print('\n * Exiting eIDAS Bridge server')
 
 if __name__ == "__main__":
     
     print (" * Starting eIDAS Bridge demo")
-    parser = argparse.ArgumentParser(description="Runs an eIDAS Bridge demo with a University backend web")
+    parser = argparse.ArgumentParser(description="Runs an eIDAS Bridge server")
     parser.add_argument(
         "-host",
         "--host",

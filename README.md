@@ -33,8 +33,8 @@ $ cd test-eidas-bridge
 
 Clone the repository and move to the project directory
 ```sh
-$ git clone https://github.com/validatedid/eidas-bridge
-$ cd eidas-bridge
+$ git clone https://<your_user>@ec.europa.eu/cefdigital/code/scm/ebsi/4-eidas-bridge.git
+$ cd 4-eidas-bridge
 ```
 ### Docker
 Execute a script to build and run the dockerized eIDAS Bridge library:
@@ -48,12 +48,10 @@ PS ~\eidas-bridge> bash .\scripts\build_and_run_docker
 ```
 
 ### Usage
-This docker demo exposes a web server to run web demo and also another server to work directly with the eIDAS Bridge Swagger API:
-- eIDAS Bridge Web demo on `http://localhost:8080/university_backend/`
+This docker demo exposes a server to work directly with the eIDAS Bridge Swagger API:
 - eIDAS Bridge Swagger API on `http://localhost:5002/`
 
-Open your browser and access to `http://localhost:8080/university_backend/` to interact with eIDAS Bridge Web Demo.
-Or open your browser and access to `http://localhost:5002/` to interact with the eIDAS Bridge Swagger API.
+Open your browser and access to `http://localhost:5002/` to interact with the eIDAS Bridge Swagger API.
 
 To stop the demo and docker container, just press `Ctrl^C` on the same terminal your executed the script.
 
@@ -71,8 +69,8 @@ $ cd test-eidas-bridge
 
 Clone the repository and move to the project directory
 ```sh
-$ git clone https://github.com/validatedid/eidas-bridge
-$ cd eidas-bridge
+$ git clone https://<your_user>@ec.europa.eu/cefdigital/code/scm/ebsi/4-eidas-bridge.git
+$ cd 4-eidas-bridge
 ```
 
 Create and activate python virtual environment:
@@ -113,8 +111,7 @@ Run eIDAS Bridge Library API Demo
 Implementation of a demo that exposes a RESTFUL Open API / Swagger style to call eIDAS Bridge Library in Python.
 Following previous instructions, we should have the project github repo and be placed on `eidas-bridge` directory.
 
-This demo launches two localhost servers:
-- eIDAS Link local data repository on `http://localhost:8000`
+This demo launches:
 - eIDAS Bridge Swagger API on `http://localhost:5002/`
 
 ### Requirements
