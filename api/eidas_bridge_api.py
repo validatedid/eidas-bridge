@@ -330,6 +330,7 @@ class EIDASVerifyCredential(Resource):
 
 def init_api_server(host='0.0.0.0', port='5002'):
     # run api demo
+    print(' * Starting API server at http://'+host+':'+ str(port))
     app.run(host, port)
     
 if __name__ == '__main__':

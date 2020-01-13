@@ -7,7 +7,7 @@ sys.path.insert(0,parentdir)
 import argparse, multiprocessing, time
 multiprocessing.set_start_method('spawn', True)
 from demo.util.hub_server import start_hub_server
-from start.eidas_bridge_api import init_api_server
+from api.eidas_bridge_api import init_api_server
 
 def main(args):
 
