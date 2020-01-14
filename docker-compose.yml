@@ -8,7 +8,7 @@ services:
       dockerfile: ./Dockerfile
     image: eidasbridge-dev.ebsi.zyz
     ports:
-      - '5002:5002'
+      - '9000:9000'
     environment:
       - FLASK_ENV=development
     volumes:
@@ -22,6 +22,6 @@ services:
         dockerfile: ./Dockerfile
     image: hubserver-dev.ebsi.zyz
     ports:
-      - '9092:9092'
+      - '9001:9001'
     environment:
       - FLASK_ENV=development

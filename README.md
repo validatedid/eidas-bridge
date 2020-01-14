@@ -44,9 +44,9 @@ $ docker-compose up --build
 ```
 
 This docker demo exposes a server to work directly with the eIDAS Bridge Swagger API:
-- eIDAS Bridge Swagger API on `http://localhost:5002/`
+- eIDAS Bridge Swagger API on `http://localhost:9000/`
 
-Open your browser and access to `http://localhost:5002/` to interact with the eIDAS Bridge Swagger API.
+Open your browser and access to `http://localhost:9000/` to interact with the eIDAS Bridge Swagger API.
 
 To stop the demo and docker container, just press `Ctrl^C` on the same terminal your executed the script.
 
@@ -107,7 +107,7 @@ Implementation of a demo that exposes a RESTFUL Open API / Swagger style to call
 Following previous instructions, we should have the project github repo and be placed on `eidas-bridge` directory.
 
 This demo launches:
-- eIDAS Bridge Swagger API on `http://localhost:5002/`
+- eIDAS Bridge Swagger API on `http://localhost:9000/`
 
 ### Requirements
 - Flask
@@ -123,7 +123,7 @@ Execute `eidas_bridge_api.py`:
 ```sh
 $ python demo/eidas_bridge_api.py
 ```
-SWAGGER API calls will be located at `http://localhost:5002` and will expose:
+SWAGGER API calls will be located at `http://localhost:9000` and will expose:
   - `/eidas/load-qec`
   - `/eidas/service-endpoint`
   - `/eidas/get-pubkey`

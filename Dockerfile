@@ -14,4 +14,4 @@ RUN apk --update add --virtual build-dependencies libffi-dev openssl-dev python-
     && pip3 install --no-cache-dir -e . \
     && apk del gcc build-dependencies
 
-CMD ["python3", "/code/api/eidas_bridge_api.py"]
+CMD ["python3", "start.py"]

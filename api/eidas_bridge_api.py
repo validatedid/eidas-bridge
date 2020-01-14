@@ -16,7 +16,7 @@ CORS(app)
 app.config['JSON_SORT_KEYS'] = False
 api = Api(app, version='0.5', title='eIDAS Bridge API', description='An eIDAS bridge API to connect to a SSI solution')
 
-eidas = api.namespace('eidas', description="eIDAS bridge API calls")
+eidas = api.namespace('eidas', description="eIDAS Bridge API calls")
 
 eidas_load_qec_input_model = api.model('EIDASLoadQEC', {
     'did': fields.String(
@@ -74,7 +74,7 @@ service_output_model = api.model('ServiceEndpoint', {
     'serviceEndpoint': fields.String(
         description="Service Endpoint URL", 
         required=True,
-        example="http://localhost:9092/did:ebsi:21tDAKCERh95uGgKbJNHYp/eidas"),
+        example="http://localhost:9001/did:ebsi:21tDAKCERh95uGgKbJNHYp/eidas"),
 })
 
 @eidas.route('/service-endpoint')
@@ -327,10 +327,7 @@ class EIDASVerifyCredential(Resource):
             request.json['did_document']
         )
 
-def init_api_server(host='0.0.0.0', port='5002'):
+def init_api_server(host='0.0.0.0', port='9000'):
     # run api demo
     print(' * Starting API server at http://'+host+':'+ str(port))
     app.run(host, port)
-    
-if __name__ == "__main__":  
-  init_api_server()
