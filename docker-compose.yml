@@ -13,8 +13,8 @@ services:
       - FLASK_ENV=development
     volumes:
       - ./:/code
-    depends_on: 
-      - hubserver
+    networks: 
+      - backend
 
   hubserver:
     build: 
@@ -25,3 +25,9 @@ services:
       - '9001:9001'
     environment:
       - FLASK_ENV=development
+    networks: 
+      - backend
+
+networks:
+  backend:
+    driver: "bridge"
