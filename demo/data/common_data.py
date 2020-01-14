@@ -567,7 +567,7 @@ did_documents = [
         }, {
             "id": "did:ebsi:21tDAKCERh95uGgKbJNHYp#eidas",
             "type": "EidasService",
-            "serviceEndpoint": "http://localhost:9092/did:ebsi:21tDAKCERh95uGgKbJNHYp/eidas"
+            "serviceEndpoint": "http://localhost:9001/did:ebsi:21tDAKCERh95uGgKbJNHYp/eidas"
         }]
     }
 ]
