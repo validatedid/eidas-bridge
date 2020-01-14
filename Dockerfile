@@ -7,7 +7,7 @@ WORKDIR /code
 # Copy the current directory contents into the container at /app
 COPY . /code
 
-RUN apk --update add python py-pip openssl ca-certificates py-openssl wget
+RUN apk --update add python py-pip openssl ca-certificates py-openssl wget curl
 RUN apk --update add --virtual build-dependencies libffi-dev openssl-dev python-dev py-pip build-base \
     && pip3 install --upgrade pip \
     && pip3 install --no-cache-dir -r requirements.txt -r requirements.demo.txt \
