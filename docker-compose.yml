@@ -1,16 +1,18 @@
 
-version: '3.2'
+version: '3.7'
 
 services:
   eidasbridge:
     build: 
       context: .
       dockerfile: ./Dockerfile
-    image: eidasbridge-dev.ebsi.zyz
+    image: eidasbridge-dev.ebsi.xyz
+    container_name: eidasbridge
     ports:
       - '9000:9000'
     environment:
       - FLASK_ENV=development
+    restart: always
     volumes:
       - ./:/code
     networks: 
@@ -20,11 +22,13 @@ services:
     build: 
         context: ./demo
         dockerfile: ./Dockerfile
-    image: hubserver-dev.ebsi.zyz
+    image: hubserver-dev.ebsi.xyz
+    container_name: hubserver
     ports:
       - '9001:9001'
     environment:
       - FLASK_ENV=development
+    restart: always
     networks: 
       - backend
 

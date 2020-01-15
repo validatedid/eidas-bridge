@@ -6,6 +6,10 @@ import re, json
 app = Flask(__name__)
 api = Api(app)
 
+@app.route('/')
+def getC():
+  print('I\'m in!!')
+
 @app.route('/<did>/eidas')
 def getQEC(did):
   try:
@@ -20,8 +24,10 @@ def getQEC(did):
   # return json.dumps(eidas_data, indent=2).encode()
 
 
-def init_hub_server():
-  app.run(debug=True, host='0.0.0.0', port="9001")
+def init_hub_server(host='0.0.0.0', port='9001'):
+  # run api demo
+  print(' * Starting API server at http://'+host+':'+ str(port))
+  app.run(host, port)
 
 if __name__ == '__main__':
   init_hub_server()
