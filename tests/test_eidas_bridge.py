@@ -6,7 +6,7 @@ from eidas_bridge.utils.util import timestamp
 from demo.data.common_data import all_type_dids, all_type_certificates, bad_type_proofs, \
         dids, bad_type_endpoints, service_endpoints, bad_type_credentials, credentials, did_documents, \
         eidas_data_list, dids, basic_credentials
-from demo.hub_server import start_hub_server
+from demo.hub_server import init_hub_server
 from eidas_bridge.utils.dbmanager import DBManager, EIDASNotDataCreated
 from eidas_bridge.utils.crypto import eidas_load_pkcs12, _load_private_key_from_data, ecdsa_sign
 from demo.util.crypto import ecdsa_verify_priv
@@ -39,7 +39,7 @@ def test_eidas_verify_credential_bad_types(credential):
 def test_eidas_verify_credential(credential, did_doc):
 
     # run server process
-    hub_server_proc = multiprocessing.Process(target=start_hub_server)
+    hub_server_proc = multiprocessing.Process(target=init_hub_server)
     hub_server_proc.start()
 
     assert eidas_verify_credential(credential, did_doc) == "VALID"
