@@ -10,9 +10,9 @@ from eidas_bridge.eidas_bridge import eidas_get_service_endpoint, eidas_sign_cre
     EIDASNotSupportedException
 from eidas_bridge.utils.crypto import InvalidSignatureException, x509_load_certificate_from_data_bytes, \
     PKCS1v15_PADDING, PSS_PADDING, rsa_verify, _ecdsa_serialize_privkey, x509_get_PEM_certificate_from_obj
-from data.common_data import eidas_inputs, service_endpoints, credentials, paddings, did_documents
-from util.util import bcolors, print_object
-from util.crypto import create_selfsigned_x509_certificate, store_key_and_x509cert_to_disk, \
+from demo.data.common_data import eidas_inputs, service_endpoints, credentials, paddings, did_documents
+from demo.util.util import bcolors, print_object
+from demo.util.crypto import create_selfsigned_x509_certificate, store_key_and_x509cert_to_disk, \
     print_rsa_pub_key, print_x509cert, eidas_crypto_hash_byte, eidas_crypto_hash_str, \
     eidas_crypto_hash_hex, load_private_key_from_file, x509_load_certificate_from_file, \
     print_rsa_priv_key, rsa_sign, load_pkcs12_file, ecdsa_verify_priv, ecdsa_verify, \
