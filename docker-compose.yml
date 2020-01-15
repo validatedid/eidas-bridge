@@ -6,13 +6,18 @@ services:
     build: 
       context: .
       dockerfile: ./Dockerfile
-    image: eidasbridge-dev.ebsi.xyz
-    container_name: eidasbridge
+    image: "${DOCKER_EIDASBRIDGE_IMAGE_NAME}:${TAG}"
+    container_name: "${DOCKER_EIDASBRIDGE_CONTAINER_NAME}"
+    restart: always
     ports:
       - '9000:9000'
-    environment:
-      - FLASK_ENV=development
+    env_file:
+      - .env
     restart: always
+    logging:
+      options:
+        max-size: '100m'
+        max-file: '50'
     volumes:
       - ./:/code
     networks: 
@@ -22,12 +27,17 @@ services:
     build: 
         context: ./demo
         dockerfile: ./Dockerfile
-    image: hubserver-dev.ebsi.xyz
-    container_name: hubserver
+    image: "${DOCKER_HUBSERVER_IMAGE_NAME}:${TAG}"
+    container_name: "${DOCKER_HUBSERVER_CONTAINER_NAME}"
+    restart: always
+    logging:
+      options:
+        max-size: '100m'
+        max-file: '50'
     ports:
       - '9001:9001'
-    environment:
-      - FLASK_ENV=development
+    env_file:
+      - .env
     restart: always
     networks: 
       - backend
