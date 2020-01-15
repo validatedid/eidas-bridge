@@ -74,7 +74,7 @@ service_output_model = api.model('ServiceEndpoint', {
     'serviceEndpoint': fields.String(
         description="Service Endpoint URL", 
         required=True,
-        example="http://localhost:9001/did:ebsi:21tDAKCERh95uGgKbJNHYp/eidas"),
+        example="http://hubserver:9001/did:ebsi:21tDAKCERh95uGgKbJNHYp/eidas"),
 })
 
 @eidas.route('/service-endpoint')
